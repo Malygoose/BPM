@@ -1,0 +1,1140 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="ezFlow_HOPAX" Class="dcFormDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=.;Initial Catalog=ezFlow_HOPAX;Persist Security Info=True;User ID=jb" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="Flow" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.wfAppAbs1Currency" Member="wfAppAbs1Currency">
+    <Type Name="wfAppAbs1Currency">
+      <Column Name="iAutoKey" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="sProcessID" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="idProcess" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="sNobr" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="iRate" Type="System.Decimal" DbType="Decimal(13,5) NOT NULL" CanBeNull="false" />
+      <Column Name="sCurrencyCode" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sCurrencyName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="iAmount" Type="System.Decimal" DbType="Decimal(16,2) NOT NULL" CanBeNull="false" />
+      <Column Name="iAmountReal" Type="System.Decimal" DbType="Decimal(16,2) NOT NULL" CanBeNull="false" />
+      <Column Name="bSign" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="sState" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="dDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="dKeyDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.wfAppAbs1Ticket" Member="wfAppAbs1Ticket">
+    <Type Name="wfAppAbs1Ticket">
+      <Column Name="iAutoKey" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="sProcessID" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="idProcess" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="sNobr" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="dDateTimeB" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="dDateTimeE" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="dDateB" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="dDateE" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="sTimeB" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sTimeE" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sFlightB" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sFlightE" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sLocationB" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sLocationE" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sTicketSeqCode" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sTicketSeqName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="bNotify" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="bSign" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="sState" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="dDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="dKeyDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.wfAppAgent" Member="wfAppAgent">
+    <Type Name="wfAppAgent">
+      <Column Name="iAutoKey" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="sNobr" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sAgentNobr" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sAgentName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sAgentMail" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="sNote" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="sKeyMan" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="dKeyDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.wfFormSendMailLog" Member="wfFormSendMailLog">
+    <Type Name="wfFormSendMailLog">
+      <Column Name="iAutoKey" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="sFormCode" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sFormName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sCategory" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sProcessID" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="idProcess" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="sNobr" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sMail" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sSubject" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sContent" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="dKeyDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.wfFormSendMail" Member="wfFormSendMail">
+    <Type Name="wfFormSendMail">
+      <Column Name="iAutoKey" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="sFormCode" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sFormName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sCategory" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sProcessID" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="idProcess" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="sNobr" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sMail" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sContent" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sKeyMan" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="dKeyDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.wfAppAbs1" Member="wfAppAbs1">
+    <Type Name="wfAppAbs1">
+      <Column Name="iAutoKey" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="sFormCode" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sProcessID" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="idProcess" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="sNobr" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sDept" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sDeptName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJob" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJobName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJobl" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJoblName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sEmpcd" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sEmpcdName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sRole" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="sDI" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sRote" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="dDateTimeB" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="dDateTimeE" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="dDateB" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="dDateE" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="sTimeB" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sTimeE" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sHcode" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sHname" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="iDay" Type="System.Decimal" DbType="Decimal(16,2) NOT NULL" CanBeNull="false" />
+      <Column Name="iHour" Type="System.Decimal" DbType="Decimal(16,2) NOT NULL" CanBeNull="false" />
+      <Column Name="iTotalDay" Type="System.Decimal" DbType="Decimal(16,2) NOT NULL" CanBeNull="false" />
+      <Column Name="iTotalHour" Type="System.Decimal" DbType="Decimal(16,2) NOT NULL" CanBeNull="false" />
+      <Column Name="bExceptionHour" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="iExceptionHour" Type="System.Decimal" DbType="Decimal(16,2) NOT NULL" CanBeNull="false" />
+      <Column Name="sReserve1" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="sReserve2" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="sReserve3" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="sReserve4" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="sSalYYMM" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="bSign" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="sState" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sAgentNobr" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sAgentName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sAgentNote" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="bAuth" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="sNote" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="dDateTimeB1" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="dDateTimeE1" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="dDateB1" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="dDateE1" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="sTimeB1" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sTimeE1" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="iDay1" Type="System.Decimal" DbType="Decimal(16,2)" CanBeNull="true" />
+      <Column Name="iHour1" Type="System.Decimal" DbType="Decimal(16,2)" CanBeNull="true" />
+      <Column Name="iTotalDay1" Type="System.Decimal" DbType="Decimal(16,2)" CanBeNull="true" />
+      <Column Name="iTotalHour1" Type="System.Decimal" DbType="Decimal(16,2)" CanBeNull="true" />
+      <Column Name="sCode1" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sName1" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sCode2" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sName2" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sCode3" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sName3" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sWork" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="sChargeDeptCode" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sChargeDeptName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sExt" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sMobileTel" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sLocation" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="bLearned" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="sNameE" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sPassport" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sID" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="dBirthday" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="sTaiwanID" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="dKeyDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="sGuid" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="iUse" Type="System.Decimal" DbType="Decimal(16,2)" CanBeNull="true" />
+      <Column Name="sUnit" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sInfo" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="sMailBody" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.wfAppCard" Member="wfAppCard">
+    <Type Name="wfAppCard">
+      <Column Name="iAutoKey" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="sFormCode" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sProcessID" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="idProcess" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="sNobr" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sDept" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sDeptName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJob" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJobName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJobl" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJoblName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sEmpcd" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sEmpcdName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sRole" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="sDI" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sRote" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="dDateTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="dDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="sTime" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sReasonCode" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sReasonName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sReserve1" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="sReserve2" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="sReserve3" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="sReserve4" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="bSign" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="sState" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="bAuth" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="sCode1" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sName1" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sCode2" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sName2" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sCode3" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sName3" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sNote" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="dKeyDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="sGuid" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sInfo" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="sMailBody" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.wfAppForm" Member="wfAppForm">
+    <Type Name="wfAppForm">
+      <Column Name="iAutoKey" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="sFormCode" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sProcessID" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="idProcess" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="sNobr" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sDept" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sDeptName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJob" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJobName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJobl" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJoblName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sEmpcd" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sEmpcdName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sRole" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sDI" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sCodeF" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sNameF" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="iPage" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="sLevel" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="dDateIn" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="dDateD" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="sReserve1" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="sReserve2" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="sReserve3" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="sReserve4" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="bSign" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="sState" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="bAuth" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="sNote" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="dKeyDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="sGuid" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sInfo" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="sMailBody" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.wfAppImprove" Member="wfAppImprove">
+    <Type Name="wfAppImprove">
+      <Column Name="iAutoKey" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="sFormCode" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sProcessID" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="idProcess" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="sNobr" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sDept" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sDeptName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJob" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJobName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJobl" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJoblName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sEmpcd" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sEmpcdName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sRole" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sDI" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sTitle" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="sCatCode" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sCatName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="dDateA" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="dDateD" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="dDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="bName" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="sReserve1" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="sReserve2" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="sReserve3" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="sReserve4" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="bSign" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="sState" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="bAuth" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="sNote" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="dKeyDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="sGuid" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sInfo" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="sMailBody" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.wfAppOt1" Member="wfAppOt1">
+    <Type Name="wfAppOt1">
+      <Column Name="iAutoKey" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="sFormCode" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sProcessID" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="idProcess" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="sNobr" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sDept" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sDeptName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJob" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJobName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJobl" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJoblName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sEmpcd" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sEmpcdName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sRole" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="sDI" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sRote" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="dDateTimeB" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="dDateTimeE" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="dDateB" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="dDateE" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="sTimeB" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sTimeE" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sOtcatCode" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sOtcatName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sOtrcdCode" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sOtrcdName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sRoteCode" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sRoteName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sOtDeptCode" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sOtDeptName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="iTotalHour" Type="System.Decimal" DbType="Decimal(16,2) NOT NULL" CanBeNull="false" />
+      <Column Name="bExceptionHour" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="iExceptionHour" Type="System.Decimal" DbType="Decimal(16,2) NOT NULL" CanBeNull="false" />
+      <Column Name="sReserve1" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="sReserve2" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="sReserve3" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="sReserve4" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="sSalYYMM" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="bSign" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="sState" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="bAuth" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="sNote" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="dKeyDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="sGuid" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sInfo" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="sMailBody" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.wfAppReturn" Member="wfAppReturn">
+    <Type Name="wfAppReturn">
+      <Column Name="iAutoKey" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="sFormCode" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sProcessID" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="idProcess" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="sNobr" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sDept" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sDeptName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJob" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJobName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJobl" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJoblName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sEmpcd" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sEmpcdName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sRole" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sDI" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sRote" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sIntentionCode" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sIntentionName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="dDateTimeB" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="dDateTimeE" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="dDateB" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="dDateE" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="sTimeB" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sTimeE" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="iDay" Type="System.Decimal" DbType="Decimal(16,2) NOT NULL" CanBeNull="false" />
+      <Column Name="bExceptionHour" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="iExceptionHour" Type="System.Decimal" DbType="Decimal(16,2) NOT NULL" CanBeNull="false" />
+      <Column Name="sReserve1" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="sReserve2" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="sReserve3" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="sReserve4" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="bSign" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="sState" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="bAuth" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="sNote" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="dDateTimeB1" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="dDateTimeE1" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="dDateB1" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="dDateE1" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="sTimeB1" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sTimeE1" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="iDay1" Type="System.Decimal" DbType="Decimal(16,2)" CanBeNull="true" />
+      <Column Name="dDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="sCode1" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sName1" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sCode2" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sName2" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sCode3" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sName3" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sOrginal" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="sHeadquarters" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="dKeyDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="sGuid" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sInfo" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="sMailBody" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.wfAppShiftLong" Member="wfAppShiftLong">
+    <Type Name="wfAppShiftLong">
+      <Column Name="iAutoKey" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="sFormCode" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sProcessID" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="idProcess" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="sNobr" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sDept" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sDeptName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJob" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJobName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJobl" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJoblName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sEmpcd" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sEmpcdName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sRole" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="sDI" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sRote" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sRotetCode" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sRotetName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sHoliCode" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sHoliName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sOtRateCode" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sOtRateName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="dDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="sRotetCodeA" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sRotetNameA" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sHoliCodeA" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sHoliNameA" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sOtRateCodeA" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sOtRateNameA" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sReserve1" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="sReserve2" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="sReserve3" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="sReserve4" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="bSign" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="sState" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="bAuth" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="sNote" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="dKeyDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="sGuid" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sInfo" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="sMailBody" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.wfAppShiftShort" Member="wfAppShiftShort">
+    <Type Name="wfAppShiftShort">
+      <Column Name="iAutoKey" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="sFormCode" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sProcessID" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="idProcess" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="sNobr" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sNobrA" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sNameA" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sDeptA" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sDeptNameA" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJobA" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJobNameA" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJoblA" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJoblNameA" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sEmpcdA" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sEmpcdNameA" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sRoleA" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="sDIA" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sRoteA" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sRoteNameA" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="dDateA" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="sNobrB" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sNameB" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sDeptB" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sDeptNameB" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJobB" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJobNameB" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJoblB" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJoblNameB" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sEmpcdB" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sEmpcdNameB" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sRoleB" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="sDIB" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sRoteB" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sRoteNameB" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="dDateB" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="sReserve1" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="sReserve2" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="sReserve3" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="sReserve4" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="bSign" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="sState" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="bAuth" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="sNote" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="dKeyDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="sGuid" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sInfo" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="sMailBody" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.wfAppAssessSatisfi" Member="wfAppAssessSatisfi">
+    <Type Name="wfAppAssessSatisfi">
+      <Column Name="iAutoKey" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="wfAppAssess_sGuid" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sTypeCode" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sContent" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="sSatisfiCode" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sKeyMan" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="dKeyDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.wfAppAssessAppraisal" Member="wfAppAssessAppraisal">
+    <Type Name="wfAppAssessAppraisal">
+      <Column Name="iAutoKey" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="wfAppAssess_sGuid" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="AssessCat_sCode" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Key1" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="iValue" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="sValue" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="dKeyDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.wfAppAssess" Member="wfAppAssess">
+    <Type Name="wfAppAssess">
+      <Column Name="iAutoKey" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="sFormCode" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sProcessID" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="idProcess" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="sNobr" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sDept" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sDeptName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJob" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJobName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJobl" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJoblName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJobo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJoboName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sEmpcd" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sEmpcdName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sRole" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="sDI" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="dInDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="dExpiryDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="sResultAreaCode" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sResultAreaName" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="iExtendMonth" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="sGuideNobr" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sGuideName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sManageNobr" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sManageName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sLearn" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="sLearnContent" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="sLearnQuestion" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="sProposal" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="sManage1" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="sManage2" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="sJoblNew" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJoboNew" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sReserve1" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="sReserve2" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="sReserve3" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="sReserve4" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="bSign" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="sState" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="bAuth" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="sNote" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="dKeyDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="sGuid" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sInfo" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="sMailBody" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="sJsonInfo" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.wfAppAssessSalary" Member="wfAppAssessSalary">
+    <Type Name="wfAppAssessSalary">
+      <Column Name="iAutoKey" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="wfAppAssess_sGuid" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sSalaryCode" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sSalaryName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="iMoneyValue" Type="System.Decimal" DbType="Decimal(16,2) NOT NULL" CanBeNull="false" />
+      <Column Name="iEncodeMoneyValue" Type="System.Decimal" DbType="Decimal(16,2) NOT NULL" CanBeNull="false" />
+      <Column Name="dDateA" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="sKeyMan" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="dKeyDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.wfAppSubjoin" Member="wfAppSubjoin">
+    <Type Name="wfAppSubjoin">
+      <Column Name="iAutoKey" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="sFormCode" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sProcessID" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="idProcess" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="sNobr" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sDept" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sDeptName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJob" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJobName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJobl" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJoblName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJobo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJoboName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sEmpcd" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sEmpcdName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sRole" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="sDI" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sAppDeptsCode" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sAppDeptsName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sNeedJobCode" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sNeedJobName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="dAppDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="dNeedDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="iDeptsSetPeople" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="iDeptsNowPeople" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="iDeptsJoinPeople" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="sEmpClassCode" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sEmpClassName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sClassReason" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="sChangeEmp" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sProposeEmp" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sPetitionCode" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sPetitionName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sPetitionSerno" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sEmpTypeCode" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sEmpTypeName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="iEmpTypeMonth" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="sNeedDesc" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="iAgeMin" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="iAgeMax" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="sSexCode" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sSexName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sMilitaryCode" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sMilitaryName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sSchoolCode" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sSchoolName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sSchoolFamily" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sWorkExp" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="sLanguageCode" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sLanguageName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sLanguageEtc" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sDriveLicenseCode" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sDriveLicenseName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sArea" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sPersonality" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="sEtc" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="sTrain" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="sReserve1" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="sReserve2" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="sReserve3" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="sReserve4" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="bSign" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="sState" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="bAuth" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="sNote" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="dKeyDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="sGuid" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sInfo" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="sMailBody" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="sJsonInfo" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.wfAppAssessJob" Member="wfAppAssessJob">
+    <Type Name="wfAppAssessJob">
+      <Column Name="iAutoKey" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="wfAppAssess_sGuid" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sJobl" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJoblName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJobo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJoboName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJoblNew" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJoblNameNew" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJoboNew" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJoboNameNew" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sKeyMan" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="dKeyDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.wfAppAssessLog" Member="wfAppAssessLog">
+    <Type Name="wfAppAssessLog">
+      <Column Name="iAutoKey" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="wfAppAssess_sGuid" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sCateCode" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sJsonContent" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="sHtmlContent" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="sContent" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="sKeyMan" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="dKeyDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.wfAppSalary" Member="wfAppSalary">
+    <Type Name="wfAppSalary">
+      <Column Name="iAutoKey" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="sFormCode" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sProcessID" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="idProcess" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="sNobr" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sDept" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sDeptName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sDeptm" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sDeptmName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJob" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJobName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJobl" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJoblName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJobo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJoboName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sEmpcd" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sEmpcdName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sRole" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="sDI" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sTransItemCode" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sTransItemName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="dAppDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="dInDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="dDateA" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="sDeptNew" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sDeptNameNew" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sDeptmNew" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sDeptmNameNew" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJobNew" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJobNameNew" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJoblNew" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJoblNameNew" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJoboNew" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJoboNameNew" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sTransReasonCode" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sTransReasonName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="bErpAuth" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="bAgent" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="sAgentNobr1" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sAgentName1" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sAgentNobr2" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sAgentName2" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="bManage" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="sManageNobr1" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sManageName1" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sManageNobr2" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sManageName2" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="bWorkContent" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="sReserve1" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="sReserve2" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="sReserve3" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="sReserve4" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="bSign" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="sState" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="bAuth" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="sNote" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="dKeyDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="sGuid" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sInfo" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="sMailBody" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="sJsonInfo" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.wfAppTrCourseNameList" Member="wfAppTrCourseNameList">
+    <Type Name="wfAppTrCourseNameList">
+      <Column Name="iAutoKey" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="wfAppTrCourse_sGuid" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sNobr" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sDept" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sDeptName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJob" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJobName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJobl" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJoblName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sEmpcd" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sEmpcdName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sNote" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="dKeyDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.wfAppOt" Member="wfAppOt">
+    <Type Name="wfAppOt">
+      <Column Name="iAutoKey" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="sFormCode" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sProcessID" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="idProcess" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="sNobr" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sDept" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sDeptName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJob" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJobName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJobl" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJoblName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sEmpcd" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sEmpcdName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sRole" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="sDI" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sRote" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="dDateTimeB1" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="dDateTimeE1" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="dDateB1" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="dDateE1" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="sTimeB1" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sTimeE1" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="dDateTimeB" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="dDateTimeE" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="dDateB" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="dDateE" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="sTimeB" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sTimeE" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sOtcatCode" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sOtcatName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sOtrcdCode" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sOtrcdName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sRoteCode" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sRoteName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sOtDeptCode" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sOtDeptName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="iTotalHour1" Type="System.Decimal" DbType="Decimal(16,2) NOT NULL" CanBeNull="false" />
+      <Column Name="iTotalHour" Type="System.Decimal" DbType="Decimal(16,2) NOT NULL" CanBeNull="false" />
+      <Column Name="bExceptionHour" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="iExceptionHour" Type="System.Decimal" DbType="Decimal(16,2) NOT NULL" CanBeNull="false" />
+      <Column Name="sReserve1" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="sReserve2" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="sReserve3" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="sReserve4" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="sSalYYMM" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="bSign" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="sState" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="bAuth" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="sNote" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="dKeyDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="sGuid" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sInfo" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="sMailBody" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.wfAppAbsc" Member="wfAppAbsc">
+    <Type Name="wfAppAbsc">
+      <Column Name="iAutoKey" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="sFormCode" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sProcessID" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="idProcess" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="sNobr" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sDept" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sDeptName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJob" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJobName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJobl" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJoblName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sEmpcd" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sEmpcdName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sRole" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="sDI" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sRote" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="dDateTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="dDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="sTime" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sTimeB" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sTimeE" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sHcode" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sHname" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="iUse" Type="System.Decimal" DbType="Decimal(16,2) NOT NULL" CanBeNull="false" />
+      <Column Name="sUnit" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sYYMM" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sReserve1" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="sReserve2" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="sReserve3" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="sReserve4" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="bSign" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="sState" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="bAuth" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="sCode1" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sName1" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sCode2" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sName2" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sCode3" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sName3" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sNote" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="dKeyDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="sGuid" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sInfo" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="sMailBody" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.wfAppAbs" Member="wfAppAbs">
+    <Type Name="wfAppAbs">
+      <Column Name="iAutoKey" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="sFormCode" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sProcessID" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="idProcess" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="sNobr" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sDept" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sDeptName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJob" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJobName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJobl" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJoblName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sEmpcd" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sEmpcdName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sRole" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="sDI" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sRote" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="dDateTimeB" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="dDateTimeE" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="dDateB" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="dDateE" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="sTimeB" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sTimeE" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sHcode" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sHname" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="iDay" Type="System.Decimal" DbType="Decimal(16,2) NOT NULL" CanBeNull="false" />
+      <Column Name="iHour" Type="System.Decimal" DbType="Decimal(16,2) NOT NULL" CanBeNull="false" />
+      <Column Name="iTotalDay" Type="System.Decimal" DbType="Decimal(16,2) NOT NULL" CanBeNull="false" />
+      <Column Name="iTotalHour" Type="System.Decimal" DbType="Decimal(16,2) NOT NULL" CanBeNull="false" />
+      <Column Name="bExceptionHour" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="iExceptionHour" Type="System.Decimal" DbType="Decimal(16,2) NOT NULL" CanBeNull="false" />
+      <Column Name="bReturn" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="sTrafficCode" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sTrafficName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sTrafficNameEtc" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="bReside" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="sAddress" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="sReserve1" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="sReserve2" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="sReserve3" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="sReserve4" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="sSalYYMM" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="bSign" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="sState" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sAgentNobr" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sAgentName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sAgentNote" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="sAgentNobr2" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sAgentName2" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sAgentNote2" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="bAuth" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="sNote" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="sStation" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="iDriveNum" Type="System.Decimal" DbType="Decimal(16,2)" CanBeNull="true" />
+      <Column Name="sDriveNum" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sDriveNo" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sDrive" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sDriveEtc" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sItem" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="bOt" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="dKeyDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="sGuid" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="iUse" Type="System.Decimal" DbType="Decimal(16,2)" CanBeNull="true" />
+      <Column Name="iBalance" Type="System.Decimal" DbType="Decimal(16,2)" CanBeNull="true" />
+      <Column Name="sUnit" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sInfo" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="sMailBody" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.wfAppShiftDay" Member="wfAppShiftDay">
+    <Type Name="wfAppShiftDay">
+      <Column Name="iAutoKey" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="sFormCode" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sProcessID" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="idProcess" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="sNobr" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sDept" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sDeptName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJob" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJobName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJobl" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJoblName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sEmpcd" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sEmpcdName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sRole" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="sDI" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sRote" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="dDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="iMinutes" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="sTimeOld" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sTimeNew" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sReserve1" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="sReserve2" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="sReserve3" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="sReserve4" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="bSign" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="sState" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="bAuth" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="sNote" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="dKeyDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="sGuid" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sInfo" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="sMailBody" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.wfAppTrCourse" Member="wfAppTrCourse">
+    <Type Name="wfAppTrCourse">
+      <Column Name="iAutoKey" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="sFormCode" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sProcessID" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="idProcess" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="sNobr" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sDept" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sDeptName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJob" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJobName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJobl" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJoblName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sEmpcd" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sEmpcdName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sRole" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="sDI" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="dDateA" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="sCourseSerno" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sDeptAppName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sTrTypeCode" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sTrTypeName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sTrCateCode" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sTrCateName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sTrCatCode" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sTrCatName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sCourseCode" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sCourseName" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="dDateTimeB" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="dDateTimeE" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="sTrTarget" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sTrAddress" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="sTrPurpose" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="sTrContent" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="sMasterUnit" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="sTrTeacher" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="iCharge" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="sEstimateCode" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="sEstimateName" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="sTrEtcCode" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="sTrEtcName" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="sTrEtc" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="bSign" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="sState" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="bAuth" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="sNote" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="dKeyDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="sGuid" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sInfo" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="sMailBody" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="sJsonInfo" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="trOtherCourse" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="trTrainingPlanDetail_iAutoKey" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="isPlan" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="isOtherCourse" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="BADays" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="BATemplet" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="sSerial" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.wfAppTrCourseDate" Member="wfAppTrCourseDate">
+    <Type Name="wfAppTrCourseDate">
+      <Column Name="iAutoKey" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="wfAppTrCourse_sGuid" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="dDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="dTimeB" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="dTimeE" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="dKeyDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ApplyGroup" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="iAttendMins" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.wfAppItr" Member="wfAppItr">
+    <Type Name="wfAppItr">
+      <Column Name="iAutoKey" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="sFormCode" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sProcessID" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="idProcess" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="iClassAutoKey" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="sNobr" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sDept" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sDeptName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJob" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJobName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJobl" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJoblName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sEmpcd" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sEmpcdName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sRole" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sDI" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sYear" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sTrCourseCode" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sTrCourseName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="strJoinType_sCode" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="bPresence" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="bPass" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="sReserve1" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sReserve2" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sReserve3" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sReserve4" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="bSign" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="sState" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sNote" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="dKeyDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="sKeyMan" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sGuid" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sInfo" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="sMailBody" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.wfAppCr" Member="wfAppCr">
+    <Type Name="wfAppCr">
+      <Column Name="iAutoKey" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="sFormCode" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sProcessID" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="idProcess" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="iClassAutoKey" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="sNobr" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sDept" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sDeptName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJob" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJobName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJobl" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sJoblName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sEmpcd" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sEmpcdName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sRole" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sDI" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sYear" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sTrCourseCode" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sTrCourseName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sPassState" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sReserve1" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sReserve2" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sReserve3" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sReserve4" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="bSign" Type="System.Boolean" DbType="Bit" CanBeNull="false" />
+      <Column Name="sState" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sNote" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="dKeyDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="sKeyMan" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sGuid" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sInfo" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="sMailBody" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+    </Type>
+  </Table>
+</Database>
