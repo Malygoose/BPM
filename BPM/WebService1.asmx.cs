@@ -26,6 +26,12 @@ namespace BPM
         }
 
         [WebMethod]
+        public string Hello(string Name)
+        {
+            return "Hello " + Name + " !";
+        }
+
+        [WebMethod]
         public double GetBMI(double Weight, double Height)
         { 
             return Weight/Math.Pow( Height/100,2);
