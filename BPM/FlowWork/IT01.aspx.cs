@@ -6,6 +6,8 @@ using System.Data;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
+using System.Net.Mail;
+using System.Net;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -722,11 +724,11 @@ namespace BPM.FlowWork
             }
 
             stuFormInfo stuFormInfo = (stuFormInfo)ViewState["stuFormInfo"];
-
+         
             //  取得表單序號
             ezEngineServices.Service oService = new ezEngineServices.Service(dcFlow.Connection);
             stuFormInfo.intProcessID = oService.GetProcessID();
-
+          
             SqlbulkCopyFileUpload(stuFormInfo.intProcessID);
             SqlBulkCopyApplyContent(stuFormInfo.intProcessID);
             SqlBulkCopyNemEmployee(stuFormInfo.intProcessID);
@@ -771,7 +773,7 @@ namespace BPM.FlowWork
             //dcForm.SubmitChanges();
             dcFlow.SubmitChanges();
 
-
+            
             try
             {
                 //  判斷發起人與申請人是否相同，不同的話則為代發起
@@ -784,6 +786,9 @@ namespace BPM.FlowWork
                 {
                     oService.FlowStart(stuFormInfo.intProcessID, stuFormInfo.strFormID, stuFormInfo.strApplyEmpRoleID, stuFormInfo.strApplyEmpID, stuFormInfo.strApplyEmpRoleID, stuFormInfo.strApplyEmpID);
                 }
+
+                //寄信通知簽核者
+                SendMail(stuFormInfo);
 
                 Response.Redirect("Home.aspx");
 
@@ -2392,6 +2397,60 @@ namespace BPM.FlowWork
             conn.Close();
         }
 
-        
+        private void SendMail(stuFormInfo stuFormInfo)
+        {
+            string strSingerEmail;
+
+            string connectionString = ConfigurationManager.ConnectionStrings["ShareElecForm"].ConnectionString;
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                string query = "spFormView";
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@strProcessID", stuFormInfo.intProcessID);
+                    cmd.Parameters.AddWithValue("@strEmpID", stuFormInfo.strLoginEmpID);
+
+                    SqlDataAdapter da = new SqlDataAdapter();
+                    DataSet ds = new DataSet();
+                    da.SelectCommand = cmd;
+                    da.Fill(ds);
+
+                    strSingerEmail = ds.Tables[2].Rows[0]["SignerEmail"].ToString();
+
+                }
+            }
+
+            if (string.IsNullOrEmpty(strSingerEmail))
+            {
+                strSingerEmail = "chiawei.chang@hiss.com.tw";
+            }
+
+            try
+            {
+                //創建一個電子郵件
+                MailMessage mail = new MailMessage();
+                mail.From = new MailAddress("chiawei.chang@hiss.com.tw"); //發
+                mail.To.Add(strSingerEmail);//收
+                mail.Subject = "【通知】("+ stuFormInfo.strApplyEmpID + ")"+stuFormInfo.strApplyEmpName+"之"+stuFormInfo.strFormName;//標題
+                //內文
+                mail.Body = "您有一筆"+ stuFormInfo.strFormName+"尚未簽核，請到\r\nPortal登入網址：http://192.168.1.26:8084/login\r\n做簽核，謝謝!\r\n\r\n\r\n" +                           
+                            "此信件為系統自動寄送，請勿直接回信，若有疑問請洽MIS，謝謝您！";
+                
+                //創建一個SMTP客戶端
+                SmtpClient smtpClient = new SmtpClient("msa.hinet.net");//mail.hiss.com.tw、msa.hinet.net     SMTP服務器地址
+                smtpClient.Port = 587;//110、25                                                               SMTP端口號
+                smtpClient.Credentials = new NetworkCredential("chiawei.chang@hiss.com.tw", "T124382686");//webMail 地址密碼
+                smtpClient.EnableSsl = true; //啟用SSL加密
+
+                smtpClient.Send(mail);//發送
+            }
+            catch (Exception ex)
+            {
+                Response.Write("<script>alert('" + ex.Message + "')</script>");
+            }
+        }
+
     }
 }
