@@ -42,9 +42,6 @@ namespace BPM
                 mail.To.Add("chiawei.chang@hiss.com.tw");//收
                 mail.Subject = "(測試)【通知】(20230305)張家瑋 之共通表單";
                 mail.Body = "(測試)Portal登入網址：http://192.168.1.26:8084/login\r\n" +
-                            "工號:20230305\r\n" +
-                            "姓名:張家瑋\r\n" +
-                            "部門:系統設計課\r\n\r\n" +
                             "此信件為系統自動寄送，請勿直接回信，若有疑問請洽MIS，謝謝您！";
 
                 //創建一個SMTP客戶端

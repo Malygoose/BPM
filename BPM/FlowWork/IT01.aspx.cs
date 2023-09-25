@@ -953,6 +953,9 @@ namespace BPM.FlowWork
                             FinishToEmployeeItems();
                         }
 
+                        //寄信通知簽核者
+                        SendMail(stuFormInfo);
+
                         Response.Redirect("Home.aspx");
                     }
                     else
