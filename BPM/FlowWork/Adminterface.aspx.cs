@@ -98,6 +98,7 @@ namespace BPM.FlowWork
         //搜尋該員工工號的現有項目
         protected void btnSearch_Click(object sender, EventArgs e)
         {
+            grvAdminterface.SelectedIndex = -1;
             ViewSearchEmployeeHaveItems();
         }
         //選取後txb呈現該資料

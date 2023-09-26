@@ -38,16 +38,16 @@ namespace BPM
             {
                 //創建一個電子郵件
                 MailMessage mail = new MailMessage();
-                mail.From = new MailAddress("chiawei.chang@hiss.com.tw"); //發
-                mail.To.Add("chiawei.chang@hiss.com.tw");//收
-                mail.Subject = "(測試)【通知】(20230305)張家瑋 之共通表單";
+                mail.From = new MailAddress("hiss.it@hiss.com.tw"); //發
+                mail.To.Add("hiss.it@hiss.com.tw");//收
+                mail.Subject = "(測試)";
                 mail.Body = "(測試)Portal登入網址：http://192.168.1.26:8084/login\r\n" +
                             "此信件為系統自動寄送，請勿直接回信，若有疑問請洽MIS，謝謝您！";
 
                 //創建一個SMTP客戶端
                 SmtpClient smtpClient = new SmtpClient("msa.hinet.net");//mail.hiss.com.tw、msa.hinet.net     SMTP服務器地址
                 smtpClient.Port = 587;//110、25                                                               SMTP端口號
-                smtpClient.Credentials = new NetworkCredential("chiawei.chang@hiss.com.tw", "T124382686");//webMail 地址密碼
+                smtpClient.Credentials = new NetworkCredential("hiss.it@hiss.com.tw", "Aa123456");//webMail 地址密碼
                 smtpClient.EnableSsl = true; //啟用SSL加密
 
                 smtpClient.Send(mail);//發送

@@ -11,6 +11,7 @@ using System.Net;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Antlr.Runtime.Tree;
 
 namespace BPM.FlowWork
 {
@@ -2401,40 +2402,41 @@ namespace BPM.FlowWork
         }
 
         private void SendMail(stuFormInfo stuFormInfo)
-        {
-            string strSingerEmail;
-
-            string connectionString = ConfigurationManager.ConnectionStrings["ShareElecForm"].ConnectionString;
-            using (SqlConnection conn = new SqlConnection(connectionString))
-            {
-                conn.Open();
-                string query = "spFormView";
-                using (SqlCommand cmd = new SqlCommand(query, conn))
-                {
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@strProcessID", stuFormInfo.intProcessID);
-                    cmd.Parameters.AddWithValue("@strEmpID", stuFormInfo.strLoginEmpID);
-
-                    SqlDataAdapter da = new SqlDataAdapter();
-                    DataSet ds = new DataSet();
-                    da.SelectCommand = cmd;
-                    da.Fill(ds);
-
-                    strSingerEmail = ds.Tables[2].Rows[0]["SignerEmail"].ToString();
-
-                }
-            }
-
-            if (string.IsNullOrEmpty(strSingerEmail))
-            {
-                strSingerEmail = "chiawei.chang@hiss.com.tw";
-            }
-
+        {           
             try
             {
+                string strSingerEmail;//簽核者信箱
+
+                string connectionString = ConfigurationManager.ConnectionStrings["ShareElecForm"].ConnectionString;
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    string query = "spFormView";
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@strProcessID", stuFormInfo.intProcessID);
+                        cmd.Parameters.AddWithValue("@strEmpID", stuFormInfo.strLoginEmpID);
+
+                        SqlDataAdapter da = new SqlDataAdapter();
+                        DataSet ds = new DataSet();
+                        da.SelectCommand = cmd;
+                        da.Fill(ds);
+                        
+                        if (string.IsNullOrEmpty(ds.Tables[2].Rows[0]["SignerEmail"].ToString()))//如果為空值的話代表流程即將結束，不會有下一個簽核者信箱
+                        {
+                            strSingerEmail = "hiss.it@hiss.com.tw";//因為strSingerEmail不能為空，所以預設hiss.it@hiss.com.tw
+                        }
+                        else 
+                        {
+                            strSingerEmail = ds.Tables[2].Rows[0]["SignerEmail"].ToString(); //下一個簽核者信箱
+                        }
+                    }
+                }
+
                 //創建一個電子郵件
                 MailMessage mail = new MailMessage();
-                mail.From = new MailAddress("chiawei.chang@hiss.com.tw"); //發
+                mail.From = new MailAddress("hiss.it@hiss.com.tw"); //發
                 mail.To.Add(strSingerEmail);//收
                 mail.Subject = "【通知】("+ stuFormInfo.strApplyEmpID + ")"+stuFormInfo.strApplyEmpName+"之"+stuFormInfo.strFormName;//標題
                 //內文
@@ -2444,7 +2446,7 @@ namespace BPM.FlowWork
                 //創建一個SMTP客戶端
                 SmtpClient smtpClient = new SmtpClient("msa.hinet.net");//mail.hiss.com.tw、msa.hinet.net     SMTP服務器地址
                 smtpClient.Port = 587;//110、25                                                               SMTP端口號
-                smtpClient.Credentials = new NetworkCredential("chiawei.chang@hiss.com.tw", "T124382686");//webMail 地址密碼
+                smtpClient.Credentials = new NetworkCredential("hiss.it@hiss.com.tw", "Aa123456");//webMail 地址密碼
                 smtpClient.EnableSsl = true; //啟用SSL加密
 
                 smtpClient.Send(mail);//發送
