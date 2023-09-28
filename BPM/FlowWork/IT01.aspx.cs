@@ -2401,6 +2401,7 @@ namespace BPM.FlowWork
             conn.Close();
         }
 
+        //寄email
         private void SendMail(stuFormInfo stuFormInfo)
         {           
             try
