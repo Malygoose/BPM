@@ -2441,9 +2441,11 @@ namespace BPM.FlowWork
                 mail.To.Add(strSingerEmail);//收
                 mail.Subject = "【通知】("+ stuFormInfo.strApplyEmpID + ")"+stuFormInfo.strApplyEmpName+"之"+stuFormInfo.strFormName;//標題
                 //內文
-                mail.Body = "您有一筆"+ stuFormInfo.strFormName+"尚未簽核，請到\r\nPortal登入網址：http://192.168.1.26:8084/login\r\n做簽核，謝謝!\r\n\r\n\r\n" +                           
-                            "此信件為系統自動寄送，請勿直接回信，若有疑問請洽MIS，謝謝您！";
-                
+                mail.IsBodyHtml = true;
+                mail.Body = "您有一筆資服單尚未簽核，請到<br>Portal登入網址：<a href='http://192.168.1.26:8084/login'>http://192.168.1.26:8084/login</a>" +
+                            "<br>做簽核，謝謝!<br><br><br>" +
+                            "<font color='red'>此信件為系統自動寄送，請勿直接回信，若有疑問請洽MIS，謝謝您！</font>";
+
                 //創建一個SMTP客戶端
                 SmtpClient smtpClient = new SmtpClient("msa.hinet.net");//mail.hiss.com.tw、msa.hinet.net     SMTP服務器地址
                 smtpClient.Port = 587;//110、25                                                               SMTP端口號

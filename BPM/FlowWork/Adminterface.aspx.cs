@@ -110,7 +110,7 @@ namespace BPM.FlowWork
 
             int intPageIndex = grvAdminterface.PageIndex;   //擷取當前頁索引
             int intPageSize = grvAdminterface.PageSize;      //擷取每頁顯示記錄數
-            int intCurrentSelectedIndex = intSelectedIndex + (intPageIndex ) * intPageSize; //取得當前頁面的索引
+            int intCurrentSelectedIndex = intSelectedIndex + intPageIndex  * intPageSize; //取得當前頁面的索引
 
 
             DataRow drAdminterface = dtAdminterface.Rows[intCurrentSelectedIndex];
@@ -124,6 +124,7 @@ namespace BPM.FlowWork
             txbEditItemName.Text = drAdminterface["ItemName"].ToString();
 
             lblGuidKey.Text = drAdminterface["GuidKey"].ToString();
+            //lblGuidKey.Text = grvAdminterface.SelectedValue.ToString();
         }
         //更改資料
         protected void btnEdit_Click(object sender, EventArgs e)
@@ -139,10 +140,10 @@ namespace BPM.FlowWork
             string strItemName = txbEditItemName.Text;
             string strGuidKey = lblGuidKey.Text;
 
-            int intSelectedIndex = grvAdminterface.SelectedIndex;//選擇索引
-            int intPageIndex = grvAdminterface.PageIndex;   //擷取當前頁索引
-            int intPageSize = grvAdminterface.PageSize;      //擷取每頁顯示記錄數
-            int intCurrentSelectedIndex = intSelectedIndex + (intPageIndex) * intPageSize; //取得當前頁面選擇的索引
+            int intSelectedIndex = grvAdminterface.SelectedIndex;   //選擇索引   5   第六筆
+            int intPageIndex = grvAdminterface.PageIndex;           //擷取當前頁索引   1  第二頁
+            int intPageSize = grvAdminterface.PageSize;             //擷取每頁顯示記錄數  20
+            int intCurrentSelectedIndex = intSelectedIndex + intPageIndex * intPageSize; //取得當前頁面選擇的索引  5+20*1=25 第二頁第六筆
 
             dtAdminterface.Rows[intCurrentSelectedIndex]["Nobr"] = strNobr;
             dtAdminterface.Rows[intCurrentSelectedIndex]["UserName"] = strUserName;
@@ -189,7 +190,7 @@ namespace BPM.FlowWork
             int intSelectedIndex = grvAdminterface.SelectedIndex;
             int intPageIndex = grvAdminterface.PageIndex;   //擷取當前頁索引
             int intPageSize = grvAdminterface.PageSize;      //擷取每頁顯示記錄數
-            int intCurrentSelectedIndex = intSelectedIndex + (intPageIndex) * intPageSize; //取得當前頁面選擇的索引
+            int intCurrentSelectedIndex = intSelectedIndex + intPageIndex * intPageSize; //取得當前頁面選擇的索引
 
             DataRow drAdminterface = dtAdminterface.Rows[intCurrentSelectedIndex];
             

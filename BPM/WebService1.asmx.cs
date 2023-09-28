@@ -39,10 +39,16 @@ namespace BPM
                 //創建一個電子郵件
                 MailMessage mail = new MailMessage();
                 mail.From = new MailAddress("hiss.it@hiss.com.tw"); //發
-                mail.To.Add("hiss.it@hiss.com.tw");//收
+                mail.To.Add("chiawei.chang@hiss.com.tw");//收
                 mail.Subject = "(測試)";
-                mail.Body = "(測試)Portal登入網址：http://192.168.1.26:8084/login\r\n" +
-                            "此信件為系統自動寄送，請勿直接回信，若有疑問請洽MIS，謝謝您！";
+                //mail.Body = "(測試)Portal登入網址：<a href='http://192.168.1.26:8084/login'>http://192.168.1.26:8084/login</a><br>" +
+                //            "<span style='color:red;'>此信件為系統自動寄送，請勿直接回信，若有疑問請洽MIS，謝謝您！</span>";
+                //mail.IsBodyHtml = true;
+
+                mail.IsBodyHtml = true;
+                mail.Body = "您有一筆資服單尚未簽核，請到<br>Portal登入網址：<a href='http://192.168.1.26:8084/login'>http://192.168.1.26:8084/login</a>" +
+                            "<br>做簽核，謝謝!<br><br><br>" +
+                            "<font color='red'>此信件為系統自動寄送，請勿直接回信，若有疑問請洽MIS，謝謝您！</font>";
 
                 //創建一個SMTP客戶端
                 SmtpClient smtpClient = new SmtpClient("msa.hinet.net");//mail.hiss.com.tw、msa.hinet.net     SMTP服務器地址

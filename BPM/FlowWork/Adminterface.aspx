@@ -70,7 +70,7 @@
                 <asp:Panel ID="pnlAdminterface" runat="server">
 
                     <asp:GridView ID="grvAdminterface" runat="server" AutoGenerateColumns="False" CellPadding="4" ForeColor="#333333" GridLines="None" Width="100%"
-                        OnSelectedIndexChanged="grvAdminterface_SelectedIndexChanged" OnRowDeleting="grvAdminterface_RowDeleting" AllowPaging="true" PageSize="20" OnPageIndexChanging="grvAdminterface_PageIndexChanging">
+                        OnSelectedIndexChanged="grvAdminterface_SelectedIndexChanged" OnRowDeleting="grvAdminterface_RowDeleting" AllowPaging="true" PageSize="20" OnPageIndexChanging="grvAdminterface_PageIndexChanging" DataKeyNames="GuidKey">
                         <Columns>
                             <asp:BoundField DataField="Nobr" HeaderText="工號" />
                             <asp:BoundField DataField="UserName" HeaderText="姓名" />
