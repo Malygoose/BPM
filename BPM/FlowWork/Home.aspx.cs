@@ -40,7 +40,7 @@ namespace BPM.FlowWork
                 //HttpCookie cookie = Request.Cookies["EmployeeName"];
                 //lblLoginName.Text = cookie.Value;
 
-                if (LoginEmpID == "20181104")
+                if (LoginEmpID == "20181104" || LoginEmpID=="20210305")
                 {                 
                     HLAdminterface.Visible = true;
                 }
