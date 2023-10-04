@@ -33,15 +33,6 @@ namespace BPM.FlowWork
         protected global::System.Web.UI.ScriptManager ScriptManager;
 
         /// <summary>
-        /// btnRefresh 控制項。
-        /// </summary>
-        /// <remarks>
-        /// 自動產生的欄位。
-        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnRefresh;
-
-        /// <summary>
         /// btnHome 控制項。
         /// </summary>
         /// <remarks>
@@ -141,6 +132,15 @@ namespace BPM.FlowWork
         protected global::System.Web.UI.WebControls.Label lblAdd;
 
         /// <summary>
+        /// lblErrorMessage 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblErrorMessage;
+
+        /// <summary>
         /// txbEditNobr 控制項。
         /// </summary>
         /// <remarks>
@@ -177,13 +177,13 @@ namespace BPM.FlowWork
         protected global::System.Web.UI.WebControls.TextBox txbEditItemType;
 
         /// <summary>
-        /// txbEditAssetsCode 控制項。
+        /// txbEditItemName 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txbEditAssetsCode;
+        protected global::System.Web.UI.WebControls.TextBox txbEditItemName;
 
         /// <summary>
         /// txbEditAssetsName 控制項。
@@ -195,13 +195,13 @@ namespace BPM.FlowWork
         protected global::System.Web.UI.WebControls.TextBox txbEditAssetsName;
 
         /// <summary>
-        /// txbEditItemName 控制項。
+        /// txbEditAssetsCode 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txbEditItemName;
+        protected global::System.Web.UI.WebControls.TextBox txbEditAssetsCode;
 
         /// <summary>
         /// btnAdd 控制項。
@@ -231,6 +231,15 @@ namespace BPM.FlowWork
         protected global::System.Web.UI.WebControls.Button btnClear;
 
         /// <summary>
+        /// btnDelete 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnDelete;
+
+        /// <summary>
         /// lblGuidKey 控制項。
         /// </summary>
         /// <remarks>
@@ -247,6 +256,15 @@ namespace BPM.FlowWork
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel pnlAdminterface;
+
+        /// <summary>
+        /// btnShowAdminterface 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnShowAdminterface;
 
         /// <summary>
         /// grvAdminterface 控制項。
