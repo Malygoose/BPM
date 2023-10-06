@@ -49,26 +49,37 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>工號:<asp:TextBox ID="txbEditNobr" runat="server"></asp:TextBox></td>
-                            <td>姓名:<asp:TextBox ID="txbEditUserName" runat="server"></asp:TextBox></td>
-                            <td>部門:<asp:TextBox ID="txbEditDeptName" runat="server"></asp:TextBox></td>
-                            <td>種類:<asp:TextBox ID="txbEditItemType" runat="server"></asp:TextBox></td>
-                        </tr>
-                        <tr>
-                            <td>項目:<asp:TextBox ID="txbEditItemName" runat="server"></asp:TextBox></td>
-                            <td>資產名稱:<asp:TextBox ID="txbEditAssetsName" runat="server"></asp:TextBox></td>
-                            <td>資產編號:<asp:TextBox ID="txbEditAssetsCode" runat="server"></asp:TextBox></td>
                             <td>
-                                <asp:Button ID="btnAdd" runat="server" Text="新增" OnClick="btnAdd_Click" OnClientClick="return confirm('確定要新增嗎？');" />
-                                <asp:Button ID="btnEdit" runat="server" Text="更改" OnClick="btnEdit_Click" OnClientClick="return confirm('確定要更改嗎？');" Visible="false" />
-                                <asp:Button ID="btnClear" runat="server" Text="清空" OnClick="btnClear_Click" />
-                                <asp:Button ID="btnDelete" runat="server" Text="刪除" OnClick="btnDelete_Click" Visible="false" OnClientClick="return confirm('確定要刪除嗎？');" />
+                                工號、姓名:
+                                <asp:TextBox ID="txbEmpNumName" runat="server" AutoPostBack="true"></asp:TextBox>
+                                <ajaxToolkit:AutoCompleteExtender ID="AutoCompleteExtender1" runat="server"
+                                    TargetControlID="txbEmpNumName"
+                                    ServiceMethod="GetMatchingData"
+                                    MinimumPrefixLength="1"
+                                    CompletionInterval="100"
+                                    EnableCaching="false"
+                                    ServicePath="~/WebService1.asmx">
+                                </ajaxToolkit:AutoCompleteExtender>
                             </td>
-                        </tr>
-                        <tr>
+                            <%--<td>工號:<asp:TextBox ID="txbEditNobr" runat="server"></asp:TextBox></td>
+                            <td>姓名:<asp:TextBox ID="txbEditUserName" runat="server"></asp:TextBox></td>--%>
+                            <td>部門:<asp:TextBox ID="txbEditDeptName" runat="server"></asp:TextBox></td>
+                            <%--<td>種類:<asp:TextBox ID="txbEditItemType" runat="server"></asp:TextBox></td>--%>
                             <td>種類:<asp:DropDownList ID="ddlItemType" runat="server" AutoPostBack="True" DataTextField="TypeName" DataValueField="TypeID" Font-Size="12" OnSelectedIndexChanged="ddlItemType_SelectedIndexChanged"></asp:DropDownList>
                             </td>
                             <td>項目:<asp:DropDownList ID="ddlItemList" runat="server" AutoPostBack="True" DataTextField="ItemName" DataValueField="ItemID" Font-Size="12"></asp:DropDownList>
+                            </td>
+                        </tr>
+                        <tr>
+                            <%--<td>項目:<asp:TextBox ID="txbEditItemName" runat="server"></asp:TextBox></td>--%>
+                            <td>資產名稱:<asp:TextBox ID="txbEditAssetsName" runat="server"></asp:TextBox></td>
+                            <td>資產編號:<asp:TextBox ID="txbEditAssetsCode" runat="server"></asp:TextBox></td>
+                            <td>
+                                <asp:Button ID="btnAdd" runat="server" Text="新增" OnClick="btnAdd_Click"/>
+                                <asp:Button ID="btnEdit" runat="server" Text="更改" OnClick="btnEdit_Click" OnClientClick="return confirm('確定要更改嗎？');" Visible="false" />
+                                <asp:Button ID="btnDelete" runat="server" Text="刪除" OnClick="btnDelete_Click" Visible="false" OnClientClick="return confirm('確定要刪除嗎？');" />
+                                <asp:Button ID="btnClear" runat="server" Text="清空" OnClick="btnClear_Click" />
+                                
                             </td>
                         </tr>
                     </table>

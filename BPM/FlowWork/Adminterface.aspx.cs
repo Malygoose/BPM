@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Drawing;
 using System.Linq;
 using System.Web;
+using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using static BPMLib.Class1;
@@ -25,6 +27,7 @@ namespace BPM.FlowWork
                 ItemTypeFormLoad();
             }
         }
+
 
         //按鈕顯示所有人現有項目表
         protected void btnShowAdminterface_Click(object sender, EventArgs e)
@@ -141,11 +144,12 @@ namespace BPM.FlowWork
 
             //利用datakeynames得到資料
             lblGuidKey.Text = grvAdminterface.SelectedDataKey["GuidKey"].ToString();
-            txbEditNobr.Text = grvAdminterface.SelectedDataKey["Nobr"].ToString();
-            txbEditUserName.Text = grvAdminterface.SelectedDataKey["UserName"].ToString();
+            //txbEditNobr.Text = grvAdminterface.SelectedDataKey["Nobr"].ToString();
+            //txbEditUserName.Text = grvAdminterface.SelectedDataKey["UserName"].ToString();
+            txbEmpNumName.Text = grvAdminterface.SelectedDataKey["Nobr"].ToString()+", "+ grvAdminterface.SelectedDataKey["UserName"].ToString();
             txbEditDeptName.Text = grvAdminterface.SelectedDataKey["DeptName"].ToString();
-            txbEditItemType.Text = grvAdminterface.SelectedDataKey["ItemType"].ToString();
-            txbEditItemName.Text = grvAdminterface.SelectedDataKey["ItemName"].ToString();
+            //txbEditItemType.Text = grvAdminterface.SelectedDataKey["ItemType"].ToString();
+            //txbEditItemName.Text = grvAdminterface.SelectedDataKey["ItemName"].ToString();
             txbEditAssetsName.Text = grvAdminterface.SelectedDataKey["AssetsName"].ToString();
             txbEditAssetsCode.Text = grvAdminterface.SelectedDataKey["AssetsCode"].ToString();
 
@@ -172,13 +176,19 @@ namespace BPM.FlowWork
         //更改資料
         protected void btnEdit_Click(object sender, EventArgs e)
         {           
-            string strNobr = txbEditNobr.Text;
-            string strUserName = txbEditUserName.Text;
+            string[] strEmpNumNameArray = txbEmpNumName.Text.Split(',');
+
+            string strNobr = strEmpNumNameArray[0];
+            string strUserName = strEmpNumNameArray[1];
+            //string strNobr = txbEditNobr.Text;
+            //string strUserName = txbEditUserName.Text;
             string strDeptName = txbEditDeptName.Text;
-            string strItemType = txbEditItemType.Text;
+            //string strItemType = txbEditItemType.Text;
+            //string strItemName = txbEditItemName.Text;
+            string strItemType = ddlItemType.SelectedItem.Text;
+            string strItemName = ddlItemList.SelectedItem.Text; 
             string strAssetsCode = txbEditAssetsCode.Text;
-            string strAssetsName = txbEditAssetsName.Text;
-            string strItemName = txbEditItemName.Text;
+            string strAssetsName = txbEditAssetsName.Text;          
             string strGuidKey = lblGuidKey.Text;
 
             DataTable dtAdminterface = (DataTable)ViewState["dtAdminterface"];
@@ -282,6 +292,7 @@ namespace BPM.FlowWork
             grvAdminterface.SelectedIndex = -1;
             btnEdit.Visible = false;
             btnDelete.Visible = false;
+            ClearTxbContent() ;
         }
 
         //protected void grvAdminterface_RowDeleting(object sender, GridViewDeleteEventArgs e)
@@ -340,14 +351,24 @@ namespace BPM.FlowWork
 
         protected void btnAdd_Click(object sender, EventArgs e)
         {
+            string strEmpNumName = txbEmpNumName.Text;
+            string[] strEmpNumNameArray = strEmpNumName.Split(',');
+
             //得到資料
-            string strAddNobr = txbEditNobr.Text;
-            string strAddUserName = txbEditUserName.Text;
+            string strAddNobr = strEmpNumNameArray[0];
+            string strAddUserName = strEmpNumNameArray[1];       
+            //string strAddNobr = txbEditNobr.Text;
+            //string strAddUserName = txbEditUserName.Text;
             string strAddDeptName = txbEditDeptName.Text;
-            string strAddItemType = txbEditItemType.Text;
+            //string strAddItemType = txbEditItemType.Text;
+            //string strAddItemName = txbEditItemName.Text;
+            string strAddItemType = ddlItemType.SelectedItem.Text;
+            string strAddItemName = ddlItemList.SelectedItem.Text;  
             string strAddAssetsCode = txbEditAssetsCode.Text;
             string strAddAssetsName = txbEditAssetsName.Text;
-            string strAddItemName = txbEditItemName.Text;
+            
+
+            
 
             //判斷工號或姓名不能為空值
             if (string.IsNullOrEmpty(strAddNobr) || string.IsNullOrEmpty(strAddUserName))
@@ -419,13 +440,15 @@ namespace BPM.FlowWork
 
         protected void ClearTxbContent()
         {
-            txbEditNobr.Text = "";
-            txbEditUserName.Text = "";
+            //txbEditNobr.Text = "";
+            //txbEditUserName.Text = "";
+            txbEmpNumName.Text = "";
             txbEditDeptName.Text = "";
-            txbEditItemType.Text = "";
+            //txbEditItemType.Text = "";
+            //txbEditItemName.Text = "";
             txbEditAssetsCode.Text = "";
             txbEditAssetsName.Text = "";
-            txbEditItemName.Text = "";
+            
         }
 
         protected void ddlItemType_SelectedIndexChanged(object sender, EventArgs e)

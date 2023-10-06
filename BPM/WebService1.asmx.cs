@@ -5,6 +5,10 @@ using System.Net.Mail;
 using System.Net;
 using System.Web;
 using System.Web.Services;
+using System.Data.SqlClient;
+using static BPMLib.Class1;
+using static BPMLib.Class1.FormInfo;
+using System.Data;
 
 namespace BPM
 {
@@ -15,7 +19,7 @@ namespace BPM
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
     [System.ComponentModel.ToolboxItem(false)]
     // 若要允許使用 ASP.NET AJAX 從指令碼呼叫此 Web 服務，請取消註解下列一行。
-    // [System.Web.Script.Services.ScriptService]
+    [System.Web.Script.Services.ScriptService]
     public class WebService1 : System.Web.Services.WebService
     {
 
@@ -29,6 +33,35 @@ namespace BPM
         public double GetBMI(double Weight, double Height)
         { 
             return Weight/Math.Pow( Height/100,2);
+        }
+
+        [WebMethod]
+        public List<string> GetMatchingData(string prefixText)
+        {
+            List<string> matchingData = new List<string>();
+
+            dbFunction dbFunction = new dbFunction();
+            //連線
+            using (SqlConnection conn = dbFunction.sqlHissFlowConnection())
+            {
+                conn.Open();
+            
+                string query = "spInputEmpNumToSearch";
+                using (SqlCommand command = new SqlCommand(query, conn))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@prefixText", prefixText + "%");
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            matchingData.Add(reader["id"].ToString());
+                        }
+                    }
+                }
+            }
+            return matchingData;
         }
 
         [WebMethod]

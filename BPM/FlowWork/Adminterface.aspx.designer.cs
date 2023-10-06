@@ -141,22 +141,22 @@ namespace BPM.FlowWork
         protected global::System.Web.UI.WebControls.Label lblErrorMessage;
 
         /// <summary>
-        /// txbEditNobr 控制項。
+        /// txbEmpNumName 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txbEditNobr;
+        protected global::System.Web.UI.WebControls.TextBox txbEmpNumName;
 
         /// <summary>
-        /// txbEditUserName 控制項。
+        /// AutoCompleteExtender1 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txbEditUserName;
+        protected global::AjaxControlToolkit.AutoCompleteExtender AutoCompleteExtender1;
 
         /// <summary>
         /// txbEditDeptName 控制項。
@@ -168,22 +168,22 @@ namespace BPM.FlowWork
         protected global::System.Web.UI.WebControls.TextBox txbEditDeptName;
 
         /// <summary>
-        /// txbEditItemType 控制項。
+        /// ddlItemType 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txbEditItemType;
+        protected global::System.Web.UI.WebControls.DropDownList ddlItemType;
 
         /// <summary>
-        /// txbEditItemName 控制項。
+        /// ddlItemList 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txbEditItemName;
+        protected global::System.Web.UI.WebControls.DropDownList ddlItemList;
 
         /// <summary>
         /// txbEditAssetsName 控制項。
@@ -222,15 +222,6 @@ namespace BPM.FlowWork
         protected global::System.Web.UI.WebControls.Button btnEdit;
 
         /// <summary>
-        /// btnClear 控制項。
-        /// </summary>
-        /// <remarks>
-        /// 自動產生的欄位。
-        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnClear;
-
-        /// <summary>
         /// btnDelete 控制項。
         /// </summary>
         /// <remarks>
@@ -240,22 +231,13 @@ namespace BPM.FlowWork
         protected global::System.Web.UI.WebControls.Button btnDelete;
 
         /// <summary>
-        /// ddlItemType 控制項。
+        /// btnClear 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlItemType;
-
-        /// <summary>
-        /// ddlItemList 控制項。
-        /// </summary>
-        /// <remarks>
-        /// 自動產生的欄位。
-        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlItemList;
+        protected global::System.Web.UI.WebControls.Button btnClear;
 
         /// <summary>
         /// lblGuidKey 控制項。
