@@ -36,6 +36,12 @@ namespace BPMLib
                 SqlConnection sqlCon = new SqlConnection("server=192.168.1.26;database=ming;User ID=chiawei;Password=Aa123456;");
                 return sqlCon;
             }
+
+            public SqlConnection sqlHissDBtestConnection()
+            {
+                SqlConnection sqlCon = new SqlConnection("server=192.168.1.26;database=DatabaseTest;User ID=chiawei;Password=Aa123456;");
+                return sqlCon;
+            }
         }
 
         public class FormInfo
@@ -117,6 +123,8 @@ namespace BPMLib
                 public DataTable dtwfFormAppInfo;       //寫入EZFlow wfFormAppInfo
                 public DataTable dtwfFormApp;           //寫入EZFlow wfFormApp
                 public DataTable dtwfFormSignM;         //寫入EZFlow wfFormSignM
+
+               
             }
 
             // 設定發起人的資訊

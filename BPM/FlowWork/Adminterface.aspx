@@ -13,7 +13,7 @@
         <table width="100%">
             <tr>
                 <td width="85%"></td>
-               <%-- <td>
+                <%-- <td>
                     <asp:Button ID="btnRefresh" runat="server" Text="重新整理" OnClick="btnRefresh_Click" />
                 </td>--%>
                 <td>
@@ -55,37 +55,44 @@
                             <td>種類:<asp:TextBox ID="txbEditItemType" runat="server"></asp:TextBox></td>
                         </tr>
                         <tr>
-                            <td>項目:<asp:TextBox ID="txbEditItemName" runat="server"></asp:TextBox></td>                          
+                            <td>項目:<asp:TextBox ID="txbEditItemName" runat="server"></asp:TextBox></td>
                             <td>資產名稱:<asp:TextBox ID="txbEditAssetsName" runat="server"></asp:TextBox></td>
                             <td>資產編號:<asp:TextBox ID="txbEditAssetsCode" runat="server"></asp:TextBox></td>
                             <td>
-                                <asp:Button ID="btnAdd" runat="server" Text="新增" OnClick="btnAdd_Click" OnClientClick="return confirm('確定要新增嗎？');"/>
+                                <asp:Button ID="btnAdd" runat="server" Text="新增" OnClick="btnAdd_Click" OnClientClick="return confirm('確定要新增嗎？');" />
                                 <asp:Button ID="btnEdit" runat="server" Text="更改" OnClick="btnEdit_Click" OnClientClick="return confirm('確定要更改嗎？');" Visible="false" />
                                 <asp:Button ID="btnClear" runat="server" Text="清空" OnClick="btnClear_Click" />
-                                <asp:Button ID="btnDelete" runat="server" Text="刪除" OnClick="btnDelete_Click" Visible="false" OnClientClick="return confirm('確定要刪除嗎？');"/>
+                                <asp:Button ID="btnDelete" runat="server" Text="刪除" OnClick="btnDelete_Click" Visible="false" OnClientClick="return confirm('確定要刪除嗎？');" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>種類:<asp:DropDownList ID="ddlItemType" runat="server" AutoPostBack="True" DataTextField="TypeName" DataValueField="TypeID" Font-Size="12" OnSelectedIndexChanged="ddlItemType_SelectedIndexChanged"></asp:DropDownList>
+                            </td>
+                            <td>項目:<asp:DropDownList ID="ddlItemList" runat="server" AutoPostBack="True" DataTextField="ItemName" DataValueField="ItemID" Font-Size="12"></asp:DropDownList>
                             </td>
                         </tr>
                     </table>
                     <asp:Label ID="lblGuidKey" runat="server" Visible="false"></asp:Label>
-                </asp:Panel><br />
+                </asp:Panel>
+                <br />
 
                 <asp:Panel ID="pnlAdminterface" runat="server">
 
-                    <asp:Button ID="btnShowAdminterface" runat="server" Text="顯示現有項目表" OnClick="btnShowAdminterface_Click" Font-Size="15"/>
+                    <asp:Button ID="btnShowAdminterface" runat="server" Text="顯示現有項目表" OnClick="btnShowAdminterface_Click" Font-Size="15" />
 
                     <asp:GridView ID="grvAdminterface" runat="server" AutoGenerateColumns="False" CellPadding="4" ForeColor="#333333" GridLines="None" Width="100%"
-                        OnSelectedIndexChanged="grvAdminterface_SelectedIndexChanged" AllowPaging="true" PageSize="20" OnPageIndexChanging="grvAdminterface_PageIndexChanging" 
+                        OnSelectedIndexChanged="grvAdminterface_SelectedIndexChanged" AllowPaging="true" PageSize="20" OnPageIndexChanging="grvAdminterface_PageIndexChanging"
                         DataKeyNames="GuidKey,Nobr,UserName,DeptName,ItemType,ItemName,AssetsName,AssetsCode">
                         <Columns>
                             <asp:BoundField DataField="Nobr" HeaderText="工號" />
                             <asp:BoundField DataField="UserName" HeaderText="姓名" />
                             <asp:BoundField DataField="DeptName" HeaderText="部門" />
                             <asp:BoundField DataField="ItemType" HeaderText="種類" />
-                             <asp:BoundField DataField="ItemName" HeaderText="項目" />
+                            <asp:BoundField DataField="ItemName" HeaderText="項目" />
                             <asp:BoundField DataField="AssetsName" HeaderText="資產名稱" />
                             <asp:BoundField DataField="AssetsCode" HeaderText="資產編號" />
-                            
-                           
+
+
 
                             <asp:CommandField ShowSelectButton="true"></asp:CommandField>
 

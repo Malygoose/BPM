@@ -21,7 +21,8 @@ namespace BPM.FlowWork
                 string strEmployeeName = (string)Session["EmployeeName"];
                 lblLoginName.Text = strEmployeeName;
 
-               
+                //ItemType ItemList載入
+                ItemTypeFormLoad();
             }
         }
 
@@ -89,6 +90,29 @@ namespace BPM.FlowWork
                     grvAdminterface.DataBind();
                 }
             }
+        }
+
+        public void ItemTypeFormLoad() 
+        {
+            dbFunction dbFunction = new dbFunction();
+            //連線
+            using (SqlConnection conn = dbFunction.sqlHissDBtestConnection())
+            {
+                SqlCommand cmd = new SqlCommand("spflowTestFormLoad", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                SqlDataAdapter da = new SqlDataAdapter();
+                DataSet ds = new DataSet();
+                da.SelectCommand = cmd;
+                conn.Open();
+                da.Fill(ds);
+                //設定ddlItemType
+                ddlItemType.DataSource = ds.Tables[0];
+                ddlItemType.DataBind();
+                //設定ddlItemList
+                ddlItemList.DataSource = ds.Tables[1];
+                ddlItemList.DataBind();
+            }         
         }
 
         //首頁
@@ -404,7 +428,27 @@ namespace BPM.FlowWork
             txbEditItemName.Text = "";
         }
 
-        
+        protected void ddlItemType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            dbFunction dbFunction = new dbFunction();
+
+            using (SqlConnection conn = dbFunction.sqlHissDBtestConnection())
+            {
+                SqlCommand cmd = new SqlCommand("spGetIT01ItemListByTypeID", conn);
+
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@strTypeID", ddlItemType.SelectedValue);
+
+                SqlDataAdapter da = new SqlDataAdapter();
+                DataSet ds = new DataSet();
+                da.SelectCommand = cmd;
+                conn.Open();
+                da.Fill(ds);
+
+                ddlItemList.DataSource = ds.Tables[0];
+                ddlItemList.DataBind();
+            }
+        }
     }   
 }
 
