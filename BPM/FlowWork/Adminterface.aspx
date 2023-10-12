@@ -45,13 +45,12 @@
                         <tr>
                             <td>
                                 <asp:Label ID="lblAdd" runat="server" Text="新增/更改資料" Font-Size="20"></asp:Label>
-                                <asp:Label ID="lblErrorMessage" runat="server" Text="工號或姓名不能為空值" ForeColor="Red" Visible="false"></asp:Label>
+                                <asp:Label ID="lblErrorMessage" runat="server" Text="部門不能為空值" ForeColor="Red" Visible="false"></asp:Label>
                             </td>
                         </tr>
                         <tr>
-                            <td>
-                                工號、姓名:
-                                <asp:TextBox ID="txbEmpNumName" runat="server" AutoPostBack="true"></asp:TextBox>
+                            <td>工號、姓名、部門:
+                                <asp:TextBox ID="txbEmpNumName" runat="server" AutoPostBack="true" Width="230px"></asp:TextBox>
                                 <ajaxToolkit:AutoCompleteExtender ID="AutoCompleteExtender1" runat="server"
                                     TargetControlID="txbEmpNumName"
                                     ServiceMethod="GetMatchingData"
@@ -63,23 +62,20 @@
                             </td>
                             <%--<td>工號:<asp:TextBox ID="txbEditNobr" runat="server"></asp:TextBox></td>
                             <td>姓名:<asp:TextBox ID="txbEditUserName" runat="server"></asp:TextBox></td>--%>
-                            <td>部門:<asp:TextBox ID="txbEditDeptName" runat="server"></asp:TextBox></td>
+                            <%--<td>部門:<asp:TextBox ID="txbEditDeptName" runat="server"></asp:TextBox></td>--%>
                             <%--<td>種類:<asp:TextBox ID="txbEditItemType" runat="server"></asp:TextBox></td>--%>
+                            <%--<td>項目:<asp:TextBox ID="txbEditItemName" runat="server"></asp:TextBox></td>--%>
                             <td>種類:<asp:DropDownList ID="ddlItemType" runat="server" AutoPostBack="True" DataTextField="TypeName" DataValueField="TypeID" Font-Size="12" OnSelectedIndexChanged="ddlItemType_SelectedIndexChanged"></asp:DropDownList>
                             </td>
                             <td>項目:<asp:DropDownList ID="ddlItemList" runat="server" AutoPostBack="True" DataTextField="ItemName" DataValueField="ItemID" Font-Size="12"></asp:DropDownList>
                             </td>
-                        </tr>
-                        <tr>
-                            <%--<td>項目:<asp:TextBox ID="txbEditItemName" runat="server"></asp:TextBox></td>--%>
-                            <td>資產名稱:<asp:TextBox ID="txbEditAssetsName" runat="server"></asp:TextBox></td>
-                            <td>資產編號:<asp:TextBox ID="txbEditAssetsCode" runat="server"></asp:TextBox></td>
-                            <td>
-                                <asp:Button ID="btnAdd" runat="server" Text="新增" OnClick="btnAdd_Click"/>
+                            <td>資產名稱:<asp:TextBox ID="txbEditAssetsName" runat="server" Width="230px"></asp:TextBox></td>
+                            <td>資產編號:<asp:TextBox ID="txbEditAssetsCode" runat="server" Width="80px"></asp:TextBox></td>
+                            <td style="text-align: right;">
+                                <asp:Button ID="btnAdd" runat="server" Text="新增" OnClick="btnAdd_Click" />
                                 <asp:Button ID="btnEdit" runat="server" Text="更改" OnClick="btnEdit_Click" OnClientClick="return confirm('確定要更改嗎？');" Visible="false" />
                                 <asp:Button ID="btnDelete" runat="server" Text="刪除" OnClick="btnDelete_Click" Visible="false" OnClientClick="return confirm('確定要刪除嗎？');" />
                                 <asp:Button ID="btnClear" runat="server" Text="清空" OnClick="btnClear_Click" />
-                                
                             </td>
                         </tr>
                     </table>

@@ -159,15 +159,6 @@ namespace BPM.FlowWork
         protected global::AjaxControlToolkit.AutoCompleteExtender AutoCompleteExtender1;
 
         /// <summary>
-        /// txbEditDeptName 控制項。
-        /// </summary>
-        /// <remarks>
-        /// 自動產生的欄位。
-        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txbEditDeptName;
-
-        /// <summary>
         /// ddlItemType 控制項。
         /// </summary>
         /// <remarks>

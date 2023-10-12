@@ -56,7 +56,7 @@ namespace BPM
                     {
                         while (reader.Read())
                         {
-                            matchingData.Add(reader["id"].ToString());
+                            matchingData.Add(reader["EmployeeID"].ToString());
                         }
                     }
                 }

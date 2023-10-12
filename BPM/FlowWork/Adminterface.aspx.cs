@@ -146,8 +146,8 @@ namespace BPM.FlowWork
             lblGuidKey.Text = grvAdminterface.SelectedDataKey["GuidKey"].ToString();
             //txbEditNobr.Text = grvAdminterface.SelectedDataKey["Nobr"].ToString();
             //txbEditUserName.Text = grvAdminterface.SelectedDataKey["UserName"].ToString();
-            txbEmpNumName.Text = grvAdminterface.SelectedDataKey["Nobr"].ToString()+", "+ grvAdminterface.SelectedDataKey["UserName"].ToString();
-            txbEditDeptName.Text = grvAdminterface.SelectedDataKey["DeptName"].ToString();
+            txbEmpNumName.Text = grvAdminterface.SelectedDataKey["Nobr"].ToString()+","+grvAdminterface.SelectedDataKey["UserName"].ToString() + "," + grvAdminterface.SelectedDataKey["DeptName"].ToString();
+            //txbEditDeptName.Text = grvAdminterface.SelectedDataKey["DeptName"].ToString();
             //txbEditItemType.Text = grvAdminterface.SelectedDataKey["ItemType"].ToString();
             //txbEditItemName.Text = grvAdminterface.SelectedDataKey["ItemName"].ToString();
             txbEditAssetsName.Text = grvAdminterface.SelectedDataKey["AssetsName"].ToString();
@@ -180,9 +180,10 @@ namespace BPM.FlowWork
 
             string strNobr = strEmpNumNameArray[0];
             string strUserName = strEmpNumNameArray[1];
+            string strDeptName = strEmpNumNameArray[2];
             //string strNobr = txbEditNobr.Text;
             //string strUserName = txbEditUserName.Text;
-            string strDeptName = txbEditDeptName.Text;
+            //string strDeptName = txbEditDeptName.Text;
             //string strItemType = txbEditItemType.Text;
             //string strItemName = txbEditItemName.Text;
             string strItemType = ddlItemType.SelectedItem.Text;
@@ -356,10 +357,11 @@ namespace BPM.FlowWork
 
             //得到資料
             string strAddNobr = strEmpNumNameArray[0];
-            string strAddUserName = strEmpNumNameArray[1];       
+            string strAddUserName = strEmpNumNameArray[1];
+            string strAddDeptName = strEmpNumNameArray[2];
             //string strAddNobr = txbEditNobr.Text;
             //string strAddUserName = txbEditUserName.Text;
-            string strAddDeptName = txbEditDeptName.Text;
+            //string strAddDeptName = txbEditDeptName.Text;
             //string strAddItemType = txbEditItemType.Text;
             //string strAddItemName = txbEditItemName.Text;
             string strAddItemType = ddlItemType.SelectedItem.Text;
@@ -370,8 +372,8 @@ namespace BPM.FlowWork
 
             
 
-            //判斷工號或姓名不能為空值
-            if (string.IsNullOrEmpty(strAddNobr) || string.IsNullOrEmpty(strAddUserName))
+            //判斷不能為空值
+            if (string.IsNullOrEmpty(strEmpNumName))
             {
                 lblErrorMessage.Visible = true;
             }
@@ -443,7 +445,7 @@ namespace BPM.FlowWork
             //txbEditNobr.Text = "";
             //txbEditUserName.Text = "";
             txbEmpNumName.Text = "";
-            txbEditDeptName.Text = "";
+            //txbEditDeptName.Text = "";
             //txbEditItemType.Text = "";
             //txbEditItemName.Text = "";
             txbEditAssetsCode.Text = "";
