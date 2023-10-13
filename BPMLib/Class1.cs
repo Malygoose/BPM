@@ -573,7 +573,7 @@ namespace BPMLib
                 drwfFormAppInfo["sNobr"] = stuFormInfo.strApplyEmployeeID;
                 drwfFormAppInfo["sName"] = stuFormInfo.strApplyEmployeeName;
                 drwfFormAppInfo["sState"] = "1";
-                drwfFormAppInfo["sInfo"] = "(測試)" + stuFormInfo.strApplyEmployeeName + "，需求日期：" + stuFormInfo.strRequireDate;
+                drwfFormAppInfo["sInfo"] = "(測試)" + stuFormInfo.strApplyEmployeeName; //+ "，需求日期：" + stuFormInfo.strRequireDate;
                 drwfFormAppInfo["sGuid"] = Guid.NewGuid().ToString();
                 drwfFormAppInfo["dKeyDate"] = DateTime.Now.ToString();
                 stuFormInfo.dtwfFormAppInfo.Rows.Add(drwfFormAppInfo);
@@ -591,12 +591,12 @@ namespace BPMLib
                 drwfFormApp["sJobName"] = stuFormInfo.strApplyEmployeeJobName;
                 drwfFormApp["sRole"] = stuFormInfo.strApplyEmployeeRoleID;
                 drwfFormApp["dDateTimeA"] = DateTime.Now;
-                drwfFormApp["dDateTimeD"] = DateTime.Parse(stuFormInfo.strRequireDate);
+                drwfFormApp["dDateTimeD"] = DateTime.Now;//DateTime.Parse(stuFormInfo.strRequireDate);
                 drwfFormApp["bSign"] = true;
                 drwfFormApp["sConditions1"] = "60";
                 drwfFormApp["iCateOrder"] = stuFormInfo.intApplyEmployeeDeptLevel;
                 drwfFormApp["sLevel"] = stuFormInfo.intApplyEmployeeDeptLevel.ToString();
-                drwfFormApp["sInfo"] = "(測試)" + stuFormInfo.strApplyEmployeeName + "，需求日期：" + stuFormInfo.strRequireDate;
+                drwfFormApp["sInfo"] = "(測試)" + stuFormInfo.strApplyEmployeeName;// + "，需求日期：" + stuFormInfo.strRequireDate;
                 drwfFormApp["sNote"] = stuFormInfo.strApplyReason;
                 drwfFormApp["sState"] = "1";
                 drwfFormApp["bDelay"] = false;

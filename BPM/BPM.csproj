@@ -299,6 +299,7 @@
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="FlowWork\Adminterface.aspx" />
+    <Content Include="FlowWork\CAPA.aspx" />
     <Content Include="FlowWork\Home.aspx" />
     <Content Include="FlowWork\IT01.aspx" />
     <Content Include="FlowWork\Template.aspx" />
@@ -409,6 +410,13 @@
     </Compile>
     <Compile Include="FlowWork\Adminterface.aspx.designer.cs">
       <DependentUpon>Adminterface.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="FlowWork\CAPA.aspx.cs">
+      <DependentUpon>CAPA.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FlowWork\CAPA.aspx.designer.cs">
+      <DependentUpon>CAPA.aspx</DependentUpon>
     </Compile>
     <Compile Include="FlowWork\Home.aspx.cs">
       <DependentUpon>Home.aspx</DependentUpon>

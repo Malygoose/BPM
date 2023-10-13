@@ -164,6 +164,7 @@
 
             <ul>
                 <li><asp:HyperLink ID="HLIT01ApplyForm" runat="server" Font-Size="25px" NavigateUrl="~/FlowWork/IT01?IT01=?" CssClass="no-underline">資訊服務申請單</asp:HyperLink></li>
+                <li><asp:HyperLink ID="HLCAPA" runat="server" Font-Size="25px" NavigateUrl="~/FlowWork/CAPA?CAPA=?" CssClass="no-underline" >矯正預防單</asp:HyperLink></li>
                 <li><asp:HyperLink ID="HLTemplate" runat="server" Font-Size="25px" NavigateUrl="~/FlowWork/Template?Template=?" CssClass="no-underline" >(測試)共通表單</asp:HyperLink></li>
             </ul><br />
             
@@ -238,8 +239,8 @@
                             <asp:BoundField DataField="表單序號" HeaderText="表單序號" ItemStyle-Width="80px">
                             <ItemStyle Width="80px" />
                             </asp:BoundField>
-                            <asp:BoundField DataField="表單名稱" HeaderText="表單名稱" ItemStyle-Width="80px">
-                            <ItemStyle Width="80px" />
+                            <asp:BoundField DataField="表單名稱" HeaderText="表單名稱" ItemStyle-Width="100px">
+                            <ItemStyle Width="100px" />
                             </asp:BoundField>
                             <asp:BoundField DataField="發起人" HeaderText="發起人" ItemStyle-Width="80px">
                             <ItemStyle Width="80px" />
@@ -279,7 +280,7 @@
                             <ItemStyle Width="80px" />
                         </asp:BoundField>
                         <asp:BoundField DataField="表單名稱" HeaderText="表單名稱">
-                            <ItemStyle Width="80px" />
+                            <ItemStyle Width="100px" />
                         </asp:BoundField>
                         <asp:BoundField DataField="發起人" HeaderText="發起人">
                             <ItemStyle Width="80px" />

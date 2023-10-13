@@ -1,48 +1,34 @@
-﻿using ezEngineServices;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
 using System.Data.SqlClient;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using WebGrease.Activities;
-using static BPM.FlowWork.IT01;
-using static BPM.FlowWork.Template;
-using BPMLib;
 using static BPMLib.Class1;
 using static BPMLib.Class1.FormInfo;
-using System.Net.Mail;
-using System.Net;
 
 namespace BPM.FlowWork
 {
-    public partial class Template : System.Web.UI.Page
+    public partial class CAPA : System.Web.UI.Page
     {
-        public string strRequireDate; //需求日期
-
         protected void Page_Load(object sender, EventArgs e)
         {
             FormInfo Forminfo = new FormInfo();
 
             if (!IsPostBack)
             {
-                //  設定表單資訊-------------------------------------
-                strRequireDate = DateTime.Now.AddDays(7).ToString("yyyy-MM-dd");//需求日期
+                //  設定表單資訊-------------------------------------              
                 lblApplyDate.Text = DateTime.Now.ToString("yyyy/MM/dd");//申請日期
+
+                rbtnlSelectWorking.SelectedIndex = 0;
 
                 stuFormInfo stuFormInfo = new stuFormInfo();//結構
                 stuFormInfo = Forminfo.GetFormInfoDataTable(stuFormInfo);
 
                 stuFormInfo.strLoginEmployeeID = User.Identity.Name;
-
-                //stuFormInfo.dtFileUpload = Forminfo.GetDtFileUpload();
-                //stuFormInfo.dtwfFormAppInfo = Forminfo.GetDtwfFormAppInfo();
-                //stuFormInfo.dtwfFormApp = Forminfo.GetDtwfFormApp();
-                //stuFormInfo.dtwfFormSignM = Forminfo.getDtwfFormSignM();
 
                 if (!string.IsNullOrEmpty(stuFormInfo.strLoginEmployeeID))
                 {
@@ -57,7 +43,6 @@ namespace BPM.FlowWork
                             stuFormInfo = Forminfo.GetFormView(stuFormInfo);//取得表單資訊
 
                             //檢視畫面顯示設定
-                            txbRequireDate.Enabled = false;
                             ddlSelectStartEmpDept.Visible = false;
                             ddlSelectApplyEmp.Visible = false;
                             txbSignOpinion.Enabled = false;
@@ -69,10 +54,9 @@ namespace BPM.FlowWork
                             pnlFileUpload.Visible = false;
                             grvFileUpload.Columns[3].Visible = false;
 
-                            //申請日期、需求日期顯示設定
+                            //申請日期顯示設定
                             lblApplyDate.Text = stuFormInfo.dateApplyDate.ToString("yyyy-MM-dd");
-                            strRequireDate = stuFormInfo.dateRequireDate.ToString("yyyy-MM-dd");
-                            txbRequireDate.Text = strRequireDate;
+
 
                             //選取的申請人
                             lblSelectApplyEmp.Text = stuFormInfo.strApplyEmployeeName;
@@ -124,7 +108,6 @@ namespace BPM.FlowWork
                             stuFormInfo = Forminfo.GetFormView(stuFormInfo);//取得表單資訊
 
                             //簽核畫面顯示設定
-                            txbRequireDate.Enabled = false;
                             ddlSelectStartEmpDept.Visible = false;
                             ddlSelectApplyEmp.Visible = false;
                             pnlCheck.Visible = true;
@@ -137,8 +120,6 @@ namespace BPM.FlowWork
 
                             //申請日期、需求日期顯示設定
                             lblApplyDate.Text = stuFormInfo.dateApplyDate.ToString("yyyy-MM-dd");
-                            strRequireDate = stuFormInfo.dateRequireDate.ToString("yyyy-MM-dd");
-                            txbRequireDate.Text = strRequireDate;
 
                             //選取的申請人
                             lblSelectApplyEmp.Text = stuFormInfo.strApplyEmployeeName;
@@ -233,10 +214,6 @@ namespace BPM.FlowWork
                     }
                     ViewState["stuFormInfo"] = stuFormInfo;
                 }
-            }
-            else
-            {
-                strRequireDate = txbRequireDate.Text;
             }
         }
 
@@ -400,16 +377,8 @@ namespace BPM.FlowWork
         {
             FormInfo formInfo = new FormInfo();
             stuFormInfo stuFormInfo = (stuFormInfo)ViewState["stuFormInfo"];
-            stuFormInfo.strRequireDate = txbRequireDate.Text;
             stuFormInfo.strApplyReason = txbApplyReason.Text;
 
-            //  檢查有無輸入日期
-            if (string.IsNullOrEmpty(stuFormInfo.strRequireDate))
-            {
-                Response.Write("<script>alert('" + "請選擇需求日期!" + "')</script>");
-                return;
-            }
-          
             try
             {
                 dbFunction dbFunction = new dbFunction();
@@ -437,7 +406,7 @@ namespace BPM.FlowWork
                     oService.FlowStart(stuFormInfo.intProcessID, stuFormInfo.strFormID, stuFormInfo.strApplyEmployeeRoleID, stuFormInfo.strApplyEmployeeID, stuFormInfo.strApplyEmployeeRoleID, stuFormInfo.strApplyEmployeeID);
                 }
 
-                
+
 
                 Response.Redirect("Home.aspx");
             }
@@ -555,6 +524,5 @@ namespace BPM.FlowWork
                 }
             }
         }
-      
     }
 }
