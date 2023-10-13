@@ -1,9 +1,11 @@
 ﻿using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Spreadsheet;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Services;
@@ -511,9 +513,22 @@ namespace BPM.FlowWork
 
             ws.Cell(1,1).InsertTable(dtAdminterface);
 
-            string fileName = "資訊設備明細表.xlsx"; // 文件名
-            string downloadsFolder = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\Downloads\\"+ fileName;
-            wb.SaveAs(downloadsFolder);
+            //string fileName = "資訊設備明細表.xlsx"; // 文件名
+            //string downloadsFolder = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\Downloads\\"+ fileName;
+            //wb.SaveAs(downloadsFolder);
+
+            using (MemoryStream memoryStream = new MemoryStream())
+            {
+                wb.SaveAs(memoryStream);
+
+                //下載
+                Response.Clear();
+                Response.Buffer = true;
+                Response.AddHeader("content-disposition", "attachment; filename=資訊設備明細表.xlsx");
+                Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                Response.BinaryWrite(memoryStream.ToArray());
+                Response.End();
+            }
 
         }
     }
