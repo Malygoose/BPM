@@ -12,10 +12,10 @@
         <asp:ScriptManager ID="ScriptManager" runat="server"></asp:ScriptManager>
         <table width="100%">
             <tr>
-                <td width="85%"></td>
-                <%-- <td>
-                    <asp:Button ID="btnRefresh" runat="server" Text="重新整理" OnClick="btnRefresh_Click" />
-                </td>--%>
+                <td width="80%"></td>
+                <td>
+                    <asp:Button ID="btnDownload" runat="server" Text="下載(Excel)" OnClick="btnDownload_Click"/>
+                </td>
                 <td>
                     <asp:Button ID="btnHome" runat="server" Text="首頁" OnClick="btnHome_Click" />
                 </td>
@@ -44,8 +44,7 @@
                     <table width="100%">
                         <tr>
                             <td>
-                                <asp:Label ID="lblAdd" runat="server" Text="新增/更改資料" Font-Size="20"></asp:Label>
-                                <asp:Label ID="lblErrorMessage" runat="server" Text="部門不能為空值" ForeColor="Red" Visible="false"></asp:Label>
+                                <asp:Label ID="lblAdd" runat="server" Text="新增/更改資料" Font-Size="20"></asp:Label>                               
                             </td>
                         </tr>
                         <tr>
@@ -69,8 +68,12 @@
                             </td>
                             <td>項目:<asp:DropDownList ID="ddlItemList" runat="server" AutoPostBack="True" DataTextField="ItemName" DataValueField="ItemID" Font-Size="12"></asp:DropDownList>
                             </td>
-                            <td>資產名稱:<asp:TextBox ID="txbEditAssetsName" runat="server" Width="230px"></asp:TextBox></td>
-                            <td>資產編號:<asp:TextBox ID="txbEditAssetsCode" runat="server" Width="80px"></asp:TextBox></td>
+                            <td>資產名稱:<asp:TextBox ID="txbEditAssetsName" runat="server" Width="230px"></asp:TextBox>
+                                <asp:Label ID="lblErrorMessage" runat="server" Text="無效的電子信箱" ForeColor="Red" Visible="false"></asp:Label>
+                            </td>
+                            <td>資產編號:<asp:TextBox ID="txbEditAssetsCode" runat="server" Width="80px"></asp:TextBox>                               
+                            </td>
+
                             <td style="text-align: right;">
                                 <asp:Button ID="btnAdd" runat="server" Text="新增" OnClick="btnAdd_Click" />
                                 <asp:Button ID="btnEdit" runat="server" Text="更改" OnClick="btnEdit_Click" OnClientClick="return confirm('確定要更改嗎？');" Visible="false" />
@@ -85,7 +88,7 @@
 
                 <asp:Panel ID="pnlAdminterface" runat="server">
 
-                    <asp:Button ID="btnShowAdminterface" runat="server" Text="顯示現有項目表" OnClick="btnShowAdminterface_Click" Font-Size="15" />
+                    <%--<asp:Button ID="btnShowAdminterface" runat="server" Text="顯示現有項目表" OnClick="btnShowAdminterface_Click" Font-Size="15" />--%>
 
                     <asp:GridView ID="grvAdminterface" runat="server" AutoGenerateColumns="False" CellPadding="4" ForeColor="#333333" GridLines="None" Width="100%"
                         OnSelectedIndexChanged="grvAdminterface_SelectedIndexChanged" AllowPaging="true" PageSize="20" OnPageIndexChanging="grvAdminterface_PageIndexChanging"

@@ -9,6 +9,7 @@ using System.Data.SqlClient;
 using static BPMLib.Class1;
 using static BPMLib.Class1.FormInfo;
 using System.Data;
+using ClosedXML.Excel;
 
 namespace BPM
 {
@@ -98,5 +99,6 @@ namespace BPM
                 return "郵件發送失敗 " + ex.Message;
             }
         }
+       
     }
 }
