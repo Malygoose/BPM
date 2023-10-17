@@ -204,6 +204,7 @@ namespace BPM.FlowWork
             //判斷信箱是否有效
             if (strItemType == "信箱" && !IsValidEmail(strInputEmail))
             {
+                lblErrorMessage.Text = "無效的電子信箱";
                 lblErrorMessage.Visible = true;
             }
             else
@@ -402,8 +403,9 @@ namespace BPM.FlowWork
             //判斷信箱是否有效
             if (strAddItemType == "信箱" && !IsValidEmail(strInputEmail))
             {
+                lblErrorMessage.Text = "無效的電子信箱";
                 lblErrorMessage.Visible =true;
-            }
+            }          
             else 
             {
                 lblErrorMessage.Visible = false;
@@ -470,12 +472,38 @@ namespace BPM.FlowWork
             //txbEditItemType.Text = "";
             //txbEditItemName.Text = "";
             txbEditAssetsCode.Text = "";
-            txbEditAssetsName.Text = "";
-            
+            txbEditAssetsName.Text = "";                         
         }
         //依照不同的ItemType得到相對的Itemlist
         protected void ddlItemType_SelectedIndexChanged(object sender, EventArgs e)
         {
+            //清空
+            txbEditAssetsCode.Text = "";
+            txbEditAssetsName.Text = "";
+            lblErrorMessage.Visible = false;
+            //顯示
+            switch (ddlItemType.SelectedItem.Text)
+            {
+                case "硬體":
+                    lblAssetsCode.Visible = true;
+                    txbEditAssetsCode.Visible = true;
+                    lblAssetsName.Visible = true;
+                    txbEditAssetsName.Visible = true;
+                    break;
+                case "信箱":
+                    lblAssetsCode.Visible = false;
+                    txbEditAssetsCode.Visible = false;
+                    lblAssetsName.Visible = true;
+                    txbEditAssetsName.Visible = true;
+                    break;
+                default:
+                    lblAssetsCode.Visible = false;
+                    txbEditAssetsCode.Visible = false;
+                    lblAssetsName.Visible = false;
+                    txbEditAssetsName.Visible = false;
+                    break;
+            }
+
             dbFunction dbFunction = new dbFunction();
 
             using (SqlConnection conn = dbFunction.sqlHissDBtestConnection())
@@ -501,6 +529,13 @@ namespace BPM.FlowWork
         {
             string pattern = @"^\w+([-+.']\w+)*@hiss\.com\.tw$";
             return System.Text.RegularExpressions.Regex.IsMatch(email, pattern);    
+        }
+
+        //判斷是否為有效的資產編號
+        public bool IsValidAssetsCode(string AssetsCode)
+        {
+            string pattern = @"^\d{7}$";
+            return System.Text.RegularExpressions.Regex.IsMatch(AssetsCode, pattern);
         }
 
         //資訊設備明細表下載成excel
