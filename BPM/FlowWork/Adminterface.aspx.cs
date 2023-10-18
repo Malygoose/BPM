@@ -145,20 +145,44 @@ namespace BPM.FlowWork
         //選取後txb呈現該資料
         protected void grvAdminterface_SelectedIndexChanged(object sender, EventArgs e)
         {
+            //第三版寫法
+            DataTable dtAdminterface = (DataTable)ViewState["dtAdminterface"];
+            //dataKey找guid
+            string strGuidKey = grvAdminterface.SelectedDataKey[0].ToString();
+
+            DataRow[] selectedRow = dtAdminterface.Select("GuidKey= '" + strGuidKey + "'");
+
+            txbEmpNumName.Text = selectedRow[0]["Nobr"].ToString() + "," + selectedRow[0]["UserName"].ToString() + "," + selectedRow[0]["DeptName"].ToString();
+            txbEditAssetsName.Text = selectedRow[0]["AssetsName"].ToString();
+            txbEditAssetsCode.Text = selectedRow[0]["AssetsCode"].ToString();
+
+            //選取改變dropdownlist的值
+            ddlItemType.SelectedValue = selectedRow[0]["ItemTypeID"].ToString();
+            ddlItemType_SelectedIndexChanged(null, null);
+            ddlItemList.SelectedValue = selectedRow[0]["ItemCode"].ToString();
+
             //按鈕顯示
             btnEdit.Visible = true;
             btnDelete.Visible = true;
 
-            //利用datakeynames得到資料
-            lblGuidKey.Text = grvAdminterface.SelectedDataKey["GuidKey"].ToString();
+            //*第二版寫法，利用datakeynames"GuidKey,Nobr,UserName,DeptName,ItemType,ItemName,AssetsName,AssetsCode"得到資料
+
+            //lblGuidKey.Text = grvAdminterface.SelectedDataKey["GuidKey"].ToString();
+            //txbEmpNumName.Text = grvAdminterface.SelectedDataKey["Nobr"].ToString() + "," 
+            //    + grvAdminterface.SelectedDataKey["UserName"].ToString() + "," 
+            //    + grvAdminterface.SelectedDataKey["DeptName"].ToString();
+            //txbEditAssetsName.Text = grvAdminterface.SelectedDataKey["AssetsName"].ToString();
+            //txbEditAssetsCode.Text = grvAdminterface.SelectedDataKey["AssetsCode"].ToString();
+
             //txbEditNobr.Text = grvAdminterface.SelectedDataKey["Nobr"].ToString();
             //txbEditUserName.Text = grvAdminterface.SelectedDataKey["UserName"].ToString();
-            txbEmpNumName.Text = grvAdminterface.SelectedDataKey["Nobr"].ToString()+","+grvAdminterface.SelectedDataKey["UserName"].ToString() + "," + grvAdminterface.SelectedDataKey["DeptName"].ToString();
+
             //txbEditDeptName.Text = grvAdminterface.SelectedDataKey["DeptName"].ToString();
             //txbEditItemType.Text = grvAdminterface.SelectedDataKey["ItemType"].ToString();
             //txbEditItemName.Text = grvAdminterface.SelectedDataKey["ItemName"].ToString();
-            txbEditAssetsName.Text = grvAdminterface.SelectedDataKey["AssetsName"].ToString();
-            txbEditAssetsCode.Text = grvAdminterface.SelectedDataKey["AssetsCode"].ToString();
+
+
+            //*第一版寫法 因為index要自己想邏輯所以改寫成dataKey
 
             //DataTable dtAdminterface = (DataTable)ViewState["dtAdminterface"];
 
@@ -201,11 +225,17 @@ namespace BPM.FlowWork
             string strGuidKey = lblGuidKey.Text;
 
             string strInputEmail = txbEditAssetsName.Text.Trim();
+
+            string strMessage = "檢查Email成功";
             //判斷信箱是否有效
-            if (strItemType == "信箱" && !IsValidEmail(strInputEmail))
+            if (strItemType == "信箱")
             {
-                lblErrorMessage.Text = "無效的電子信箱";
+                             
+                strMessage =IsDuplicateEmail(strItemType);
+               
+                
                 lblErrorMessage.Visible = true;
+                lblErrorMessage.Text = strMessage;
             }
             else
             {
@@ -401,11 +431,17 @@ namespace BPM.FlowWork
 
             string strInputEmail = txbEditAssetsName.Text.Trim();
             //判斷信箱是否有效
-            if (strAddItemType == "信箱" && !IsValidEmail(strInputEmail))
+            string strMessage = "檢查Email成功";
+            //判斷信箱是否有效
+            if (strInputEmail == "信箱")
             {
-                lblErrorMessage.Text = "無效的電子信箱";
-                lblErrorMessage.Visible =true;
-            }          
+
+                strMessage = IsDuplicateEmail(strInputEmail);
+
+               
+                lblErrorMessage.Visible = true;
+                lblErrorMessage.Text = strMessage;
+            }
             else 
             {
                 lblErrorMessage.Visible = false;
@@ -489,18 +525,21 @@ namespace BPM.FlowWork
                     txbEditAssetsCode.Visible = true;
                     lblAssetsName.Visible = true;
                     txbEditAssetsName.Visible = true;
+                    lblAssetsName.Text = "資產名稱";
                     break;
                 case "信箱":
                     lblAssetsCode.Visible = false;
                     txbEditAssetsCode.Visible = false;
                     lblAssetsName.Visible = true;
                     txbEditAssetsName.Visible = true;
+                    lblAssetsName.Text = "信箱名稱";
                     break;
                 default:
                     lblAssetsCode.Visible = false;
                     txbEditAssetsCode.Visible = false;
                     lblAssetsName.Visible = false;
                     txbEditAssetsName.Visible = false;
+                    lblAssetsName.Text = "資產名稱";
                     break;
             }
 
@@ -525,10 +564,37 @@ namespace BPM.FlowWork
         }
 
         //判斷是否為有效的信箱
-        public bool IsValidEmail(string email) 
+        //public bool IsValidEmail(string email) 
+        //{
+        //    string pattern = @"^\w+([-+.']\w+)*@hiss\.com\.tw$";
+        //    return System.Text.RegularExpressions.Regex.IsMatch(email, pattern);    
+        //}
+
+        //判斷信箱是否有效或重複
+        public string IsDuplicateEmail(string email)
         {
+
             string pattern = @"^\w+([-+.']\w+)*@hiss\.com\.tw$";
-            return System.Text.RegularExpressions.Regex.IsMatch(email, pattern);    
+            if (System.Text.RegularExpressions.Regex.IsMatch(email, pattern))
+            {
+                dbFunction dbFunction = new dbFunction();
+
+                using (SqlConnection conn = dbFunction.sqlHissMingConnection())
+                {
+                    SqlCommand cmd = new SqlCommand("spIT01EmployeeItemsCheckFields", conn);
+
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@strEmail", email);
+
+                    return (string)cmd.ExecuteScalar();
+                }
+            }
+            else 
+            {
+                return "Emiail格式有誤";
+            }
+
+           
         }
 
         //判斷是否為有效的資產編號
@@ -547,10 +613,6 @@ namespace BPM.FlowWork
             DataTable dtAdminterface =(DataTable)ViewState["dtAdminterface"];
 
             ws.Cell(1,1).InsertTable(dtAdminterface);
-
-            //string fileName = "資訊設備明細表.xlsx"; // 文件名
-            //string downloadsFolder = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\Downloads\\"+ fileName;
-            //wb.SaveAs(downloadsFolder);
 
             using (MemoryStream memoryStream = new MemoryStream())
             {
