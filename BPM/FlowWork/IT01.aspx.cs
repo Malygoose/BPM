@@ -789,7 +789,7 @@ namespace BPM.FlowWork
                 }
 
                 //寄信通知簽核者
-                SendMail(stuFormInfo);
+                //SendMail(stuFormInfo);
 
                 Response.Redirect("Home.aspx");
 
@@ -955,7 +955,7 @@ namespace BPM.FlowWork
                         }
 
                         //寄信通知簽核者
-                        SendMail(stuFormInfo);
+                        //SendMail(stuFormInfo);
 
                         Response.Redirect("Home.aspx");
                     }
@@ -1498,6 +1498,9 @@ namespace BPM.FlowWork
             dt.Columns.Add("ItemGuidKey");
             dt.Columns.Add("AssetsCode");
 
+            dt.Columns.Add("ItemTypeID");
+            dt.Columns.Add("ItemCode");
+
             dt.Columns.Add("Description");
             dt.Columns.Add("ItemProcessing");
 
@@ -1578,6 +1581,9 @@ namespace BPM.FlowWork
 
             dt.Columns.Add("StartEmpRoleID");
             dt.Columns.Add("ApplyEmpRoleID");
+
+            dt.Columns.Add("ItemTypeID");
+            dt.Columns.Add("ItemCode");
 
             dt.Columns.Add("sState");
             return dt;
@@ -1760,6 +1766,9 @@ namespace BPM.FlowWork
 
                     row["Description"] = txbItemAddReason.Text;
                     txbItemAddReason.Text = string.Empty;
+
+                    row["ItemTypeID"] = ddlItemType.SelectedItem.Value;
+                    row["ItemCode"] = ddlItemList.SelectedItem.Value;
 
                     row["ShowDeleteButton"] = true;
                     row["ShowEditButton"] = false;
@@ -2162,6 +2171,9 @@ namespace BPM.FlowWork
                 string strAssetsCode = rowdtItemAdd["AssetsCode"].ToString();
                 string strItemProcessing = rowdtItemAdd["ItemProcessing"].ToString();
 
+                string strItemTypeID = rowdtItemAdd["ItemTypeID"].ToString();
+                string strItemCode = rowdtItemAdd["ItemCode"].ToString();
+
                 DataRow newRow = stuDataTableList.dtSqlBulkApplyContent.NewRow();
                 newRow["FormCode"] = stuFormInfo.strFormCode;
                 newRow["ProcessID"] = intRequestID;
@@ -2190,6 +2202,9 @@ namespace BPM.FlowWork
                 newRow["AssetsCode"] = strAssetsCode;
                 newRow["Description"] = strDescription;
                 newRow["ItemProcessing"] = strItemProcessing;
+
+                newRow["ItemTypeID"] =strItemTypeID;
+                newRow["ItemCode"] = strItemCode;
 
 
                 if (!string.IsNullOrEmpty(stuFormInfo.strApplyEmpRoleID) && !string.IsNullOrEmpty(stuFormInfo.strStartEmpRoleID))
@@ -2238,6 +2253,9 @@ namespace BPM.FlowWork
                     bulkCopy.ColumnMappings.Add("ItemProcessing", "ItemProcessing");
 
                     bulkCopy.ColumnMappings.Add("ApplyWorkType", "ApplyWorkType");
+                    
+                    bulkCopy.ColumnMappings.Add("ItemTypeID", "ItemTypeID");
+                    bulkCopy.ColumnMappings.Add("ItemCode", "ItemCode");
 
                     bulkCopy.WriteToServer(stuDataTableList.dtSqlBulkApplyContent);
                 }
@@ -2312,6 +2330,9 @@ namespace BPM.FlowWork
                 string strItemTypeName = drSqlBulkApplyContent["ItemTypeName"].ToString();
                 string strItemName = drSqlBulkApplyContent["ItemName"].ToString();
 
+                string strItemTypeID = drSqlBulkApplyContent["ItemTypeID"].ToString();
+                string strItemCode = drSqlBulkApplyContent["ItemCode"].ToString();
+
                 SqlCommand cmd = new SqlCommand("", conn); // 初始化 SqlCommand 物件
 
                 switch (strServiceType)
@@ -2327,6 +2348,9 @@ namespace BPM.FlowWork
                             newRow["ItemType"] = strItemType;
                             newRow["ItemTypeName"] = strItemTypeName;
                             newRow["ItemName"] = strItemName;
+
+                            newRow["ItemTypeID"] = strItemTypeID;
+                            newRow["ItemCode"] = strItemCode;
 
                             stuDataTableList.AddToEmployeeItems.Rows.Add(newRow);
 
@@ -2394,6 +2418,9 @@ namespace BPM.FlowWork
             bulkCopy.ColumnMappings.Add("ItemType", "ItemType");
             bulkCopy.ColumnMappings.Add("ItemTypeName", "ItemName");
             bulkCopy.ColumnMappings.Add("ItemName", "AssetsName");
+
+            bulkCopy.ColumnMappings.Add("ItemTypeID", "ItemTypeID");
+            bulkCopy.ColumnMappings.Add("ItemCode", "ItemCode");
 
             bulkCopy.WriteToServer(stuDataTableList.AddToEmployeeItems);
 

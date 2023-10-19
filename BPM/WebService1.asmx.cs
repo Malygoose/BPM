@@ -99,6 +99,33 @@ namespace BPM
                 return "郵件發送失敗 " + ex.Message;
             }
         }
-       
+
+        [WebMethod]
+        public string EmailCheckFields(string email)
+        {
+            string pattern = @"^\w+([-+.']\w+)*@hiss\.com\.tw$";
+            if (System.Text.RegularExpressions.Regex.IsMatch(email, pattern))
+            {
+                dbFunction dbFunction = new dbFunction();
+
+                
+
+                using (SqlConnection conn = dbFunction.sqlHissMingConnection())
+                {
+                    conn.Open();
+
+                    SqlCommand cmd = new SqlCommand("spIT01EmployeeItemsCheckFields", conn);
+
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@strEmail", email);
+
+                    return (string)cmd.ExecuteScalar();
+                }
+            }
+            else
+            {
+                return "Emiail格式有誤";
+            }
+        }
     }
 }

@@ -70,7 +70,12 @@ namespace BPM.FlowWork
         //管理者看搜尋的人現有項目表
         public void ViewSearchEmployeeHaveItems()
         {
-            string strSearchEmpName = txbSearch.Text;
+            string strSearchText = txbSearch.Text;
+
+            if (string.IsNullOrEmpty(strSearchText))
+            {
+                strSearchText = ddlItemList.SelectedItem.Text;
+            }
 
             dbFunction dbFunction = new dbFunction();
             //連線
@@ -81,7 +86,7 @@ namespace BPM.FlowWork
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@SearchEmpName", strSearchEmpName);
+                    cmd.Parameters.AddWithValue("@SearchEmpName", strSearchText);
                     //cmd.ExecuteNonQuery();
 
                     SqlDataAdapter da = new SqlDataAdapter();
@@ -139,6 +144,7 @@ namespace BPM.FlowWork
             //按鈕顯示
             btnEdit.Visible = false;
             btnDelete.Visible = false;
+            btnDownload.Visible = true;
             //顯示尋找的現有項目
             ViewSearchEmployeeHaveItems();
         }
@@ -151,6 +157,8 @@ namespace BPM.FlowWork
             string strGuidKey = grvAdminterface.SelectedDataKey[0].ToString();
 
             DataRow[] selectedRow = dtAdminterface.Select("GuidKey= '" + strGuidKey + "'");
+
+            lblGuidKey.Text = strGuidKey;
 
             txbEmpNumName.Text = selectedRow[0]["Nobr"].ToString() + "," + selectedRow[0]["UserName"].ToString() + "," + selectedRow[0]["DeptName"].ToString();
             txbEditAssetsName.Text = selectedRow[0]["AssetsName"].ToString();
@@ -224,82 +232,91 @@ namespace BPM.FlowWork
             string strAssetsName = txbEditAssetsName.Text;          
             string strGuidKey = lblGuidKey.Text;
 
-            string strInputEmail = txbEditAssetsName.Text.Trim();
+            string strItemTypeID = ddlItemType.SelectedItem.Value;
+            string strItemCode = ddlItemList.SelectedItem.Value;
 
-            string strMessage = "檢查Email成功";
+            //string strInputEmail = txbEditAssetsName.Text.Trim();
+
+            //string strMessage = "檢查Email成功";
             //判斷信箱是否有效
-            if (strItemType == "信箱")
-            {
+            //if (strItemType == "信箱")
+            //{
                              
-                strMessage =IsDuplicateEmail(strItemType);
+            //    strMessage =IsDuplicateEmail(strItemType);
                
                 
-                lblErrorMessage.Visible = true;
-                lblErrorMessage.Text = strMessage;
-            }
-            else
+            //    lblErrorMessage.Visible = true;
+            //    lblErrorMessage.Text = strMessage;
+            //}
+            //else
+            //{
+            lblMessage.Visible = false;
+
+            //用select找guidkey
+            DataTable dtAdminterface = (DataTable)ViewState["dtAdminterface"];
+            DataRow[] selectedRow = dtAdminterface.Select("GuidKey= '" + strGuidKey + "'");
+            //將變更的資料寫入
+            selectedRow[0]["Nobr"] = strNobr;
+            selectedRow[0]["UserName"] = strUserName;
+            selectedRow[0]["DeptName"] = strDeptName;
+            selectedRow[0]["ItemType"] = strItemType;
+            selectedRow[0]["AssetsCode"] = strAssetsCode;
+            selectedRow[0]["AssetsName"] = strAssetsName;
+            selectedRow[0]["ItemName"] = strItemName;
+            selectedRow[0]["GuidKey"] = strGuidKey;
+
+            selectedRow[0]["ItemTypeID"] = strItemTypeID;
+            selectedRow[0]["ItemCode"] = strItemCode;
+            //int intSelectedIndex = grvAdminterface.SelectedIndex;   //選擇索引   5   第六筆
+            //int intPageIndex = grvAdminterface.PageIndex;           //擷取當前頁索引   1  第二頁
+            //int intPageSize = grvAdminterface.PageSize;             //擷取每頁顯示記錄數  20
+            //int intCurrentSelectedIndex = intSelectedIndex + intPageIndex * intPageSize; //取得當前頁面選擇的索引  5+20*1=25 第二頁第六筆
+
+            //dtAdminterface.Rows[intCurrentSelectedIndex]["Nobr"] = strNobr;
+            //dtAdminterface.Rows[intCurrentSelectedIndex]["UserName"] = strUserName;
+            //dtAdminterface.Rows[intCurrentSelectedIndex]["DeptName"] = strDeptName;
+            //dtAdminterface.Rows[intCurrentSelectedIndex]["ItemType"] = strItemType;
+            //dtAdminterface.Rows[intCurrentSelectedIndex]["AssetsCode"] = strAssetsCode;
+            //dtAdminterface.Rows[intCurrentSelectedIndex]["AssetsName"] = strAssetsName;
+            //dtAdminterface.Rows[intCurrentSelectedIndex]["ItemName"] = strItemName;
+            //dtAdminterface.Rows[intCurrentSelectedIndex]["GuidKey"] = strGuidKey;
+
+            dbFunction dbFunction = new dbFunction();
+            //連線
+            using (SqlConnection conn = dbFunction.sqlHissMingConnection())
             {
-                lblErrorMessage.Visible = false;
-
-                //用select找guidkey
-                DataTable dtAdminterface = (DataTable)ViewState["dtAdminterface"];
-                DataRow[] selectedRow = dtAdminterface.Select("GuidKey= '" + strGuidKey + "'");
-                //將變更的資料寫入
-                selectedRow[0]["Nobr"] = strNobr;
-                selectedRow[0]["UserName"] = strUserName;
-                selectedRow[0]["DeptName"] = strDeptName;
-                selectedRow[0]["ItemType"] = strItemType;
-                selectedRow[0]["AssetsCode"] = strAssetsCode;
-                selectedRow[0]["AssetsName"] = strAssetsName;
-                selectedRow[0]["ItemName"] = strItemName;
-                selectedRow[0]["GuidKey"] = strGuidKey;
-                //int intSelectedIndex = grvAdminterface.SelectedIndex;   //選擇索引   5   第六筆
-                //int intPageIndex = grvAdminterface.PageIndex;           //擷取當前頁索引   1  第二頁
-                //int intPageSize = grvAdminterface.PageSize;             //擷取每頁顯示記錄數  20
-                //int intCurrentSelectedIndex = intSelectedIndex + intPageIndex * intPageSize; //取得當前頁面選擇的索引  5+20*1=25 第二頁第六筆
-
-                //dtAdminterface.Rows[intCurrentSelectedIndex]["Nobr"] = strNobr;
-                //dtAdminterface.Rows[intCurrentSelectedIndex]["UserName"] = strUserName;
-                //dtAdminterface.Rows[intCurrentSelectedIndex]["DeptName"] = strDeptName;
-                //dtAdminterface.Rows[intCurrentSelectedIndex]["ItemType"] = strItemType;
-                //dtAdminterface.Rows[intCurrentSelectedIndex]["AssetsCode"] = strAssetsCode;
-                //dtAdminterface.Rows[intCurrentSelectedIndex]["AssetsName"] = strAssetsName;
-                //dtAdminterface.Rows[intCurrentSelectedIndex]["ItemName"] = strItemName;
-                //dtAdminterface.Rows[intCurrentSelectedIndex]["GuidKey"] = strGuidKey;
-
-                dbFunction dbFunction = new dbFunction();
-                //連線
-                using (SqlConnection conn = dbFunction.sqlHissMingConnection())
+                conn.Open();
+                string query = "spUpdateIT01EmployeeItems";
+                using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
-                    conn.Open();
-                    string query = "spUpdateIT01EmployeeItems";
-                    using (SqlCommand cmd = new SqlCommand(query, conn))
-                    {
-                        cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandType = CommandType.StoredProcedure;
 
-                        cmd.Parameters.AddWithValue("@Nobr", strNobr);
-                        cmd.Parameters.AddWithValue("@UserName", strUserName);
-                        cmd.Parameters.AddWithValue("@DeptName", strDeptName);
-                        cmd.Parameters.AddWithValue("@ItemType", strItemType);
-                        cmd.Parameters.AddWithValue("@AssetsCode", strAssetsCode);
-                        cmd.Parameters.AddWithValue("@AssetsName", strAssetsName);
-                        cmd.Parameters.AddWithValue("@ItemName", strItemName);
-                        cmd.Parameters.AddWithValue("@GuidKey", strGuidKey);
+                    cmd.Parameters.AddWithValue("@Nobr", strNobr);
+                    cmd.Parameters.AddWithValue("@UserName", strUserName);
+                    cmd.Parameters.AddWithValue("@DeptName", strDeptName);
+                    cmd.Parameters.AddWithValue("@ItemType", strItemType);
+                    cmd.Parameters.AddWithValue("@AssetsCode", strAssetsCode);
+                    cmd.Parameters.AddWithValue("@AssetsName", strAssetsName);
+                    cmd.Parameters.AddWithValue("@ItemName", strItemName);
+                    cmd.Parameters.AddWithValue("@GuidKey", strGuidKey);
 
-                        cmd.ExecuteNonQuery();
-                    }
+                    cmd.Parameters.AddWithValue("@ItemTypeID", strItemTypeID);
+                    cmd.Parameters.AddWithValue("@ItemCode", strItemCode);
+
+                    cmd.ExecuteNonQuery();
                 }
-                ViewState["dtAdminterface"] = dtAdminterface;
-                grvAdminterface.DataSource = dtAdminterface;
-                grvAdminterface.DataBind();
-                //取消選取
-                grvAdminterface.SelectedIndex = -1;
-                //按鈕顯示
-                btnEdit.Visible = false;
-                btnDelete.Visible = false;
-                //清空
-                ClearTxbContent();
-            }           
+            }
+            ViewState["dtAdminterface"] = dtAdminterface;
+            grvAdminterface.DataSource = dtAdminterface;
+            grvAdminterface.DataBind();
+            //取消選取
+            grvAdminterface.SelectedIndex = -1;
+            //按鈕顯示
+            btnEdit.Visible = false;
+            btnDelete.Visible = false;
+            //清空
+            ClearTxbContent();
+            //}           
         }
 
         //刪除
@@ -424,28 +441,41 @@ namespace BPM.FlowWork
             //string strAddItemType = txbEditItemType.Text;
             //string strAddItemName = txbEditItemName.Text;
             string strAddItemType = ddlItemType.SelectedItem.Text;
-            string strAddItemName = ddlItemList.SelectedItem.Text;  
+            string strAddItemName = ddlItemList.SelectedItem.Text;
+
+            string strAddItemTypeID = ddlItemType.SelectedItem.Value;
+            string strAddItemCode = ddlItemList.SelectedItem.Value;
+
             string strAddAssetsCode = txbEditAssetsCode.Text;
             string strAddAssetsName = txbEditAssetsName.Text;
-
-
+          
             string strInputEmail = txbEditAssetsName.Text.Trim();
+
+            bool check = true;
+
+            string strMessage;
             //判斷信箱是否有效
-            string strMessage = "檢查Email成功";
-            //判斷信箱是否有效
-            if (strInputEmail == "信箱")
+            if (strAddItemType == "信箱")
             {
-
-                strMessage = IsDuplicateEmail(strInputEmail);
-
-               
-                lblErrorMessage.Visible = true;
-                lblErrorMessage.Text = strMessage;
+                strMessage = EmailCheckFields(strInputEmail);
+                if (!string.IsNullOrEmpty(strMessage))
+                {
+                    lblMessage.Text = strMessage;
+                    lblMessage.Visible = true;
+                    check = false;
+                }
+                else 
+                {
+                    lblMessage.Text = "Email檢查成功";
+                    lblMessage.Visible = true;
+                    check = true;
+                }                                 
             }
-            else 
-            {
-                lblErrorMessage.Visible = false;
 
+
+            //檢查成功就寫入
+            if (check)
+            {
                 //設定資料欄位
                 DataTable dtAddIT01EmployeeItems = new DataTable();
                 dtAddIT01EmployeeItems.Columns.Add("Nobr");
@@ -455,6 +485,8 @@ namespace BPM.FlowWork
                 dtAddIT01EmployeeItems.Columns.Add("AssetsCode");
                 dtAddIT01EmployeeItems.Columns.Add("AssetsName");
                 dtAddIT01EmployeeItems.Columns.Add("ItemName");
+                dtAddIT01EmployeeItems.Columns.Add("ItemTypeID");
+                dtAddIT01EmployeeItems.Columns.Add("ItemCode");
                 //設定欄位相對資料
                 DataRow drAddIT01EmployeeItems = dtAddIT01EmployeeItems.NewRow();
                 drAddIT01EmployeeItems["Nobr"] = strAddNobr;
@@ -464,6 +496,8 @@ namespace BPM.FlowWork
                 drAddIT01EmployeeItems["AssetsCode"] = strAddAssetsCode;
                 drAddIT01EmployeeItems["AssetsName"] = strAddAssetsName;
                 drAddIT01EmployeeItems["ItemName"] = strAddItemName;
+                drAddIT01EmployeeItems["ItemTypeID"] = strAddItemTypeID;
+                drAddIT01EmployeeItems["ItemCode"] = strAddItemCode;
                 dtAddIT01EmployeeItems.Rows.Add(drAddIT01EmployeeItems);
 
                 dbFunction dbFunction = new dbFunction();
@@ -482,6 +516,8 @@ namespace BPM.FlowWork
                         bulkCopy.ColumnMappings.Add("AssetsCode", "AssetsCode");
                         bulkCopy.ColumnMappings.Add("AssetsName", "AssetsName");
                         bulkCopy.ColumnMappings.Add("ItemName", "ItemName");
+                        bulkCopy.ColumnMappings.Add("ItemTypeID", "ItemTypeID");
+                        bulkCopy.ColumnMappings.Add("ItemCode", "ItemCode");
                         bulkCopy.WriteToServer(dtAddIT01EmployeeItems);
                     }
                 }
@@ -491,7 +527,7 @@ namespace BPM.FlowWork
                 ViewSearchEmployeeHaveItems();
                 //清空
                 ClearTxbContent();
-            }            
+            }
         }
 
         protected void btnClear_Click(object sender, EventArgs e)
@@ -508,15 +544,16 @@ namespace BPM.FlowWork
             //txbEditItemType.Text = "";
             //txbEditItemName.Text = "";
             txbEditAssetsCode.Text = "";
-            txbEditAssetsName.Text = "";                         
+            txbEditAssetsName.Text = "";
+            grvAdminterface.SelectedIndex = -1;
         }
         //依照不同的ItemType得到相對的Itemlist
         protected void ddlItemType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //清空
-            txbEditAssetsCode.Text = "";
-            txbEditAssetsName.Text = "";
-            lblErrorMessage.Visible = false;
+            ////清空
+            //txbEditAssetsCode.Text = "";
+            //txbEditAssetsName.Text = "";
+            lblMessage.Visible = false;
             //顯示
             switch (ddlItemType.SelectedItem.Text)
             {
@@ -571,9 +608,8 @@ namespace BPM.FlowWork
         //}
 
         //判斷信箱是否有效或重複
-        public string IsDuplicateEmail(string email)
+        public string EmailCheckFields(string email)
         {
-
             string pattern = @"^\w+([-+.']\w+)*@hiss\.com\.tw$";
             if (System.Text.RegularExpressions.Regex.IsMatch(email, pattern))
             {
@@ -581,6 +617,8 @@ namespace BPM.FlowWork
 
                 using (SqlConnection conn = dbFunction.sqlHissMingConnection())
                 {
+                    conn.Open();
+
                     SqlCommand cmd = new SqlCommand("spIT01EmployeeItemsCheckFields", conn);
 
                     cmd.CommandType = CommandType.StoredProcedure;
@@ -592,10 +630,9 @@ namespace BPM.FlowWork
             else 
             {
                 return "Emiail格式有誤";
-            }
-
-           
+            }        
         }
+
 
         //判斷是否為有效的資產編號
         public bool IsValidAssetsCode(string AssetsCode)

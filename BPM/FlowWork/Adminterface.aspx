@@ -12,10 +12,8 @@
         <asp:ScriptManager ID="ScriptManager" runat="server"></asp:ScriptManager>
         <table width="100%">
             <tr>
-                <td width="80%"></td>
-                <td>
-                    <asp:Button ID="btnDownload" runat="server" Text="下載(Excel)" OnClick="btnDownload_Click"/>
-                </td>
+                <td width="85%"></td>
+
                 <td>
                     <asp:Button ID="btnHome" runat="server" Text="首頁" OnClick="btnHome_Click" />
                 </td>
@@ -36,7 +34,8 @@
             <asp:Label ID="lblSearch" runat="server" Text="輸入任一關鍵字:" Font-Size="16"></asp:Label>
             <asp:TextBox ID="txbSearch" runat="server" Font-Size="16" Width="110px"></asp:TextBox>
             <asp:Button ID="btnSearch" runat="server" Text="搜尋" OnClick="btnSearch_Click" Font-Size="14" />
-            
+            <asp:Button ID="btnDownload" runat="server" Text="下載(Excel)" OnClick="btnDownload_Click" Visible="false" Font-Size="14"/>
+
         </asp:Panel>
         <br />
         <asp:UpdatePanel ID="UpdatePanel1" runat="server">
@@ -72,7 +71,7 @@
                             <td width="25%">
                                 <asp:Label ID="lblAssetsName" runat="server" Text="資產名稱:" Visible="false"></asp:Label>
                                 <asp:TextBox ID="txbEditAssetsName" runat="server" Width="230px" Visible="false"></asp:TextBox><br />
-                                <asp:Label ID="lblErrorMessage" runat="server" ForeColor="Red" Visible="false"></asp:Label>
+                                <asp:Label ID="lblMessage" runat="server" ForeColor="Red" Visible="false"></asp:Label>
                             </td>
                             <td width="15%">
                                 <asp:Label ID="lblAssetsCode" runat="server" Text="資產編號:" Visible="false"></asp:Label>

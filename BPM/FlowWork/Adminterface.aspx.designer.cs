@@ -33,15 +33,6 @@ namespace BPM.FlowWork
         protected global::System.Web.UI.ScriptManager ScriptManager;
 
         /// <summary>
-        /// btnDownload 控制項。
-        /// </summary>
-        /// <remarks>
-        /// 自動產生的欄位。
-        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnDownload;
-
-        /// <summary>
         /// btnHome 控制項。
         /// </summary>
         /// <remarks>
@@ -112,6 +103,15 @@ namespace BPM.FlowWork
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnSearch;
+
+        /// <summary>
+        /// btnDownload 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnDownload;
 
         /// <summary>
         /// UpdatePanel1 控制項。
@@ -195,13 +195,13 @@ namespace BPM.FlowWork
         protected global::System.Web.UI.WebControls.TextBox txbEditAssetsName;
 
         /// <summary>
-        /// lblErrorMessage 控制項。
+        /// lblMessage 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblErrorMessage;
+        protected global::System.Web.UI.WebControls.Label lblMessage;
 
         /// <summary>
         /// lblAssetsCode 控制項。
