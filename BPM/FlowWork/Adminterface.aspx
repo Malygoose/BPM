@@ -64,20 +64,22 @@
                             <%--<td>部門:<asp:TextBox ID="txbEditDeptName" runat="server"></asp:TextBox></td>--%>
                             <%--<td>種類:<asp:TextBox ID="txbEditItemType" runat="server"></asp:TextBox></td>--%>
                             <%--<td>項目:<asp:TextBox ID="txbEditItemName" runat="server"></asp:TextBox></td>--%>
-                            <td width="10%">種類:<asp:DropDownList ID="ddlItemType" runat="server" AutoPostBack="True" DataTextField="TypeName" DataValueField="TypeID" Font-Size="12" OnSelectedIndexChanged="ddlItemType_SelectedIndexChanged"></asp:DropDownList>
+                            <td width="9%">種類:<asp:DropDownList ID="ddlItemType" runat="server" AutoPostBack="True" DataTextField="TypeName" DataValueField="TypeID" Font-Size="12" OnSelectedIndexChanged="ddlItemType_SelectedIndexChanged"></asp:DropDownList>
                             </td>
                             <td width="10%">項目:<asp:DropDownList ID="ddlItemList" runat="server" AutoPostBack="True" DataTextField="ItemName" DataValueField="ItemID" Font-Size="12"></asp:DropDownList>
                             </td>
-                            <td width="25%">
+                            <td width="23%">
                                 <asp:Label ID="lblAssetsName" runat="server" Text="資產名稱:" Visible="false"></asp:Label>
                                 <asp:TextBox ID="txbEditAssetsName" runat="server" Width="230px" Visible="false"></asp:TextBox><br />
-                                <asp:Label ID="lblMessage" runat="server" ForeColor="Red" Visible="false"></asp:Label>
+                                
                             </td>
                             <td width="15%">
                                 <asp:Label ID="lblAssetsCode" runat="server" Text="資產編號:" Visible="false"></asp:Label>
                                 <asp:TextBox ID="txbEditAssetsCode" runat="server" Width="80px" Visible="false"></asp:TextBox>                               
                             </td>
-
+                            <td width="10%">
+                                <asp:Label ID="lblMessage" runat="server"  Visible="false" ForeColor="Red"></asp:Label>
+                            </td>
                             <td width="15%">
                                 <asp:Button ID="btnAdd" runat="server" Text="新增" OnClick="btnAdd_Click" />
                                 <asp:Button ID="btnEdit" runat="server" Text="更改" OnClick="btnEdit_Click" OnClientClick="return confirm('確定要更改嗎？');" Visible="false" />

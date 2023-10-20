@@ -524,10 +524,10 @@ namespace BPM.FlowWork
             string startEmpID = User.Identity.Name;
             string startEmpDept = ddlSelectStartEmpDept.SelectedValue;
 
-            string connectionString = ConfigurationManager.ConnectionStrings["ming"].ConnectionString;
+            string connectionString = ConfigurationManager.ConnectionStrings["ShareElecForm"].ConnectionString;
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
-                SqlCommand cmd = new SqlCommand("spFlowIT01FormApplyDDLDept", conn);
+                SqlCommand cmd = new SqlCommand("spFormApplySelectStartEmpDept", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@strDepartmentID", startEmpDept);
                 cmd.Parameters.AddWithValue("@strEmployeeID", startEmpID);
@@ -577,6 +577,7 @@ namespace BPM.FlowWork
         protected void ddlSelectApplyEmp_SelectedIndexChanged(object sender, EventArgs e)
         {
             stuDataTableList stuDataTableList = (stuDataTableList)ViewState["stuDataTableList"];
+            
             getEmployeeInfo(stuDataTableList.dtEmployeeRoleList, ddlSelectApplyEmp.SelectedValue);
 
             if (rbtnlSelectWorking.SelectedValue == "Quit")

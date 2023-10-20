@@ -235,88 +235,112 @@ namespace BPM.FlowWork
             string strItemTypeID = ddlItemType.SelectedItem.Value;
             string strItemCode = ddlItemList.SelectedItem.Value;
 
-            //string strInputEmail = txbEditAssetsName.Text.Trim();
+            bool check = true;
 
-            //string strMessage = "檢查Email成功";
+            string strMessage;
             //判斷信箱是否有效
-            //if (strItemType == "信箱")
-            //{
-                             
-            //    strMessage =IsDuplicateEmail(strItemType);
-               
-                
-            //    lblErrorMessage.Visible = true;
-            //    lblErrorMessage.Text = strMessage;
-            //}
-            //else
-            //{
-            lblMessage.Visible = false;
-
-            //用select找guidkey
-            DataTable dtAdminterface = (DataTable)ViewState["dtAdminterface"];
-            DataRow[] selectedRow = dtAdminterface.Select("GuidKey= '" + strGuidKey + "'");
-            //將變更的資料寫入
-            selectedRow[0]["Nobr"] = strNobr;
-            selectedRow[0]["UserName"] = strUserName;
-            selectedRow[0]["DeptName"] = strDeptName;
-            selectedRow[0]["ItemType"] = strItemType;
-            selectedRow[0]["AssetsCode"] = strAssetsCode;
-            selectedRow[0]["AssetsName"] = strAssetsName;
-            selectedRow[0]["ItemName"] = strItemName;
-            selectedRow[0]["GuidKey"] = strGuidKey;
-
-            selectedRow[0]["ItemTypeID"] = strItemTypeID;
-            selectedRow[0]["ItemCode"] = strItemCode;
-            //int intSelectedIndex = grvAdminterface.SelectedIndex;   //選擇索引   5   第六筆
-            //int intPageIndex = grvAdminterface.PageIndex;           //擷取當前頁索引   1  第二頁
-            //int intPageSize = grvAdminterface.PageSize;             //擷取每頁顯示記錄數  20
-            //int intCurrentSelectedIndex = intSelectedIndex + intPageIndex * intPageSize; //取得當前頁面選擇的索引  5+20*1=25 第二頁第六筆
-
-            //dtAdminterface.Rows[intCurrentSelectedIndex]["Nobr"] = strNobr;
-            //dtAdminterface.Rows[intCurrentSelectedIndex]["UserName"] = strUserName;
-            //dtAdminterface.Rows[intCurrentSelectedIndex]["DeptName"] = strDeptName;
-            //dtAdminterface.Rows[intCurrentSelectedIndex]["ItemType"] = strItemType;
-            //dtAdminterface.Rows[intCurrentSelectedIndex]["AssetsCode"] = strAssetsCode;
-            //dtAdminterface.Rows[intCurrentSelectedIndex]["AssetsName"] = strAssetsName;
-            //dtAdminterface.Rows[intCurrentSelectedIndex]["ItemName"] = strItemName;
-            //dtAdminterface.Rows[intCurrentSelectedIndex]["GuidKey"] = strGuidKey;
-
-            dbFunction dbFunction = new dbFunction();
-            //連線
-            using (SqlConnection conn = dbFunction.sqlHissMingConnection())
+            if (strItemType == "信箱")
             {
-                conn.Open();
-                string query = "spUpdateIT01EmployeeItems";
-                using (SqlCommand cmd = new SqlCommand(query, conn))
+                strMessage = EmailCheckFields(strAssetsName);
+                if (!string.IsNullOrEmpty(strMessage))
                 {
-                    cmd.CommandType = CommandType.StoredProcedure;
-
-                    cmd.Parameters.AddWithValue("@Nobr", strNobr);
-                    cmd.Parameters.AddWithValue("@UserName", strUserName);
-                    cmd.Parameters.AddWithValue("@DeptName", strDeptName);
-                    cmd.Parameters.AddWithValue("@ItemType", strItemType);
-                    cmd.Parameters.AddWithValue("@AssetsCode", strAssetsCode);
-                    cmd.Parameters.AddWithValue("@AssetsName", strAssetsName);
-                    cmd.Parameters.AddWithValue("@ItemName", strItemName);
-                    cmd.Parameters.AddWithValue("@GuidKey", strGuidKey);
-
-                    cmd.Parameters.AddWithValue("@ItemTypeID", strItemTypeID);
-                    cmd.Parameters.AddWithValue("@ItemCode", strItemCode);
-
-                    cmd.ExecuteNonQuery();
+                    lblMessage.Text = strMessage;
+                    lblMessage.Visible = true;
+                    check = false;
+                }
+                else
+                {
+                    lblMessage.Text = "Email檢查成功";
+                    lblMessage.Visible = true;
+                    check = true;
                 }
             }
-            ViewState["dtAdminterface"] = dtAdminterface;
-            grvAdminterface.DataSource = dtAdminterface;
-            grvAdminterface.DataBind();
-            //取消選取
-            grvAdminterface.SelectedIndex = -1;
-            //按鈕顯示
-            btnEdit.Visible = false;
-            btnDelete.Visible = false;
-            //清空
-            ClearTxbContent();
-            //}           
+
+            //判斷資產編號是否有效
+            if (strItemType == "硬體" && (strAssetsName != "硬體配件" || strAssetsName != "網路電話"))
+            {
+                strMessage = AssetsCodeCheckFields(strAssetsCode);
+                if (!string.IsNullOrEmpty(strMessage))
+                {
+                    lblMessage.Text = strMessage;
+                    lblMessage.Visible = true;
+                    check = false;
+                }
+                else
+                {
+                    lblMessage.Text = "資產編號檢查成功";
+                    lblMessage.Visible = true;
+                    check = true;
+                }
+            }
+
+            if (check)
+            {
+                //用select找guidkey
+                DataTable dtAdminterface = (DataTable)ViewState["dtAdminterface"];
+                DataRow[] selectedRow = dtAdminterface.Select("GuidKey= '" + strGuidKey + "'");
+                //將變更的資料寫入
+                selectedRow[0]["Nobr"] = strNobr;
+                selectedRow[0]["UserName"] = strUserName;
+                selectedRow[0]["DeptName"] = strDeptName;
+                selectedRow[0]["ItemType"] = strItemType;
+                selectedRow[0]["AssetsCode"] = strAssetsCode;
+                selectedRow[0]["AssetsName"] = strAssetsName;
+                selectedRow[0]["ItemName"] = strItemName;
+                selectedRow[0]["GuidKey"] = strGuidKey;
+
+                selectedRow[0]["ItemTypeID"] = strItemTypeID;
+                selectedRow[0]["ItemCode"] = strItemCode;
+                //int intSelectedIndex = grvAdminterface.SelectedIndex;   //選擇索引   5   第六筆
+                //int intPageIndex = grvAdminterface.PageIndex;           //擷取當前頁索引   1  第二頁
+                //int intPageSize = grvAdminterface.PageSize;             //擷取每頁顯示記錄數  20
+                //int intCurrentSelectedIndex = intSelectedIndex + intPageIndex * intPageSize; //取得當前頁面選擇的索引  5+20*1=25 第二頁第六筆
+
+                //dtAdminterface.Rows[intCurrentSelectedIndex]["Nobr"] = strNobr;
+                //dtAdminterface.Rows[intCurrentSelectedIndex]["UserName"] = strUserName;
+                //dtAdminterface.Rows[intCurrentSelectedIndex]["DeptName"] = strDeptName;
+                //dtAdminterface.Rows[intCurrentSelectedIndex]["ItemType"] = strItemType;
+                //dtAdminterface.Rows[intCurrentSelectedIndex]["AssetsCode"] = strAssetsCode;
+                //dtAdminterface.Rows[intCurrentSelectedIndex]["AssetsName"] = strAssetsName;
+                //dtAdminterface.Rows[intCurrentSelectedIndex]["ItemName"] = strItemName;
+                //dtAdminterface.Rows[intCurrentSelectedIndex]["GuidKey"] = strGuidKey;
+
+                dbFunction dbFunction = new dbFunction();
+                //連線
+                using (SqlConnection conn = dbFunction.sqlHissMingConnection())
+                {
+                    conn.Open();
+                    string query = "spUpdateIT01EmployeeItems";
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.AddWithValue("@Nobr", strNobr);
+                        cmd.Parameters.AddWithValue("@UserName", strUserName);
+                        cmd.Parameters.AddWithValue("@DeptName", strDeptName);
+                        cmd.Parameters.AddWithValue("@ItemType", strItemType);
+                        cmd.Parameters.AddWithValue("@AssetsCode", strAssetsCode);
+                        cmd.Parameters.AddWithValue("@AssetsName", strAssetsName);
+                        cmd.Parameters.AddWithValue("@ItemName", strItemName);
+                        cmd.Parameters.AddWithValue("@GuidKey", strGuidKey);
+
+                        cmd.Parameters.AddWithValue("@ItemTypeID", strItemTypeID);
+                        cmd.Parameters.AddWithValue("@ItemCode", strItemCode);
+
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+                ViewState["dtAdminterface"] = dtAdminterface;
+                grvAdminterface.DataSource = dtAdminterface;
+                grvAdminterface.DataBind();
+                //取消選取
+                grvAdminterface.SelectedIndex = -1;
+                //按鈕顯示
+                btnEdit.Visible = false;
+                btnDelete.Visible = false;
+                //清空
+                ClearTxbContent();
+            }                 
         }
 
         //刪除
@@ -450,6 +474,7 @@ namespace BPM.FlowWork
             string strAddAssetsName = txbEditAssetsName.Text;
           
             string strInputEmail = txbEditAssetsName.Text.Trim();
+            string strInputAssetsCode = txbEditAssetsCode.Text.Trim();  
 
             bool check = true;
 
@@ -472,6 +497,23 @@ namespace BPM.FlowWork
                 }                                 
             }
 
+            //判斷資產編號是否有效
+            if (strAddItemType=="硬體" && (strAddAssetsName!="硬體配件" || strAddAssetsName!="網路電話"))
+            {
+                strMessage=AssetsCodeCheckFields(strInputAssetsCode);
+                if (!string.IsNullOrEmpty(strMessage))
+                {
+                    lblMessage.Text = strMessage;
+                    lblMessage.Visible = true;
+                    check = false;
+                }
+                else
+                {
+                    lblMessage.Text = "資產編號檢查成功";
+                    lblMessage.Visible = true;
+                    check = true;
+                }
+            }
 
             //檢查成功就寫入
             if (check)
@@ -545,6 +587,7 @@ namespace BPM.FlowWork
             //txbEditItemName.Text = "";
             txbEditAssetsCode.Text = "";
             txbEditAssetsName.Text = "";
+            lblMessage.Text = "";
             grvAdminterface.SelectedIndex = -1;
         }
         //依照不同的ItemType得到相對的Itemlist
@@ -562,21 +605,21 @@ namespace BPM.FlowWork
                     txbEditAssetsCode.Visible = true;
                     lblAssetsName.Visible = true;
                     txbEditAssetsName.Visible = true;
-                    lblAssetsName.Text = "資產名稱";
+                    lblAssetsName.Text = "資產名稱:";
                     break;
                 case "信箱":
                     lblAssetsCode.Visible = false;
                     txbEditAssetsCode.Visible = false;
                     lblAssetsName.Visible = true;
                     txbEditAssetsName.Visible = true;
-                    lblAssetsName.Text = "信箱名稱";
+                    lblAssetsName.Text = "信箱名稱:";
                     break;
                 default:
                     lblAssetsCode.Visible = false;
                     txbEditAssetsCode.Visible = false;
                     lblAssetsName.Visible = false;
                     txbEditAssetsName.Visible = false;
-                    lblAssetsName.Text = "資產名稱";
+                    lblAssetsName.Text = "資產名稱:";
                     break;
             }
 
@@ -599,13 +642,6 @@ namespace BPM.FlowWork
                 ddlItemList.DataBind();
             }
         }
-
-        //判斷是否為有效的信箱
-        //public bool IsValidEmail(string email) 
-        //{
-        //    string pattern = @"^\w+([-+.']\w+)*@hiss\.com\.tw$";
-        //    return System.Text.RegularExpressions.Regex.IsMatch(email, pattern);    
-        //}
 
         //判斷信箱是否有效或重複
         public string EmailCheckFields(string email)
@@ -633,12 +669,30 @@ namespace BPM.FlowWork
             }        
         }
 
-
-        //判斷是否為有效的資產編號
-        public bool IsValidAssetsCode(string AssetsCode)
+        //判斷資產編號是否為有效或重複
+        public string AssetsCodeCheckFields(string AssetsCode)
         {
             string pattern = @"^\d{7}$";
-            return System.Text.RegularExpressions.Regex.IsMatch(AssetsCode, pattern);
+            if (System.Text.RegularExpressions.Regex.IsMatch(AssetsCode, pattern))
+            {
+                dbFunction dbFunction = new dbFunction();
+
+                using (SqlConnection conn = dbFunction.sqlHissMingConnection())
+                {
+                    conn.Open();
+
+                    SqlCommand cmd = new SqlCommand("spIT01EmployeeItemsCheckFields", conn);
+
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@strAsscetsNo", AssetsCode);
+
+                    return (string)cmd.ExecuteScalar();
+                }
+            }
+            else
+            {
+                return "資產編號格式有誤";
+            }
         }
 
         //資訊設備明細表下載成excel
