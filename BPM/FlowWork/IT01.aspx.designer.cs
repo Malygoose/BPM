@@ -51,6 +51,15 @@ namespace BPM.FlowWork
         protected global::System.Web.UI.WebControls.Label lblProcessID;
 
         /// <summary>
+        /// btnHide 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnHide;
+
+        /// <summary>
         /// btnHome 控制項。
         /// </summary>
         /// <remarks>
@@ -114,6 +123,15 @@ namespace BPM.FlowWork
         protected global::System.Web.UI.WebControls.RadioButtonList rbtnlSelectWorking;
 
         /// <summary>
+        /// label1 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label label1;
+
+        /// <summary>
         /// lblApplyDate 控制項。
         /// </summary>
         /// <remarks>
@@ -121,6 +139,15 @@ namespace BPM.FlowWork
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblApplyDate;
+
+        /// <summary>
+        /// label2 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label label2;
 
         /// <summary>
         /// txbRequireDate 控制項。
@@ -148,6 +175,24 @@ namespace BPM.FlowWork
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel pnlPersonInfo;
+
+        /// <summary>
+        /// pnlStartEmp 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlStartEmp;
+
+        /// <summary>
+        /// Label4 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label4;
 
         /// <summary>
         /// lblStartEmpRoleID 控制項。
@@ -274,6 +319,15 @@ namespace BPM.FlowWork
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel pnlApplyEmpDevice;
+
+        /// <summary>
+        /// lblApplyEmpHaveItem 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblApplyEmpHaveItem;
 
         /// <summary>
         /// grvApplyEmpDevice 控制項。
@@ -546,6 +600,15 @@ namespace BPM.FlowWork
         protected global::System.Web.UI.WebControls.Label lblStarSeleckWorkEmp0;
 
         /// <summary>
+        /// Label3 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label3;
+
+        /// <summary>
         /// txbTotalCost 控制項。
         /// </summary>
         /// <remarks>
@@ -580,6 +643,15 @@ namespace BPM.FlowWork
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txbApplyReason;
+
+        /// <summary>
+        /// lblFileUpload 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblFileUpload;
 
         /// <summary>
         /// pnlFileUpload 控制項。
@@ -663,6 +735,15 @@ namespace BPM.FlowWork
         protected global::System.Web.UI.WebControls.Label lblCheck;
 
         /// <summary>
+        /// lblSignOpinion 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblSignOpinion;
+
+        /// <summary>
         /// txbSignOpinion 控制項。
         /// </summary>
         /// <remarks>
@@ -724,5 +805,23 @@ namespace BPM.FlowWork
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnTake;
+
+        /// <summary>
+        /// pnlVersion 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlVersion;
+
+        /// <summary>
+        /// lblVersion 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblVersion;
     }
 }

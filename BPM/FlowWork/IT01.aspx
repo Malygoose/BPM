@@ -25,7 +25,7 @@
     </script>
     <style type="text/css">
         .center-panel {
-            padding: 10px;
+            padding: 0px;
             margin: 0 auto;
             width: 1000px;
             box-shadow: 0 0 20px #666;
@@ -34,7 +34,7 @@
 
         .title-style {
             font-family: 微軟正黑體;
-            font-size: medium;
+            font-size: 18px;
             font-weight: bold;
         }
 
@@ -49,15 +49,22 @@
         .center-gridview {
             text-align: center;
         }
+
+        .font-size {
+            font-size: 20px;
+        }
     </style>
 </head>
 <body>
     <form id="form1" runat="server" class="center-panel">
         <asp:ScriptManager ID="ScriptManager" runat="server"></asp:ScriptManager>
         <asp:Panel ID="pnlBegin" runat="server">
-            <table width="100%">
+            <table width="100%" class="font-size">
                 <tr>
-                    <td width="75%">表單序號:<asp:Label ID="lblProcessID" runat="server"></asp:Label>
+                    <td width="70%">表單序號:<asp:Label ID="lblProcessID" runat="server"></asp:Label>
+                    </td>
+                    <td>
+                        <asp:Button ID="btnHide" runat="server" Text="隱藏" CssClass="title-style" OnClick="btnHide_Click" />
                     </td>
                     <td>
                         <asp:Button ID="btnHome" runat="server" Text="首頁" CssClass="title-style" OnClick="btnHome_Click" />
@@ -94,7 +101,7 @@
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <asp:RadioButtonList ID="rbtnlSelectWorking" runat="server" Font-Names="微軟正黑體" OnSelectedIndexChanged="rbtnlSelectWorking_SelectedIndexChanged" RepeatDirection="Horizontal" AutoPostBack="True">
+                        <asp:RadioButtonList ID="rbtnlSelectWorking" runat="server" Font-Names="微軟正黑體" OnSelectedIndexChanged="rbtnlSelectWorking_SelectedIndexChanged" RepeatDirection="Horizontal" AutoPostBack="True" Font-Size="20px">
                             <asp:ListItem Value="AtWork">申請在職變更(新增軟硬體/變更權限)</asp:ListItem>
                             <asp:ListItem Value="Quit">申請離職(繳回全部設備)</asp:ListItem>
                             <asp:ListItem Value="Transfer">申請調職(繳回全部設備)</asp:ListItem>
@@ -104,15 +111,17 @@
 
                 <tr>
                     <td width="25%">
-                        <div style="width: 20px; display: inline-block;"></div>
-                        申請日期:
+                        <%--<div style="width: 20px; display: inline-block;"></div>--%>
+                        <div class="font-size">
+                            <asp:Label ID="label1" runat="server" Text="申請日期:" />
                             <asp:Label ID="lblApplyDate" runat="server"></asp:Label>
+                        </div>
                     </td>
                     <td>
-                        <div>
-                            需求日期:
+                        <div class="font-size">
+                            <asp:Label ID="label2" runat="server" Text="需求日期:" />
                             <font color="red">*</font>
-                            <asp:TextBox ID="txbRequireDate" runat="server"></asp:TextBox>
+                            <asp:TextBox ID="txbRequireDate" runat="server" Font-Size="20px"></asp:TextBox>
                         </div>
                     </td>
                 </tr>
@@ -125,42 +134,44 @@
                         <ContentTemplate>
 
                             <asp:Panel ID="pnlPersonInfo" runat="server">
-                                <table width="100%">
-                                    <tr>
-                                        <td>
-                                            <div class="title-style">
-                                                ◆ 發起人資訊
-                            <asp:Label ID="lblStartEmpRoleID" runat="server" Visible="false" />
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr class="gray-row">
-                                        <td width="20%">姓名</td>
-                                        <td width="20%">職稱</td>
-                                        <td width="20%">部門</td>
-                                        <td width="20%">選擇申請人</td>
-                                        <td width="20%">選擇使用人</td>
-                                    </tr>
-                                    <tr style="text-align: center">
-                                        <td>
-                                            <asp:Label ID="lblStartEmpName" runat="server"></asp:Label>
-                                        </td>
-                                        <td>
-                                            <asp:Label ID="lblStartEmpJobName" runat="server"></asp:Label>
-                                        </td>
-                                        <td>
-                                            <asp:DropDownList ID="ddlSelectStartEmpDept" runat="server" DataTextField="DeptAndJob" DataValueField="DepartmentID" AutoPostBack="True" Font-Size="Medium" OnSelectedIndexChanged="ddlSelectStartEmpDept_SelectedIndexChanged"></asp:DropDownList>
-                                            <asp:Label ID="lblStartEmpDeptName" runat="server"></asp:Label>
-                                        </td>
-                                        <td>
-                                            <asp:DropDownList ID="ddlSelectApplyEmp" runat="server" DataTextField="EmployeeName" DataValueField="EmployeeID" AutoPostBack="True" Font-Size="Medium" OnSelectedIndexChanged="ddlSelectApplyEmp_SelectedIndexChanged"></asp:DropDownList>
-                                            <asp:Label ID="lblSelectApplyEmp" runat="server"></asp:Label>
-                                        </td>
-                                        <td>
-                                            <asp:DropDownList ID="ddlSelectUser" runat="server" AutoPostBack="True" Font-Size="Medium" DataTextField="EmployeeName" DataValueField="EmployeeID"></asp:DropDownList>
-                                            <asp:Label ID="lblSelectUser" runat="server"></asp:Label>
-                                        </td>
-                                    </tr>
+                                <table width="100%" class="font-size">
+                                    <asp:Panel ID="pnlStartEmp" runat="server">
+                                        <tr>
+                                            <td>
+                                                <div class="title-style">
+                                                    <asp:Label ID="Label4" runat="server" Text="◆ 發起人資訊"></asp:Label>
+                                                    <asp:Label ID="lblStartEmpRoleID" runat="server" Visible="false" />
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr class="gray-row">
+                                            <td width="20%">姓名</td>
+                                            <td width="20%">職稱</td>
+                                            <td width="20%">部門</td>
+                                            <td width="20%">選擇申請人</td>
+                                            <td width="20%">選擇使用人</td>
+                                        </tr>
+                                        <tr style="text-align: center">
+                                            <td>
+                                                <asp:Label ID="lblStartEmpName" runat="server"></asp:Label>
+                                            </td>
+                                            <td>
+                                                <asp:Label ID="lblStartEmpJobName" runat="server"></asp:Label>
+                                            </td>
+                                            <td>
+                                                <asp:DropDownList ID="ddlSelectStartEmpDept" runat="server" DataTextField="DeptAndJob" DataValueField="DepartmentID" AutoPostBack="True" Font-Size="Medium" OnSelectedIndexChanged="ddlSelectStartEmpDept_SelectedIndexChanged"></asp:DropDownList>
+                                                <asp:Label ID="lblStartEmpDeptName" runat="server"></asp:Label>
+                                            </td>
+                                            <td>
+                                                <asp:DropDownList ID="ddlSelectApplyEmp" runat="server" DataTextField="EmployeeName" DataValueField="EmployeeID" AutoPostBack="True" Font-Size="Medium" OnSelectedIndexChanged="ddlSelectApplyEmp_SelectedIndexChanged"></asp:DropDownList>
+                                                <asp:Label ID="lblSelectApplyEmp" runat="server"></asp:Label>
+                                            </td>
+                                            <td>
+                                                <asp:DropDownList ID="ddlSelectUser" runat="server" AutoPostBack="True" Font-Size="Medium" DataTextField="EmployeeName" DataValueField="EmployeeID"></asp:DropDownList>
+                                                <asp:Label ID="lblSelectUser" runat="server"></asp:Label>
+                                            </td>
+                                        </tr>
+                                     </asp:Panel>
                                     <tr>
                                         <td>
                                             <div class="title-style">
@@ -191,21 +202,18 @@
                                     </tr>
                                 </table>
                             </asp:Panel>
-                            <asp:Panel runat="server" ID="pnlApplyEmpDevice">
+                            <asp:Panel runat="server" ID="pnlApplyEmpDevice" CssClass="font-size">
                                 <table width="100%">
                                     <tr>
                                         <td>
-                                            <div width="100%" style="font-family: 微軟正黑體; font-size: medium; font-weight: bold;">
-                                                <br />
-                                                ◆ 申請人現有項目
-                                             
+                                            <div width="100%" style="font-family: 微軟正黑體; font-size: 20px; font-weight: bold;">
+                                                <asp:Label ID="lblApplyEmpHaveItem" runat="server" Text="◆ 申請人現有項目"></asp:Label>
                                             </div>
                                         </td>
                                     </tr>
 
                                     <tr>
                                         <td>
-
                                             <asp:GridView ID="grvApplyEmpDevice" runat="server" CssClass="center-gridview" Width="100%" AutoGenerateColumns="False" CellPadding="4" ForeColor="#333333" GridLines="None">
                                                 <AlternatingRowStyle BackColor="White" />
                                                 <Columns>
@@ -236,14 +244,12 @@
                                 <tr>
                                     <td>
                                         <div width="100%" style="font-family: 微軟正黑體; font-size: medium; font-weight: bold;">
-                                            <br />
-
-                                            <asp:Label ID="lblApplyContent" runat="server" Text="◆ 申請內容" Font-Names="微軟正黑體" Font-Size="Medium" Font-Bold="true"></asp:Label>
+                                            <asp:Label ID="lblApplyContent" runat="server" Text="◆ 申請內容" Font-Names="微軟正黑體" Font-Size="20px" Font-Bold="true"></asp:Label>
                                         </div>
                                     </td>
                                 </tr>
                             </table>
-                            <asp:Panel runat="server" ID="pnlItemAdd" Visible="true">
+                            <asp:Panel runat="server" ID="pnlItemAdd" Visible="true" CssClass="font-size">
                                 <table width="100%">
 
                                     <tr>
@@ -290,7 +296,7 @@
 
                             <table width="100%">
                                 <tr>
-                                    <td >
+                                    <td>
                                         <asp:Panel ID="pnlHWInventory" runat="server" Visible="false">
                                             <asp:Label ID="lblHWInventory" runat="server" Text="庫存硬體:"></asp:Label>
                                             <asp:DropDownList ID="ddlHWInventory" runat="server" DataTextField="HWInventory" DataValueField="AssetsCode"></asp:DropDownList>
@@ -337,33 +343,33 @@
                             </table>
 
                             <div class="gridViewContainer">
-                                <asp:GridView ID="grvApplyContent" runat="server" AutoGenerateColumns="False" CssClass="center-gridview" OnRowDataBound="grvItemAdd_RowDataBound" Width="100%" CellPadding="4" ForeColor="#333333" GridLines="None">
+                                <asp:GridView ID="grvApplyContent" runat="server" AutoGenerateColumns="False" CssClass="center-gridview" OnRowDataBound="grvItemAdd_RowDataBound" Width="100%" CellPadding="4" ForeColor="#333333" GridLines="None" Font-Size="20px">
                                     <PagerStyle CssClass="pager" BackColor="#666666" ForeColor="White" HorizontalAlign="Center" />
                                     <EditRowStyle BackColor="#7C6F57" />
                                     <FooterStyle BackColor="#1C5E55" Font-Bold="True" ForeColor="White" />
                                     <HeaderStyle BackColor="#1C5E55" Font-Bold="True" ForeColor="White" />
                                     <AlternatingRowStyle BackColor="White" />
                                     <Columns>
-                                        <asp:BoundField DataField="ServiceType" HeaderStyle-Width="10%" HeaderText="服務">
+                                        <asp:BoundField DataField="ServiceType" HeaderText="服務">
                                             <HeaderStyle Width="10%" />
                                         </asp:BoundField>
-                                        <asp:BoundField DataField="ItemType" HeaderStyle-Width="8%" HeaderText="種類">
-                                            <HeaderStyle Width="8%" />
+                                        <asp:BoundField DataField="ItemType" HeaderText="種類">
+                                            <HeaderStyle Width="10%" />
                                         </asp:BoundField>
-                                        <asp:BoundField DataField="ItemTypeName" HeaderStyle-Width="8%" HeaderText="項目">
-                                            <HeaderStyle Width="8%" />
+                                        <asp:BoundField DataField="ItemTypeName" HeaderText="項目">
+                                            <HeaderStyle Width="12%" />
                                         </asp:BoundField>
-                                        <asp:BoundField DataField="ItemName" HeaderStyle-Width="30%" HeaderText="名稱">
+                                        <asp:BoundField DataField="ItemName" HeaderText="名稱">
                                             <HeaderStyle Width="30%" />
                                         </asp:BoundField>
-                                        <asp:BoundField DataField="AssetsCode" HeaderStyle-Width="10%" HeaderText="資產編號">
+                                        <asp:BoundField DataField="AssetsCode" HeaderText="資產編號">
                                             <HeaderStyle Width="10%" />
                                         </asp:BoundField>
-                                        <asp:BoundField DataField="Description" HeaderStyle-Width="25%" HeaderText="說明">
-                                            <HeaderStyle Width="25%" />
+                                        <asp:BoundField DataField="Description" HeaderText="說明">
+                                            <HeaderStyle Width="20%" />
                                         </asp:BoundField>
-                                        <asp:BoundField DataField="ItemProcessing" HeaderStyle-Width="18%" HeaderText="處理進度" Visible="false">
-                                            <HeaderStyle Width="18%" />
+                                        <asp:BoundField DataField="ItemProcessing" HeaderText="處理進度" Visible="false">
+                                            <HeaderStyle Width="10%" />
                                         </asp:BoundField>
                                         <asp:TemplateField Visible="true">
                                             <ItemTemplate>
@@ -396,21 +402,20 @@
                 </td>
             </tr>
         </table>
-        <asp:Panel runat="server" ID="pnlITManager" Visible="false">
+        <asp:Panel runat="server" ID="pnlITManager" Visible="false" CssClass="font-size">
             <table width="100%">
                 <tr>
                     <td class="auto-style5" width="15%">
-                        <div width="100%" style="font-family: 微軟正黑體; font-size: medium; font-weight: bold; text-align: left;">
+                        <div width="100%" style="font-family: 微軟正黑體; font-weight: bold; text-align: left;">
                             ◆ 負責人：
                         </div>
                     </td>
                     <td width="85%">
-                        <asp:Label ID="lblStarSeleckWorkEmp" runat="server" Font-Size="14pt" ForeColor="Red" Text="*"></asp:Label>
-                        <asp:DropDownList ID="ddlSelectExecuteEmp" CssClass="styleCenter" runat="server" DataTextField="EmpName" DataValueField="EmpIDandRoleID" Font-Size="13" Width="200px" Enabled="false"></asp:DropDownList>
-                        <div style="display: inline-block; width: 15px"></div>
-                        <asp:Label ID="lblStarSeleckWorkEmp0" runat="server" Font-Size="14pt" ForeColor="Red" Text="*"></asp:Label>
-                        預估金額：$
-                            <asp:TextBox ID="txbTotalCost" runat="server" Style="text-align: right" Width="60px" ControlToValidate="txtNumber" ValidationExpression="^\d+$" ErrorMessage="只能輸入數字" Enabled="false" oninput="validateIntegerInput(this)"></asp:TextBox>
+                        <asp:Label ID="lblStarSeleckWorkEmp" runat="server" ForeColor="Red" Text="*"></asp:Label>
+                        <asp:DropDownList ID="ddlSelectExecuteEmp" CssClass="styleCenter" runat="server" DataTextField="EmpName" DataValueField="EmpIDandRoleID" Width="200px" Enabled="false" Font-Size="20px"></asp:DropDownList>
+                        <asp:Label ID="lblStarSeleckWorkEmp0" runat="server" ForeColor="Red" Text="*"></asp:Label>
+                        <asp:Label ID="Label3" runat="server" Text="預估金額：$"></asp:Label>
+                        <asp:TextBox ID="txbTotalCost" runat="server" Style="text-align: right" Width="60px" ControlToValidate="txtNumber" ValidationExpression="^\d+$" ErrorMessage="只能輸入數字" Enabled="false" oninput="validateIntegerInput(this)" Font-Size="20px"></asp:TextBox>
                         <script>
                             function validateIntegerInput(inputElement) {
                                 // 使用正則表達式檢查輸入是否只包含數字
@@ -441,24 +446,22 @@
                         </div>
                     </td>
                     <td>
-                        <br />
-                        <asp:TextBox ID="txbApplyReason" runat="server" TextMode="MultiLine" Width="830px" Height="50px"></asp:TextBox>
+                        <asp:TextBox ID="txbApplyReason" runat="server" TextMode="MultiLine" Width="830px" Height="50px" Font-Size="20px"></asp:TextBox>
                     </td>
                 </tr>
             </table>
         </asp:Panel>
 
-        <table width="100%">
+        <table width="100%" class="font-size">
             <tr>
                 <td>
                     <div class="title-style">
-                        <br />
-                        ◆ 附件上傳
+                        <asp:Label ID="lblFileUpload" runat="server" Text="◆ 附件上傳"></asp:Label>
                     </div>
                 </td>
             </tr>
         </table>
-        <asp:Panel ID="pnlFileUpload" runat="server">
+        <asp:Panel ID="pnlFileUpload" runat="server" CssClass="font-size">
 
             <table width="100%">
                 <tr>
@@ -477,7 +480,7 @@
             </table>
         </asp:Panel>
 
-        <asp:GridView ID="grvFileUpload" runat="server" CssClass="center-gridview" AutoGenerateColumns="False" Width="100%" CellPadding="4" ForeColor="#333333" GridLines="None">
+        <asp:GridView ID="grvFileUpload" runat="server" CssClass="center-gridview" AutoGenerateColumns="False" Width="100%" CellPadding="4" ForeColor="#333333" GridLines="None" Font-Size="20px">
             <AlternatingRowStyle BackColor="White" />
             <Columns>
                 <asp:BoundField DataField="FileName" HeaderText="檔案名稱" />
@@ -505,14 +508,13 @@
             <SortedDescendingHeaderStyle BackColor="#15524A" />
         </asp:GridView>
         <br />
-        <asp:Panel ID="pnlSend" runat="server">
+        <asp:Panel ID="pnlSend" runat="server" CssClass="font-size">
             <asp:Button ID="btnSend" runat="server" Text="送出" CssClass="title-style" OnClientClick="return confirm('確定要送出申請嗎？');" Visible="true" OnClick="btnSend_Click" />
-            <br />
             <div style="display: inline-block; width: 15px">
             </div>
         </asp:Panel>
 
-        <asp:Panel ID="pnlCheck" runat="server">
+        <asp:Panel ID="pnlCheck" runat="server" CssClass="font-size">
             <table width="100%">
                 <tr>
                     <td style="text-align: center;">
@@ -526,13 +528,11 @@
                 <tr>
                     <td width="15%">
                         <div class="title-style">
-                            ◆ 簽核意見
+                            <asp:Label ID="lblSignOpinion" runat="server" Text="◆ 簽核意見"></asp:Label>
                         </div>
                     </td>
                     <td>
-                        <br />
                         <asp:TextBox ID="txbSignOpinion" runat="server" TextMode="MultiLine" Width="830px" Height="50px"></asp:TextBox>
-                        <br />
                     </td>
                 </tr>
                 <tr>
@@ -547,15 +547,15 @@
                 <asp:Label ID="lblStatus" runat="server" ForeColor="Red" Font-Bold="true" Font-Names="微軟正黑體" Font-Size="Medium"></asp:Label>
             </div>
 
-            <asp:GridView ID="grvFormSignM" runat="server" Width="100%" AutoGenerateColumns="False" BackColor="White" BorderColor="#999999" BorderStyle="Solid" BorderWidth="1px" CellPadding="3" ForeColor="Black" GridLines="Vertical">
+            <asp:GridView ID="grvFormSignM" runat="server" Width="100%" AutoGenerateColumns="False" BackColor="White" BorderColor="#999999" BorderStyle="Solid" BorderWidth="1px" CellPadding="3" ForeColor="Black" GridLines="Vertical" Font-Size="18px">
                 <AlternatingRowStyle BackColor="#CCCCCC" />
                 <Columns>
-                    <asp:BoundField DataField="工號" HeaderText="工號" />
-                    <asp:BoundField DataField="姓名" HeaderText="姓名" />
-                    <asp:BoundField DataField="部門" HeaderText="部門" />
-                    <asp:BoundField DataField="職稱" HeaderText="職稱" />
-                    <asp:BoundField DataField="意見" HeaderText="意見" />
-                    <asp:BoundField DataField="簽核日期" HeaderText="簽核日期" />
+                    <asp:BoundField DataField="工號" HeaderText="工號" HeaderStyle-Width="5%"/>
+                    <asp:BoundField DataField="姓名" HeaderText="姓名" HeaderStyle-Width="6%"/>
+                    <asp:BoundField DataField="部門" HeaderText="部門" HeaderStyle-Width="10%"/>
+                    <asp:BoundField DataField="職稱" HeaderText="職稱" HeaderStyle-Width="8%"/>
+                    <asp:BoundField DataField="意見" HeaderText="意見" HeaderStyle-Width="44%"/>
+                    <asp:BoundField DataField="簽核日期" HeaderText="簽核日期" HeaderStyle-Width="11%"/>
                 </Columns>
                 <FooterStyle BackColor="#CCCCCC" />
                 <HeaderStyle BackColor="Black" Font-Bold="True" ForeColor="White" />
@@ -567,7 +567,7 @@
                 <SortedDescendingHeaderStyle BackColor="#383838" />
             </asp:GridView>
         </asp:Panel>
-        <asp:Panel ID="pnlBtn" runat="server">
+        <asp:Panel ID="pnlBtn" runat="server" CssClass="font-size">
             <div style="text-align: center;">
                 <asp:Button ID="btnSubmit" runat="server" Text="簽核" CssClass="title-style" OnClientClick="return confirm('確定簽核？');" OnClick="btnSubmit_Click" />
                 <asp:Button ID="btnReject" runat="server" Text="駁回" CssClass="title-style" OnClientClick="return confirm('確定駁回？');" OnClick="btnReject_Click" />
@@ -575,6 +575,12 @@
                 <br />
             </div>
 
+        </asp:Panel>
+
+        <asp:Panel ID="pnlVersion" runat="server">
+            <div style="text-align: right">
+                <asp:Label ID="lblVersion" runat="server" Text="QP-M-20-1 版次：5"></asp:Label>
+            </div>
         </asp:Panel>
     </form>
 </body>

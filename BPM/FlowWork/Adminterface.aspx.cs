@@ -701,9 +701,41 @@ namespace BPM.FlowWork
             var wb = new XLWorkbook();
             var ws = wb.Worksheets.Add("Content");
 
-            DataTable dtAdminterface =(DataTable)ViewState["dtAdminterface"];
+            //依照搜尋的文字做判斷
+            string strSearchText = txbSearch.Text;
 
-            ws.Cell(1,1).InsertTable(dtAdminterface);
+            if (string.IsNullOrEmpty(strSearchText))
+            {
+                strSearchText = ddlItemList.SelectedItem.Text;
+            }
+
+            dbFunction dbFunction = new dbFunction();
+
+            DataTable dtHaveItemsDownloadToExcel;
+
+            //連線
+            using (SqlConnection conn = dbFunction.sqlHissMingConnection())
+            {
+                conn.Open();
+                string query = "spHaveItemsDownloadToExcel";
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@SearchEmpName", strSearchText);
+                    //cmd.ExecuteNonQuery();
+
+                    SqlDataAdapter da = new SqlDataAdapter();
+                    DataSet ds = new DataSet();
+                    da.SelectCommand = cmd;
+                    da.Fill(ds);
+
+                    dtHaveItemsDownloadToExcel = ds.Tables[0];
+                }
+            }
+
+            //DataTable dtAdminterface =(DataTable)ViewState["dtAdminterface"];
+
+            ws.Cell(1,1).InsertTable(dtHaveItemsDownloadToExcel);
 
             using (MemoryStream memoryStream = new MemoryStream())
             {

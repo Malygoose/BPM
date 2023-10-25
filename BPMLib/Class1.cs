@@ -180,7 +180,7 @@ namespace BPMLib
                 stuFormInfo.strApplyEmployeeJobName = (string)drEmployee["JobName"];
                 stuFormInfo.strApplyEmployeeRoleID = (string)drEmployee["RoleID"];
                 stuFormInfo.strApplyEmployeeID = (string)drEmployee["EmployeeID"];
-                stuFormInfo.intApplyEmployeeDeptLevel = int.Parse((string)drEmployee["DeptLevel"]);
+                stuFormInfo.intApplyEmployeeDeptLevel = int.Parse((string)drEmployee["DepartmentLevel"]);
 
                 return stuFormInfo;
             }

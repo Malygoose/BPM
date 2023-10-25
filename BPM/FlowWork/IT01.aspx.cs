@@ -508,7 +508,7 @@ namespace BPM.FlowWork
             stuFormInfo.strApplyEmpJobName = (string)drEmployee["JobName"];
             stuFormInfo.strApplyEmpRoleID = (string)drEmployee["RoleID"];
             stuFormInfo.strApplyEmpID = (string)drEmployee["EmployeeID"];
-            stuFormInfo.intApplyEmpDeptLevel = int.Parse((string)drEmployee["DeptLevel"]);
+            stuFormInfo.intApplyEmpDeptLevel = int.Parse((string)drEmployee["DepartmentLevel"]);
 
             ViewState["stuFormInfo"] = stuFormInfo;
         }
@@ -2488,5 +2488,17 @@ namespace BPM.FlowWork
             }
         }
 
+        protected void btnHide_Click(object sender, EventArgs e)
+        {
+            lblApplyEmpHaveItem.Visible = false;
+            grvApplyEmpDevice.Visible = false;
+            lblFileUpload.Visible = false;
+            grvFileUpload.Visible = false;  
+            pnlFileUpload.Visible = false;
+            lblSignOpinion.Visible = false;
+            txbSignOpinion.Visible=false;
+            lblStatus.Visible = false;
+            pnlStartEmp.Visible = false;    
+        }
     }
 }
