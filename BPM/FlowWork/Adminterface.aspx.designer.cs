@@ -78,6 +78,42 @@ namespace BPM.FlowWork
         protected global::System.Web.UI.WebControls.Panel pnlSearch;
 
         /// <summary>
+        /// lblSearchItemType 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblSearchItemType;
+
+        /// <summary>
+        /// ddlSearchItemType 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlSearchItemType;
+
+        /// <summary>
+        /// lblSearchItemName 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblSearchItemName;
+
+        /// <summary>
+        /// ddlSearchItemName 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlSearchItemName;
+
+        /// <summary>
         /// lblSearch 控制項。
         /// </summary>
         /// <remarks>

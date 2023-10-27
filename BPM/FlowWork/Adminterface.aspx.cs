@@ -70,12 +70,14 @@ namespace BPM.FlowWork
         //管理者看搜尋的人現有項目表
         public void ViewSearchEmployeeHaveItems()
         {
+            string strSearchItemType = ddlSearchItemType.SelectedItem.Text;
+            string strSearchItemName = ddlSearchItemName.SelectedItem.Text; 
             string strSearchText = txbSearch.Text;
 
-            if (string.IsNullOrEmpty(strSearchText))
-            {
-                strSearchText = ddlItemList.SelectedItem.Text;
-            }
+            //if (string.IsNullOrEmpty(strSearchText))
+            //{
+            //    strSearchText = ddlItemList.SelectedItem.Text;
+            //}
 
             dbFunction dbFunction = new dbFunction();
             //連線
@@ -86,7 +88,10 @@ namespace BPM.FlowWork
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@SearchEmpName", strSearchText);
+                    cmd.Parameters.AddWithValue("@strSearchItemType", strSearchItemType);
+                    cmd.Parameters.AddWithValue("@strSearchItemName", strSearchItemName);
+                    cmd.Parameters.AddWithValue("@strSearchText", strSearchText);
+                    cmd.Parameters.AddWithValue("@isDownloadToExcel", false);
                     //cmd.ExecuteNonQuery();
 
                     SqlDataAdapter da = new SqlDataAdapter();
@@ -117,12 +122,22 @@ namespace BPM.FlowWork
                 da.SelectCommand = cmd;
                 conn.Open();
                 da.Fill(ds);
-                //設定ddlItemType
+                //設定種類
                 ddlItemType.DataSource = ds.Tables[0];
                 ddlItemType.DataBind();
-                //設定ddlItemList
+                //設定項目
                 ddlItemList.DataSource = ds.Tables[1];
                 ddlItemList.DataBind();
+                //設定搜尋的種類
+                ddlSearchItemType.DataSource = ds.Tables[0];
+                ddlSearchItemType.DataBind();
+                //設定搜尋的項目
+                ddlSearchItemName.DataSource = ds.Tables[1];    
+                ddlSearchItemName.DataBind();
+                //預設空白
+                ddlSearchItemType.Items.Insert(0, new ListItem("", ""));
+                ddlSearchItemName.Items.Insert(0, new ListItem("", ""));
+
             }         
         }
 
@@ -589,6 +604,8 @@ namespace BPM.FlowWork
             txbEditAssetsName.Text = "";
             lblMessage.Text = "";
             grvAdminterface.SelectedIndex = -1;
+            btnEdit.Visible = false;
+            btnDelete.Visible = false;
         }
         //依照不同的ItemType得到相對的Itemlist
         protected void ddlItemType_SelectedIndexChanged(object sender, EventArgs e)
@@ -641,6 +658,45 @@ namespace BPM.FlowWork
                 ddlItemList.DataSource = ds.Tables[0];
                 ddlItemList.DataBind();
             }
+        }
+
+        protected void ddlSearchItemType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (ddlSearchItemType.SelectedValue=="")
+            {
+                ddlSearchItemName.Items.Clear();
+                ddlSearchItemName.Items.Insert(0, new ListItem("", ""));
+                ddlSearchItemName.SelectedValue = "";
+                //lblSearchItemName.Visible = false;
+                //ddlSearchItemName.Visible = false;
+            }
+            else 
+            {
+                //lblSearchItemName.Visible = true;
+                //ddlSearchItemName.Visible = true;
+
+                dbFunction dbFunction = new dbFunction();
+
+                using (SqlConnection conn = dbFunction.sqlHissDBtestConnection())
+                {
+                    SqlCommand cmd = new SqlCommand("spGetIT01ItemListByTypeID", conn);
+
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@strTypeID", ddlSearchItemType.SelectedValue);
+
+                    SqlDataAdapter da = new SqlDataAdapter();
+                    DataSet ds = new DataSet();
+                    da.SelectCommand = cmd;
+                    conn.Open();
+                    da.Fill(ds);
+
+                    ddlSearchItemName.DataSource = ds.Tables[0];
+                    ddlSearchItemName.DataBind();
+                    ddlSearchItemName.Items.Insert(0, new ListItem("", ""));
+                    ddlSearchItemName.SelectedValue = "";
+                }
+            }
+            
         }
 
         //判斷信箱是否有效或重複
@@ -698,30 +754,58 @@ namespace BPM.FlowWork
         //資訊設備明細表下載成excel
         protected void btnDownload_Click(object sender, EventArgs e)
         {
+            DataTable dtHaveItemsDownloadToExcel;
+            dbFunction dbFunction = new dbFunction();
+
+            string strSearchItemType = ddlSearchItemType.SelectedItem.Text;
+            string strSearchItemName = ddlSearchItemName.SelectedItem.Text;
+            string strSearchText = txbSearch.Text;
+
             var wb = new XLWorkbook();
+            //設定名稱
             var ws = wb.Worksheets.Add("Content");
 
             //依照搜尋的文字做判斷
-            string strSearchText = txbSearch.Text;
+            //string strSearchText = txbSearch.Text;
 
-            if (string.IsNullOrEmpty(strSearchText))
-            {
-                strSearchText = ddlItemList.SelectedItem.Text;
-            }
+            //if (string.IsNullOrEmpty(strSearchText))
+            //{
+            //    strSearchText = ddlItemList.SelectedItem.Text;
+            //}
 
-            dbFunction dbFunction = new dbFunction();
+                      
+            ////連線
+            //using (SqlConnection conn = dbFunction.sqlHissMingConnection())
+            //{
+            //    conn.Open();
+            //    string query = "spHaveItemsDownloadToExcel";
+            //    using (SqlCommand cmd = new SqlCommand(query, conn))
+            //    {
+            //        cmd.CommandType = CommandType.StoredProcedure;
+            //        cmd.Parameters.AddWithValue("@SearchEmpName", strSearchText);
+            //        //cmd.ExecuteNonQuery();
 
-            DataTable dtHaveItemsDownloadToExcel;
+            //        SqlDataAdapter da = new SqlDataAdapter();
+            //        DataSet ds = new DataSet();
+            //        da.SelectCommand = cmd;
+            //        da.Fill(ds);
+
+            //        dtHaveItemsDownloadToExcel = ds.Tables[0];
+            //    }
+            //}
 
             //連線
             using (SqlConnection conn = dbFunction.sqlHissMingConnection())
             {
                 conn.Open();
-                string query = "spHaveItemsDownloadToExcel";
+                string query = "spAdminterfaceViewHaveItems";
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@SearchEmpName", strSearchText);
+                    cmd.Parameters.AddWithValue("@strSearchItemType", strSearchItemType);
+                    cmd.Parameters.AddWithValue("@strSearchItemName", strSearchItemName);
+                    cmd.Parameters.AddWithValue("@strSearchText", strSearchText);
+                    cmd.Parameters.AddWithValue("@isDownloadToExcel", true);
                     //cmd.ExecuteNonQuery();
 
                     SqlDataAdapter da = new SqlDataAdapter();
@@ -730,12 +814,20 @@ namespace BPM.FlowWork
                     da.Fill(ds);
 
                     dtHaveItemsDownloadToExcel = ds.Tables[0];
+
                 }
             }
-
-            //DataTable dtAdminterface =(DataTable)ViewState["dtAdminterface"];
-
+            //插入到excel
             ws.Cell(1,1).InsertTable(dtHaveItemsDownloadToExcel);
+
+            //設定寬度
+            ws.Column(1).Width = 10;
+            ws.Column(2).Width = 10;
+            ws.Column(3).Width = 15;
+            ws.Column(4).Width = 15;
+            ws.Column(5).Width = 20;
+            ws.Column(6).Width = 30;
+            ws.Column(7).Width = 10;
 
             using (MemoryStream memoryStream = new MemoryStream())
             {
@@ -751,6 +843,8 @@ namespace BPM.FlowWork
             }
 
         }
+
+        
     }
 }
 

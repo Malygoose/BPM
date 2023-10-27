@@ -6,6 +6,12 @@
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title></title>
+
+    <style>
+        .font-Size {
+            font-size: 20px;
+        }
+    </style>
 </head>
 <body>
     <form id="form1" runat="server">
@@ -31,10 +37,18 @@
 
         <asp:Panel ID="pnlSearch" runat="server">
 
-            <asp:Label ID="lblSearch" runat="server" Text="輸入任一關鍵字:" Font-Size="16"></asp:Label>
-            <asp:TextBox ID="txbSearch" runat="server" Font-Size="16" Width="110px"></asp:TextBox>
-            <asp:Button ID="btnSearch" runat="server" Text="搜尋" OnClick="btnSearch_Click" Font-Size="14" />
-            <asp:Button ID="btnDownload" runat="server" Text="下載(Excel)" OnClick="btnDownload_Click" Visible="false" Font-Size="14"/>
+            
+            <div class="font-Size">
+                
+                <asp:Label ID="lblSearchItemType" runat="server" Text="種類:"></asp:Label>
+                <asp:DropDownList ID="ddlSearchItemType" runat="server" AutoPostBack="True" DataTextField="TypeName" DataValueField="TypeID" OnSelectedIndexChanged="ddlSearchItemType_SelectedIndexChanged" CssClass="font-Size"></asp:DropDownList>
+                <asp:Label ID="lblSearchItemName" runat="server" Text="項目:" Visible="True"></asp:Label>
+                <asp:DropDownList ID="ddlSearchItemName" runat="server" AutoPostBack="True" DataTextField="ItemName" DataValueField="ItemID" CssClass="font-Size" Visible="True"></asp:DropDownList>
+                <asp:Label ID="lblSearch" runat="server" Text="輸入關鍵字:"></asp:Label>
+                <asp:TextBox ID="txbSearch" runat="server" Width="110px" CssClass="font-Size"></asp:TextBox>
+                <asp:Button ID="btnSearch" runat="server" Text="搜尋" OnClick="btnSearch_Click" CssClass="font-Size"/>
+                <asp:Button ID="btnDownload" runat="server" Text="下載(Excel)" OnClick="btnDownload_Click" Visible="false" CssClass="font-Size"/>
+            </div>
 
         </asp:Panel>
         <br />
@@ -44,7 +58,7 @@
                     <table width="100%">
                         <tr>
                             <td>
-                                <asp:Label ID="lblAdd" runat="server" Text="新增/更改資料" Font-Size="20"></asp:Label>    
+                                <asp:Label ID="lblAdd" runat="server" Text="新增/更改資料" Font-Size="20"></asp:Label>
                             </td>
                         </tr>
                         <tr>
@@ -71,14 +85,14 @@
                             <td width="23%">
                                 <asp:Label ID="lblAssetsName" runat="server" Text="資產名稱:" Visible="false"></asp:Label>
                                 <asp:TextBox ID="txbEditAssetsName" runat="server" Width="230px" Visible="false"></asp:TextBox><br />
-                                
+
                             </td>
                             <td width="15%">
                                 <asp:Label ID="lblAssetsCode" runat="server" Text="資產編號:" Visible="false"></asp:Label>
-                                <asp:TextBox ID="txbEditAssetsCode" runat="server" Width="80px" Visible="false"></asp:TextBox>                               
+                                <asp:TextBox ID="txbEditAssetsCode" runat="server" Width="80px" Visible="false"></asp:TextBox>
                             </td>
                             <td width="10%">
-                                <asp:Label ID="lblMessage" runat="server"  Visible="false" ForeColor="Red"></asp:Label>
+                                <asp:Label ID="lblMessage" runat="server" Visible="false" ForeColor="Red"></asp:Label>
                             </td>
                             <td width="15%">
                                 <asp:Button ID="btnAdd" runat="server" Text="新增" OnClick="btnAdd_Click" />
