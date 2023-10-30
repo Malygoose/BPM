@@ -184,6 +184,11 @@ namespace BPM.FlowWork
             ddlItemType_SelectedIndexChanged(null, null);
             ddlItemList.SelectedValue = selectedRow[0]["ItemCode"].ToString();
 
+            if (ddlItemType.SelectedItem.Text == "信箱")
+            {
+                txbEditAssetsName.Text = selectedRow[0]["AssetsName"].ToString().Split('@')[0];
+            }
+
             //按鈕顯示
             btnEdit.Visible = true;
             btnDelete.Visible = true;
@@ -229,13 +234,20 @@ namespace BPM.FlowWork
         }
         //更改資料
         protected void btnEdit_Click(object sender, EventArgs e)
-        {           
+        {
+            DataTable dtAdminterface = (DataTable)ViewState["dtAdminterface"];
+
+
             //用逗號做分割
             string[] strEmpNumNameArray = txbEmpNumName.Text.Split(',');
             //取出資料
             string strNobr = strEmpNumNameArray[0];
             string strUserName = strEmpNumNameArray[1];
             string strDeptName = strEmpNumNameArray[2];
+
+            string[] strEmailArray = txbEditAssetsName.Text.Split('@'); 
+            string strEmail = strEmailArray[0]+lblEmailFormate.Text;
+            
             //string strNobr = txbEditNobr.Text;
             //string strUserName = txbEditUserName.Text;
             //string strDeptName = txbEditDeptName.Text;
@@ -256,7 +268,7 @@ namespace BPM.FlowWork
             //判斷信箱是否有效
             if (strItemType == "信箱")
             {
-                strMessage = EmailCheckFields(strAssetsName);
+                strMessage = EmailCheckFields(strEmail);
                 if (!string.IsNullOrEmpty(strMessage))
                 {
                     lblMessage.Text = strMessage;
@@ -269,10 +281,11 @@ namespace BPM.FlowWork
                     lblMessage.Visible = true;
                     check = true;
                 }
+                strAssetsName = strEmail;
             }
 
             //判斷資產編號是否有效
-            if (strItemType == "硬體" && (strAssetsName != "硬體配件" || strAssetsName != "網路電話"))
+            if (strItemType == "硬體" && !(strItemName == "硬體配件" || strItemName == "網路電話"))
             {
                 strMessage = AssetsCodeCheckFields(strAssetsCode);
                 if (!string.IsNullOrEmpty(strMessage))
@@ -280,7 +293,16 @@ namespace BPM.FlowWork
                     lblMessage.Text = strMessage;
                     lblMessage.Visible = true;
                     check = false;
-                }
+
+                    //更改時 資產編號重複重複且為同比guid則可以更改成功
+                    DataRow[] selectedRow = dtAdminterface.Select("GuidKey= '" + strGuidKey + "'");
+                    if (strMessage == "資產編號重複" && selectedRow[0]["AssetsName"].ToString() != strAssetsName)
+                    {
+                        lblMessage.Text = "資產編號檢查成功";
+                        lblMessage.Visible = true;
+                        check = true;
+                    }
+                }               
                 else
                 {
                     lblMessage.Text = "資產編號檢查成功";
@@ -291,8 +313,7 @@ namespace BPM.FlowWork
 
             if (check)
             {
-                //用select找guidkey
-                DataTable dtAdminterface = (DataTable)ViewState["dtAdminterface"];
+                //用select找guidkey              
                 DataRow[] selectedRow = dtAdminterface.Select("GuidKey= '" + strGuidKey + "'");
                 //將變更的資料寫入
                 selectedRow[0]["Nobr"] = strNobr;
@@ -488,7 +509,7 @@ namespace BPM.FlowWork
             string strAddAssetsCode = txbEditAssetsCode.Text;
             string strAddAssetsName = txbEditAssetsName.Text;
           
-            string strInputEmail = txbEditAssetsName.Text.Trim();
+            string strInputEmail = txbEditAssetsName.Text.Trim()+lblEmailFormate.Text;
             string strInputAssetsCode = txbEditAssetsCode.Text.Trim();  
 
             bool check = true;
@@ -509,11 +530,13 @@ namespace BPM.FlowWork
                     lblMessage.Text = "Email檢查成功";
                     lblMessage.Visible = true;
                     check = true;
-                }                                 
+                }
+
+                strAddAssetsName = strInputEmail;
             }
 
             //判斷資產編號是否有效
-            if (strAddItemType=="硬體" && (strAddAssetsName!="硬體配件" || strAddAssetsName!="網路電話"))
+            if (strAddItemType=="硬體" && strAddItemName!="硬體配件" && strAddItemName != "網路電話")
             {
                 strMessage=AssetsCodeCheckFields(strInputAssetsCode);
                 if (!string.IsNullOrEmpty(strMessage))
@@ -622,6 +645,7 @@ namespace BPM.FlowWork
                     txbEditAssetsCode.Visible = true;
                     lblAssetsName.Visible = true;
                     txbEditAssetsName.Visible = true;
+                    lblEmailFormate.Visible = false;
                     lblAssetsName.Text = "資產名稱:";
                     break;
                 case "信箱":
@@ -629,6 +653,7 @@ namespace BPM.FlowWork
                     txbEditAssetsCode.Visible = false;
                     lblAssetsName.Visible = true;
                     txbEditAssetsName.Visible = true;
+                    lblEmailFormate.Visible = true;    
                     lblAssetsName.Text = "信箱名稱:";
                     break;
                 default:
@@ -636,6 +661,7 @@ namespace BPM.FlowWork
                     txbEditAssetsCode.Visible = false;
                     lblAssetsName.Visible = false;
                     txbEditAssetsName.Visible = false;
+                    lblEmailFormate.Visible = false;
                     lblAssetsName.Text = "資產名稱:";
                     break;
             }

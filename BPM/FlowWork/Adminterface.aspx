@@ -84,8 +84,8 @@
                             </td>
                             <td width="23%">
                                 <asp:Label ID="lblAssetsName" runat="server" Text="資產名稱:" Visible="false"></asp:Label>
-                                <asp:TextBox ID="txbEditAssetsName" runat="server" Width="230px" Visible="false"></asp:TextBox><br />
-
+                                <asp:TextBox ID="txbEditAssetsName" runat="server" Width="180px" Visible="false"></asp:TextBox>
+                                <asp:Label ID="lblEmailFormate" runat="server" Text="@hiss.com.tw" Visible="false"></asp:Label>
                             </td>
                             <td width="15%">
                                 <asp:Label ID="lblAssetsCode" runat="server" Text="資產編號:" Visible="false"></asp:Label>
