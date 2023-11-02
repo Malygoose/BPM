@@ -790,7 +790,7 @@ namespace BPM.FlowWork
                 }
 
                 //寄信通知簽核者
-                //SendMail(stuFormInfo);
+                SendMail(stuFormInfo);
 
                 Response.Redirect("Home.aspx");
 
@@ -956,7 +956,7 @@ namespace BPM.FlowWork
                         }
 
                         //寄信通知簽核者
-                        //SendMail(stuFormInfo);
+                        SendMail(stuFormInfo);
 
                         Response.Redirect("Home.aspx");
                     }

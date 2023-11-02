@@ -31,53 +31,13 @@ namespace BPM.FlowWork
             }
         }
 
-
-        //按鈕顯示所有人現有項目表
-        //protected void btnShowAdminterface_Click(object sender, EventArgs e)
-        //{
-        //    //管理者看現有項目表
-        //    ViewEmployeeHaveItems();
-        //}
-
-        //管理者看所有人現有項目表
-        //public void ViewEmployeeHaveItems()
-        //{            
-        //    dbFunction dbFunction = new dbFunction();
-        //    //連線
-        //    using (SqlConnection conn = dbFunction.sqlHissMingConnection())
-        //    {
-        //        conn.Open();
-        //        string query = "spAdminterfaceViewHaveItems";
-        //        using (SqlCommand cmd = new SqlCommand(query, conn))
-        //        {
-        //            cmd.CommandType = CommandType.StoredProcedure;                   
-        //            cmd.Parameters.AddWithValue("@SearchEmpName", "");
-        //            //cmd.ExecuteNonQuery();
-
-        //            SqlDataAdapter da = new SqlDataAdapter();
-        //            DataSet ds = new DataSet();
-        //            da.SelectCommand = cmd;
-        //            da.Fill(ds);
-
-        //            DataTable dtAdminterface = ds.Tables[0];
-        //            ViewState["dtAdminterface"] = dtAdminterface;
-
-        //            grvAdminterface.DataSource = dtAdminterface;
-        //            grvAdminterface.DataBind();                   
-        //        }
-        //    }
-        //}
-        //管理者看搜尋的人現有項目表
-        public void ViewSearchEmployeeHaveItems()
+        public DataTable GetDtAdminterface(bool blnDownload)
         {
             string strSearchItemType = ddlSearchItemType.SelectedItem.Text;
-            string strSearchItemName = ddlSearchItemName.SelectedItem.Text; 
+            string strSearchItemName = ddlSearchItemName.SelectedItem.Text;
             string strSearchText = txbSearch.Text;
 
-            //if (string.IsNullOrEmpty(strSearchText))
-            //{
-            //    strSearchText = ddlItemList.SelectedItem.Text;
-            //}
+            DataTable dtAdminterface;
 
             dbFunction dbFunction = new dbFunction();
             //連線
@@ -91,7 +51,7 @@ namespace BPM.FlowWork
                     cmd.Parameters.AddWithValue("@strSearchItemType", strSearchItemType);
                     cmd.Parameters.AddWithValue("@strSearchItemName", strSearchItemName);
                     cmd.Parameters.AddWithValue("@strSearchText", strSearchText);
-                    cmd.Parameters.AddWithValue("@isDownloadToExcel", false);
+                    cmd.Parameters.AddWithValue("@blnDownloadToExcel", blnDownload);
                     //cmd.ExecuteNonQuery();
 
                     SqlDataAdapter da = new SqlDataAdapter();
@@ -99,13 +59,49 @@ namespace BPM.FlowWork
                     da.SelectCommand = cmd;
                     da.Fill(ds);
 
-                    DataTable dtAdminterface = ds.Tables[0];
-                    ViewState["dtAdminterface"] = dtAdminterface;
-
-                    grvAdminterface.DataSource = dtAdminterface;
-                    grvAdminterface.DataBind();
+                    dtAdminterface = ds.Tables[0];
                 }
             }
+            return dtAdminterface;
+        }
+
+
+        //管理者看搜尋的人現有項目表
+        public void ViewSearchEmployeeHaveItems()
+        {            
+            DataTable dtAdminterface=GetDtAdminterface(false);
+            ViewState["dtAdminterface"] = dtAdminterface;
+
+            grvAdminterface.DataSource = dtAdminterface;
+            grvAdminterface.DataBind();
+
+            //dbFunction dbFunction = new dbFunction();
+            ////連線
+            //using (SqlConnection conn = dbFunction.sqlHissMingConnection())
+            //{
+            //    conn.Open();
+            //    string query = "spAdminterfaceViewHaveItems";
+            //    using (SqlCommand cmd = new SqlCommand(query, conn))
+            //    {
+            //        cmd.CommandType = CommandType.StoredProcedure;
+            //        cmd.Parameters.AddWithValue("@strSearchItemType", strSearchItemType);
+            //        cmd.Parameters.AddWithValue("@strSearchItemName", strSearchItemName);
+            //        cmd.Parameters.AddWithValue("@strSearchText", strSearchText);
+            //        cmd.Parameters.AddWithValue("@isDownloadToExcel", false);
+            //        //cmd.ExecuteNonQuery();
+
+            //        SqlDataAdapter da = new SqlDataAdapter();
+            //        DataSet ds = new DataSet();
+            //        da.SelectCommand = cmd;
+            //        da.Fill(ds);
+
+            //        DataTable dtAdminterface = ds.Tables[0];
+            //        ViewState["dtAdminterface"] = dtAdminterface;
+
+            //        grvAdminterface.DataSource = dtAdminterface;
+            //        grvAdminterface.DataBind();
+            //    }
+            //}
         }
         //載入預先設定的ItemType
         public void ItemTypeFormLoad() 
@@ -132,12 +128,11 @@ namespace BPM.FlowWork
                 ddlSearchItemType.DataSource = ds.Tables[0];
                 ddlSearchItemType.DataBind();
                 //設定搜尋的項目
-                ddlSearchItemName.DataSource = ds.Tables[1];    
-                ddlSearchItemName.DataBind();
+                //ddlSearchItemName.DataSource = ds.Tables[1];    
+                //ddlSearchItemName.DataBind();
                 //預設空白
                 ddlSearchItemType.Items.Insert(0, new ListItem("", ""));
                 ddlSearchItemName.Items.Insert(0, new ListItem("", ""));
-
             }         
         }
 
@@ -146,11 +141,7 @@ namespace BPM.FlowWork
         {
             Response.Redirect("Home.aspx");
         }
-        //重新進入該頁面
-        //protected void btnRefresh_Click(object sender, EventArgs e)
-        //{
-        //    Response.Redirect("Adminterface.aspx");
-        //}
+
         //搜尋該員工工號的現有項目
         protected void btnSearch_Click(object sender, EventArgs e)
         {
@@ -175,15 +166,15 @@ namespace BPM.FlowWork
 
             lblGuidKey.Text = strGuidKey;
 
-            txbEmpNumName.Text = selectedRow[0]["Nobr"].ToString() + "," + selectedRow[0]["UserName"].ToString() + "," + selectedRow[0]["DeptName"].ToString();
-            txbEditAssetsName.Text = selectedRow[0]["AssetsName"].ToString();
-            txbEditAssetsCode.Text = selectedRow[0]["AssetsCode"].ToString();
-
             //選取改變dropdownlist的值
             ddlItemType.SelectedValue = selectedRow[0]["ItemTypeID"].ToString();
             ddlItemType_SelectedIndexChanged(null, null);
             ddlItemList.SelectedValue = selectedRow[0]["ItemCode"].ToString();
 
+            txbEmpNumName.Text = selectedRow[0]["Nobr"].ToString() + "," + selectedRow[0]["UserName"].ToString() + "," + selectedRow[0]["DeptName"].ToString();
+            txbEditAssetsName.Text = selectedRow[0]["AssetsName"].ToString();
+            txbEditAssetsCode.Text = selectedRow[0]["AssetsCode"].ToString();
+           
             if (ddlItemType.SelectedItem.Text == "信箱")
             {
                 txbEditAssetsName.Text = selectedRow[0]["AssetsName"].ToString().Split('@')[0];
@@ -237,7 +228,6 @@ namespace BPM.FlowWork
         {
             DataTable dtAdminterface = (DataTable)ViewState["dtAdminterface"];
 
-
             //用逗號做分割
             string[] strEmpNumNameArray = txbEmpNumName.Text.Split(',');
             //取出資料
@@ -245,18 +235,13 @@ namespace BPM.FlowWork
             string strUserName = strEmpNumNameArray[1];
             string strDeptName = strEmpNumNameArray[2];
 
-            string[] strEmailArray = txbEditAssetsName.Text.Split('@'); 
+            string[] strEmailArray = txbEditAssetsName.Text.ToLower().Split('@'); 
             string strEmail = strEmailArray[0]+lblEmailFormate.Text;
-            
-            //string strNobr = txbEditNobr.Text;
-            //string strUserName = txbEditUserName.Text;
-            //string strDeptName = txbEditDeptName.Text;
-            //string strItemType = txbEditItemType.Text;
-            //string strItemName = txbEditItemName.Text;
+
             string strItemType = ddlItemType.SelectedItem.Text;
             string strItemName = ddlItemList.SelectedItem.Text; 
-            string strAssetsCode = txbEditAssetsCode.Text;
-            string strAssetsName = txbEditAssetsName.Text;          
+            string strAssetsCode = txbEditAssetsCode.Text.ToLower();
+            string strAssetsName = txbEditAssetsName.Text.ToLower();          
             string strGuidKey = lblGuidKey.Text;
 
             string strItemTypeID = ddlItemType.SelectedItem.Value;
@@ -294,7 +279,7 @@ namespace BPM.FlowWork
                     lblMessage.Visible = true;
                     check = false;
 
-                    //更改時 資產編號重複重複且為同比guid則可以更改成功
+                    //更改時 資產編號重複且為同個guid則可以更改成功，未來要新增其他的只要改&& !(selectedRow[0]["AssetsName"].ToString() == strAssetsName || OOO)就能完成
                     DataRow[] selectedRow = dtAdminterface.Select("GuidKey= '" + strGuidKey + "'");
                     if (strMessage == "資產編號重複" && selectedRow[0]["AssetsName"].ToString() != strAssetsName)
                     {
@@ -381,18 +366,7 @@ namespace BPM.FlowWork
 
         //刪除
         protected void btnDelete_Click(object sender, EventArgs e)
-        {
-            //DataTable dtAdminterface = (DataTable)ViewState["dtAdminterface"];
-
-            //int intSelectedIndex = grvAdminterface.SelectedIndex;
-            //int intPageIndex = grvAdminterface.PageIndex;   //擷取當前頁索引
-            //int intPageSize = grvAdminterface.PageSize;      //擷取每頁顯示記錄數
-            //int intCurrentSelectedIndex = intSelectedIndex + intPageIndex * intPageSize; //取得當前頁面選擇的索引
-
-            //DataRow drAdminterface = dtAdminterface.Rows[intCurrentSelectedIndex];
-
-            //string strGuidKey = drAdminterface["GuidKey"].ToString();
-
+        {          
             //用DataKeyNames得到Guidkey
             string strGuidKey = grvAdminterface.SelectedDataKey[0].ToString();
 
@@ -410,16 +384,6 @@ namespace BPM.FlowWork
 
                     cmd.ExecuteNonQuery();
                 }
-
-                //if (!string.IsNullOrEmpty(txbSearch.Text))
-                //{
-                //    ViewSearchEmployeeHaveItems();
-                //}
-                //else
-                //{
-                //    ViewEmployeeHaveItems();
-                //}
-
             }
             //取消選取
             grvAdminterface.SelectedIndex = -1;
@@ -495,21 +459,17 @@ namespace BPM.FlowWork
             string strAddNobr = strEmpNumNameArray[0];
             string strAddUserName = strEmpNumNameArray[1];
             string strAddDeptName = strEmpNumNameArray[2];
-            //string strAddNobr = txbEditNobr.Text;
-            //string strAddUserName = txbEditUserName.Text;
-            //string strAddDeptName = txbEditDeptName.Text;
-            //string strAddItemType = txbEditItemType.Text;
-            //string strAddItemName = txbEditItemName.Text;
+
             string strAddItemType = ddlItemType.SelectedItem.Text;
             string strAddItemName = ddlItemList.SelectedItem.Text;
 
             string strAddItemTypeID = ddlItemType.SelectedItem.Value;
             string strAddItemCode = ddlItemList.SelectedItem.Value;
 
-            string strAddAssetsCode = txbEditAssetsCode.Text;
-            string strAddAssetsName = txbEditAssetsName.Text;
+            string strAddAssetsCode = txbEditAssetsCode.Text.ToLower();
+            string strAddAssetsName = txbEditAssetsName.Text.ToLower();
           
-            string strInputEmail = txbEditAssetsName.Text.Trim()+lblEmailFormate.Text;
+            string strInputEmail = txbEditAssetsName.Text.ToLower().Trim()+lblEmailFormate.Text;
             string strInputAssetsCode = txbEditAssetsCode.Text.Trim();  
 
             bool check = true;
@@ -617,12 +577,7 @@ namespace BPM.FlowWork
 
         protected void ClearTxbContent()
         {
-            //txbEditNobr.Text = "";
-            //txbEditUserName.Text = "";
             txbEmpNumName.Text = "";
-            //txbEditDeptName.Text = "";
-            //txbEditItemType.Text = "";
-            //txbEditItemName.Text = "";
             txbEditAssetsCode.Text = "";
             txbEditAssetsName.Text = "";
             lblMessage.Text = "";
@@ -633,9 +588,9 @@ namespace BPM.FlowWork
         //依照不同的ItemType得到相對的Itemlist
         protected void ddlItemType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ////清空
-            //txbEditAssetsCode.Text = "";
-            //txbEditAssetsName.Text = "";
+            //清空
+            txbEditAssetsCode.Text = "";
+            txbEditAssetsName.Text = "";
             lblMessage.Visible = false;
             //顯示
             switch (ddlItemType.SelectedItem.Text)
@@ -693,14 +648,9 @@ namespace BPM.FlowWork
                 ddlSearchItemName.Items.Clear();
                 ddlSearchItemName.Items.Insert(0, new ListItem("", ""));
                 ddlSearchItemName.SelectedValue = "";
-                //lblSearchItemName.Visible = false;
-                //ddlSearchItemName.Visible = false;
             }
             else 
             {
-                //lblSearchItemName.Visible = true;
-                //ddlSearchItemName.Visible = true;
-
                 dbFunction dbFunction = new dbFunction();
 
                 using (SqlConnection conn = dbFunction.sqlHissDBtestConnection())
@@ -780,69 +730,12 @@ namespace BPM.FlowWork
         //資訊設備明細表下載成excel
         protected void btnDownload_Click(object sender, EventArgs e)
         {
-            DataTable dtHaveItemsDownloadToExcel;
-            dbFunction dbFunction = new dbFunction();
-
-            string strSearchItemType = ddlSearchItemType.SelectedItem.Text;
-            string strSearchItemName = ddlSearchItemName.SelectedItem.Text;
-            string strSearchText = txbSearch.Text;
-
             var wb = new XLWorkbook();
             //設定名稱
             var ws = wb.Worksheets.Add("Content");
-
-            //依照搜尋的文字做判斷
-            //string strSearchText = txbSearch.Text;
-
-            //if (string.IsNullOrEmpty(strSearchText))
-            //{
-            //    strSearchText = ddlItemList.SelectedItem.Text;
-            //}
-
-                      
-            ////連線
-            //using (SqlConnection conn = dbFunction.sqlHissMingConnection())
-            //{
-            //    conn.Open();
-            //    string query = "spHaveItemsDownloadToExcel";
-            //    using (SqlCommand cmd = new SqlCommand(query, conn))
-            //    {
-            //        cmd.CommandType = CommandType.StoredProcedure;
-            //        cmd.Parameters.AddWithValue("@SearchEmpName", strSearchText);
-            //        //cmd.ExecuteNonQuery();
-
-            //        SqlDataAdapter da = new SqlDataAdapter();
-            //        DataSet ds = new DataSet();
-            //        da.SelectCommand = cmd;
-            //        da.Fill(ds);
-
-            //        dtHaveItemsDownloadToExcel = ds.Tables[0];
-            //    }
-            //}
-
-            //連線
-            using (SqlConnection conn = dbFunction.sqlHissMingConnection())
-            {
-                conn.Open();
-                string query = "spAdminterfaceViewHaveItems";
-                using (SqlCommand cmd = new SqlCommand(query, conn))
-                {
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@strSearchItemType", strSearchItemType);
-                    cmd.Parameters.AddWithValue("@strSearchItemName", strSearchItemName);
-                    cmd.Parameters.AddWithValue("@strSearchText", strSearchText);
-                    cmd.Parameters.AddWithValue("@isDownloadToExcel", true);
-                    //cmd.ExecuteNonQuery();
-
-                    SqlDataAdapter da = new SqlDataAdapter();
-                    DataSet ds = new DataSet();
-                    da.SelectCommand = cmd;
-                    da.Fill(ds);
-
-                    dtHaveItemsDownloadToExcel = ds.Tables[0];
-
-                }
-            }
+            //得到搜尋後的dataTable
+            DataTable dtHaveItemsDownloadToExcel = GetDtAdminterface(true);
+         
             //插入到excel
             ws.Cell(1,1).InsertTable(dtHaveItemsDownloadToExcel);
 
@@ -855,6 +748,7 @@ namespace BPM.FlowWork
             ws.Column(6).Width = 30;
             ws.Column(7).Width = 10;
 
+            //設定儲存、下載
             using (MemoryStream memoryStream = new MemoryStream())
             {
                 wb.SaveAs(memoryStream);
@@ -868,9 +762,31 @@ namespace BPM.FlowWork
                 Response.End();
             }
 
-        }
+            //連線
+            //using (SqlConnection conn = dbFunction.sqlHissMingConnection())
+            //{
+            //    conn.Open();
+            //    string query = "spAdminterfaceViewHaveItems";
+            //    using (SqlCommand cmd = new SqlCommand(query, conn))
+            //    {
+            //        cmd.CommandType = CommandType.StoredProcedure;
+            //        cmd.Parameters.AddWithValue("@strSearchItemType", strSearchItemType);
+            //        cmd.Parameters.AddWithValue("@strSearchItemName", strSearchItemName);
+            //        cmd.Parameters.AddWithValue("@strSearchText", strSearchText);
+            //        cmd.Parameters.AddWithValue("@isDownloadToExcel", true);
+            //        //cmd.ExecuteNonQuery();
 
-        
+            //        SqlDataAdapter da = new SqlDataAdapter();
+            //        DataSet ds = new DataSet();
+            //        da.SelectCommand = cmd;
+            //        da.Fill(ds);
+
+            //        dtHaveItemsDownloadToExcel = ds.Tables[0];
+
+            //    }
+            //}
+
+        }
     }
 }
 
