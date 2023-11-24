@@ -9,11 +9,15 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using static BPMLib.Class1;
 using static BPMLib.Class1.FormInfo;
+using JBHRIS.BLL;
+using DocumentFormat.OpenXml.Wordprocessing;
 
 namespace BPM.FlowWork
 {
     public partial class CAPA : System.Web.UI.Page
     {
+        public string strOccureDate;//發生日期
+
         protected void Page_Load(object sender, EventArgs e)
         {
             FormInfo Forminfo = new FormInfo();
@@ -24,6 +28,7 @@ namespace BPM.FlowWork
                 lblApplyDate.Text = DateTime.Now.ToString("yyyy/MM/dd");//申請日期
 
                 rbtnlSelectWorking.SelectedIndex = 0;
+                rbtnComplaint.SelectedIndex = 0;
 
                 stuFormInfo stuFormInfo = new stuFormInfo();//結構
                 stuFormInfo = Forminfo.GetFormInfoDataTable(stuFormInfo);
@@ -70,15 +75,7 @@ namespace BPM.FlowWork
                             lblStartEmpName.Text = stuFormInfo.strStartEmployeeName;
                             lblStartEmpDeptName.Text = stuFormInfo.strStartEmployeeDeptName;
                             lblStartEmpJobName.Text = stuFormInfo.strStartEmployeeJobName;
-
-                            // 申請原因
-                            txbApplyReason.Enabled = false;
-                            txbApplyReason.Text = stuFormInfo.strApplyReason;
-                            if (string.IsNullOrEmpty(txbApplyReason.Text))
-                            {
-                                txbApplyReason.Text = "未填寫原因";
-                            }
-
+                        
                             if (stuFormInfo.dtSingerRoleList.Rows.Count > 0)
                             {
                                 lblStatus.Text = "等待 " + stuFormInfo.strSignerEmployeeDeptName + stuFormInfo.strSignerEmployeeJobName + stuFormInfo.strSignerEmployeeName + " 簽核中";
@@ -134,13 +131,6 @@ namespace BPM.FlowWork
                             lblStartEmpDeptName.Text = stuFormInfo.strStartEmployeeDeptName;
                             lblStartEmpJobName.Text = stuFormInfo.strStartEmployeeJobName;
 
-                            // 申請原因
-                            txbApplyReason.Enabled = false;
-                            txbApplyReason.Text = stuFormInfo.strApplyReason;
-                            if (string.IsNullOrEmpty(txbApplyReason.Text))
-                            {
-                                txbApplyReason.Text = "未填寫原因";
-                            }
 
                             //發起人為簽核人 但發起人不為申請人
                             if (stuFormInfo.strStartEmployeeID == stuFormInfo.strSignerEmployeeID && stuFormInfo.strStartEmployeeID != stuFormInfo.strApplyEmployeeID)
@@ -377,7 +367,6 @@ namespace BPM.FlowWork
         {
             FormInfo formInfo = new FormInfo();
             stuFormInfo stuFormInfo = (stuFormInfo)ViewState["stuFormInfo"];
-            stuFormInfo.strApplyReason = txbApplyReason.Text;
 
             try
             {
@@ -522,6 +511,92 @@ namespace BPM.FlowWork
                     Response.Write("<script>alert('" + "申請已取消! " + "')</script>");
                     Response.Redirect("Home.aspx");
                 }
+            }
+        }
+
+        //--------------------矯正處理單區----------------------
+
+        
+        /// <summary>
+        /// 輸入sap單號
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void btnEnter_Click(object sender, EventArgs e)
+        {
+            string strInputSAPNumber = txbInputSAPNumber.Text;
+
+            dbFunction dbFunction = new dbFunction();
+
+            using (SqlConnection conn = dbFunction.sqlHissSAPHISS_Officail01Connection())
+            {
+                SqlCommand cmd = new SqlCommand("spGetViewSapB1ProductOrderList", conn);
+
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@strInputSAPNumber", strInputSAPNumber);
+
+                SqlDataAdapter da = new SqlDataAdapter();
+                DataSet ds = new DataSet();
+                da.SelectCommand = cmd;
+                conn.Open();
+                da.Fill(ds);
+                
+                DataRow drSapB1ProductOrderList = ds.Tables[0].Rows[0];
+
+                lblEventObjectContent.Text = (string)drSapB1ProductOrderList["CustomerNo"] +" "+ (string)drSapB1ProductOrderList["CustomerName"];
+                lblProductNameContent.Text = (string)drSapB1ProductOrderList["ProductName"];
+                lblShipQtyContent.Text = drSapB1ProductOrderList["Qty"].ToString();
+            }
+        }
+
+        
+        /// <summary>
+        /// 計算不良率
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void btnBadQty_Click(object sender, EventArgs e)
+        {
+            float intShipQty = lblShipQtyContent.Text.ToInteger();
+            float intBadQty = txbBadQty.Text.ToInteger();
+
+            float BadRate = ((intBadQty / intShipQty) * 100);
+            lblBadRateContent.Text = BadRate.ToString()+"%";
+        }
+        
+        /// <summary>
+        /// 清空欄位
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void btnClearEnter_Click(object sender, EventArgs e)
+        {
+            txbInputSAPNumber.Text = "";
+            lblEventObjectContent.Text = "";
+            lblProductNameContent.Text = "";
+            lblShipQtyContent.Text = "";
+            txbBadQty.Text = "";
+            lblBadRateContent.Text = "";
+        }
+
+        /// <summary>
+        /// 矯正處理單-申請類型:客訴(complain)、進料抽檢(IQC)、生產製程巡檢(IPQC)、成品抽檢(OQC)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void rbtnlSelectWorking_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (rbtnlSelectWorking.SelectedValue) 
+            {
+                case "complain":
+                    break;
+                case "IQC":
+                    break;
+                case "IPQC":
+                    break;
+                case "OQC":
+                    break;
+
             }
         }
     }

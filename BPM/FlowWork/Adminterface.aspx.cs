@@ -30,7 +30,11 @@ namespace BPM.FlowWork
                 ItemTypeFormLoad();
             }
         }
-
+        /// <summary>
+        /// 得到管理者介面使用的DataTable
+        /// </summary>
+        /// <param name="blnDownload">判斷是否下載</param>
+        /// <returns>DataTable</returns>
         public DataTable GetDtAdminterface(bool blnDownload)
         {
             string strSearchItemType = ddlSearchItemType.SelectedItem.Text;
@@ -65,8 +69,9 @@ namespace BPM.FlowWork
             return dtAdminterface;
         }
 
-
-        //管理者看搜尋的人現有項目表
+        /// <summary>
+        /// 管理者看搜尋的人現有項目表
+        /// </summary>
         public void ViewSearchEmployeeHaveItems()
         {            
             DataTable dtAdminterface=GetDtAdminterface(false);
@@ -103,7 +108,10 @@ namespace BPM.FlowWork
             //    }
             //}
         }
-        //載入預先設定的ItemType
+        
+        /// <summary>
+        /// 載入預先設定的ItemType
+        /// </summary>
         public void ItemTypeFormLoad() 
         {
             dbFunction dbFunction = new dbFunction();
@@ -574,7 +582,9 @@ namespace BPM.FlowWork
         {
             ClearTxbContent();
         }
-
+        /// <summary>
+        /// 清空內容
+        /// </summary>
         protected void ClearTxbContent()
         {
             txbEmpNumName.Text = "";
@@ -675,7 +685,12 @@ namespace BPM.FlowWork
             
         }
 
-        //判斷信箱是否有效或重複
+        
+        /// <summary>
+        /// 判斷信箱是否有效或重複
+        /// </summary>
+        /// <param name="email">輸入email</param>
+        /// <returns></returns>
         public string EmailCheckFields(string email)
         {
             string pattern = @"^\w+([-+.']\w+)*@hiss\.com\.tw$";
@@ -701,7 +716,12 @@ namespace BPM.FlowWork
             }        
         }
 
-        //判斷資產編號是否為有效或重複
+        
+        /// <summary>
+        /// 判斷資產編號是否為有效或重複
+        /// </summary>
+        /// <param name="AssetsCode">輸入資產編號</param>
+        /// <returns>錯誤訊息</returns>
         public string AssetsCodeCheckFields(string AssetsCode)
         {
             string pattern = @"^\d{7}$";

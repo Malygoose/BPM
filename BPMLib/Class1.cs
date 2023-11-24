@@ -42,6 +42,12 @@ namespace BPMLib
                 SqlConnection sqlCon = new SqlConnection("server=192.168.1.26;database=DatabaseTest;User ID=chiawei;Password=Aa123456;");
                 return sqlCon;
             }
+
+            public SqlConnection sqlHissSAPHISS_Officail01Connection()
+            {
+                SqlConnection sqlCon = new SqlConnection("server=192.168.1.23;database=HISS_Official01;User ID=chiawei;Password=Aa123456;");
+                return sqlCon;
+            }
         }
 
         public class FormInfo
@@ -126,8 +132,11 @@ namespace BPMLib
 
                
             }
-
-            // 設定發起人的資訊
+            /// <summary>
+            /// 設定發起人的資訊
+            /// </summary>
+            /// <param name="stuFormInfo">Struct結構</param>
+            /// <returns>Struct結構</returns>           
             public stuFormInfo GetStartEmployeeInfo(stuFormInfo stuFormInfo)
             {
                 dbFunction dbFunction = new dbFunction();
@@ -164,7 +173,12 @@ namespace BPMLib
                 return stuFormInfo;
             }
 
-            //  表單，取得發起人與申請人資訊，並儲存到Struct的viewState
+
+            /// <summary>
+            /// 表單，取得發起人與申請人資訊，並儲存到Struct的viewState
+            /// </summary>
+            /// <param name="stuFormInfo">Struct結構</param>
+            /// <returns>Struct結構</returns>
             public stuFormInfo GetApplyEmployeeInfo(stuFormInfo stuFormInfo)
             {
                 //進入時預設登錄者作為發起人的第一筆相關資料
@@ -184,7 +198,13 @@ namespace BPMLib
 
                 return stuFormInfo;
             }
-            //用ApView或ApParm取得ProcessID
+
+            /// <summary>
+            /// 用ApView或ApParm取得ProcessID
+            /// </summary>
+            /// <param name="intApKey">ApView或ApParm</param>
+            /// <param name="strRequestName">表單名稱</param>
+            /// <returns>Struct結構</returns>
             public int CheckGetProcessID(int intApKey,string strRequestName)
             {
                 dbFunction dbFunction = new dbFunction();
@@ -209,7 +229,12 @@ namespace BPMLib
                 
             }
 
-            // 判斷並讀取簽核或檢視內容的view
+
+            /// <summary>
+            /// 判斷並讀取資訊服務單的簽核或檢視內容的view
+            /// </summary>
+            /// <param name="stuFormInfo">Struct結構</param>
+            /// <returns>Struct結構</returns>
             public stuFormInfo GetFormView(stuFormInfo stuFormInfo)
             {
                 dbFunction dbFunction = new dbFunction();
@@ -293,7 +318,11 @@ namespace BPMLib
                 return stuFormInfo;
             }
 
-            //送出時取得最新一筆ProcessID
+
+            /// <summary>
+            /// 送出時取得最新一筆ProcessID
+            /// </summary>
+            /// <returns>最新一筆ProcessID</returns>
             public int GetSendProcessID()
             {
                 int intProcessID;
@@ -403,6 +432,11 @@ namespace BPMLib
             //    return wfFormSignM;
             //}
 
+            /// <summary>
+            /// 建立初始化的DataTable
+            /// </summary>
+            /// <param name="stuFormInfo"></param>
+            /// <returns></returns>
             public stuFormInfo GetFormInfoDataTable(stuFormInfo stuFormInfo)
             {
                 // 建立"附件上傳"的DataTable
