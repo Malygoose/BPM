@@ -231,22 +231,58 @@ namespace BPM.FlowWork
         protected global::System.Web.UI.WebControls.Panel pnlApplyDepiction;
 
         /// <summary>
-        /// lblInputSAPNumber 控制項。
+        /// lblOccurDate 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblInputSAPNumber;
+        protected global::System.Web.UI.WebControls.Label lblOccurDate;
 
         /// <summary>
-        /// txbInputSAPNumber 控制項。
+        /// txbOccureDate 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txbInputSAPNumber;
+        protected global::System.Web.UI.WebControls.TextBox txbOccureDate;
+
+        /// <summary>
+        /// lblOccurPlace 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblOccurPlace;
+
+        /// <summary>
+        /// txbOccurPlace 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txbOccurPlace;
+
+        /// <summary>
+        /// lblInputProductCode 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblInputProductCode;
+
+        /// <summary>
+        /// txbInputProductCode 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txbInputProductCode;
 
         /// <summary>
         /// btnEnter 控制項。
@@ -375,40 +411,13 @@ namespace BPM.FlowWork
         protected global::System.Web.UI.WebControls.Label lblBadRateContent;
 
         /// <summary>
-        /// lblOccurDate 控制項。
+        /// pnlComplaint 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblOccurDate;
-
-        /// <summary>
-        /// txbOccureDate 控制項。
-        /// </summary>
-        /// <remarks>
-        /// 自動產生的欄位。
-        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txbOccureDate;
-
-        /// <summary>
-        /// lblOccurPlace 控制項。
-        /// </summary>
-        /// <remarks>
-        /// 自動產生的欄位。
-        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblOccurPlace;
-
-        /// <summary>
-        /// txbOccurPlace 控制項。
-        /// </summary>
-        /// <remarks>
-        /// 自動產生的欄位。
-        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txbOccurPlace;
+        protected global::System.Web.UI.WebControls.Panel pnlComplaint;
 
         /// <summary>
         /// lblProblemDescription 控制項。
@@ -447,15 +456,6 @@ namespace BPM.FlowWork
         protected global::System.Web.UI.WebControls.TextBox txbMeasureDirection;
 
         /// <summary>
-        /// pnlComplaint 控制項。
-        /// </summary>
-        /// <remarks>
-        /// 自動產生的欄位。
-        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlComplaint;
-
-        /// <summary>
         /// lblComplaint 控制項。
         /// </summary>
         /// <remarks>
@@ -472,6 +472,33 @@ namespace BPM.FlowWork
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
         protected global::System.Web.UI.WebControls.RadioButtonList rbtnComplaint;
+
+        /// <summary>
+        /// pnlIQC 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlIQC;
+
+        /// <summary>
+        /// pnlIPQC 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlIPQC;
+
+        /// <summary>
+        /// pnlOQC 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlOQC;
 
         /// <summary>
         /// pnlFileUpload 控制項。
@@ -535,6 +562,60 @@ namespace BPM.FlowWork
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnSend;
+
+        /// <summary>
+        /// pnlSelectInvestigator 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlSelectInvestigator;
+
+        /// <summary>
+        /// lblSelectInvestigator 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblSelectInvestigator;
+
+        /// <summary>
+        /// ddlSelectInvestigator 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlSelectInvestigator;
+
+        /// <summary>
+        /// pnlSelectManager 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlSelectManager;
+
+        /// <summary>
+        /// lblSelectManager 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblSelectManager;
+
+        /// <summary>
+        /// ddlSelectManager 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlSelectManager;
 
         /// <summary>
         /// pnlCheck 控制項。

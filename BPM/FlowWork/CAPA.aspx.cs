@@ -35,6 +35,8 @@ namespace BPM.FlowWork
 
                 stuFormInfo.strLoginEmployeeID = User.Identity.Name;
 
+                
+
                 if (!string.IsNullOrEmpty(stuFormInfo.strLoginEmployeeID))
                 {
                     //ApView or ApParm or else
@@ -98,6 +100,8 @@ namespace BPM.FlowWork
                             grvFormSignM.DataSource = stuFormInfo.dtFormSingMList;
                             grvFormSignM.DataBind();
 
+                            
+
                             break;
                         case "ApParm":
                             stuFormInfo.intApKey = int.Parse(Request[strRequestName]);//apview or apparm後面的數字
@@ -153,6 +157,27 @@ namespace BPM.FlowWork
                             grvFormSignM.DataSource = stuFormInfo.dtFormSingMList;
                             grvFormSignM.DataBind();
 
+                            //----------矯正處理單------------
+                            if (stuFormInfo.strSignOfTargetNodeID == "576")
+                            {
+                                ddlSelectInvestigator.Enabled = true;
+                                CAPASelectInvestigator();
+                            }
+                            else 
+                            { 
+                                ddlSelectInvestigator.Enabled = false;
+                            }
+
+                            if (stuFormInfo.strSignOfTargetNodeID == "581")
+                            {
+                                ddlSelectManager.Enabled = true;
+                                CAPASelectManager();
+                            }
+                            else 
+                            {
+                                ddlSelectManager.Enabled = false;
+                            }
+                                                      
                             break;
                         default:
                             //根據網址抓FormCode
@@ -438,6 +463,17 @@ namespace BPM.FlowWork
                     formInfo.InsertFormSignM(stuFormInfo);
                 }
 
+                //如果是品保主管簽核且ddlSelectInvestigator為enable=true時寫入調查者、確認者
+                if (ddlSelectInvestigator.Enabled == true && stuFormInfo.strLoginEmployeeID == QAManagerEmpID()) 
+                {
+                    InvestigatorWriteToDynamic(strProcessID);
+                }
+
+                //如果是調查者且ddlSelectManager為enable=true時寫入課長
+                if (ddlSelectManager.Enabled == true)
+                {
+                    ManagerWriteToDynamic(strProcessID);
+                }
 
                 //  流程推進
                 formInfo.FlowApprove(stuFormInfo);
@@ -524,7 +560,7 @@ namespace BPM.FlowWork
         /// <param name="e"></param>
         protected void btnEnter_Click(object sender, EventArgs e)
         {
-            string strInputSAPNumber = txbInputSAPNumber.Text;
+            string strInputProductCode = txbInputProductCode.Text;
 
             dbFunction dbFunction = new dbFunction();
 
@@ -533,7 +569,7 @@ namespace BPM.FlowWork
                 SqlCommand cmd = new SqlCommand("spGetViewSapB1ProductOrderList", conn);
 
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@strInputSAPNumber", strInputSAPNumber);
+                cmd.Parameters.AddWithValue("@strInputProductCode", strInputProductCode);
 
                 SqlDataAdapter da = new SqlDataAdapter();
                 DataSet ds = new DataSet();
@@ -571,7 +607,7 @@ namespace BPM.FlowWork
         /// <param name="e"></param>
         protected void btnClearEnter_Click(object sender, EventArgs e)
         {
-            txbInputSAPNumber.Text = "";
+            txbInputProductCode.Text = "";
             lblEventObjectContent.Text = "";
             lblProductNameContent.Text = "";
             lblShipQtyContent.Text = "";
@@ -589,15 +625,144 @@ namespace BPM.FlowWork
             switch (rbtnlSelectWorking.SelectedValue) 
             {
                 case "complain":
+                    pnlComplaint.Visible = true;
                     break;
                 case "IQC":
+                    pnlComplaint.Visible = false;
                     break;
                 case "IPQC":
+                    pnlComplaint.Visible = false;
                     break;
                 case "OQC":
+                    pnlComplaint.Visible = false;
                     break;
 
             }
+        }
+        /// <summary>
+        /// 選擇調查者
+        /// </summary>
+        public void CAPASelectInvestigator() 
+        {
+            dbFunction dbFunction = new dbFunction();
+
+            using (SqlConnection conn = dbFunction.sqlHissChiaweiConnection())
+            {
+                SqlCommand cmd = new SqlCommand("spCAPASelectInvestigator", conn);
+
+                cmd.CommandType = CommandType.StoredProcedure;
+                
+                SqlDataAdapter da = new SqlDataAdapter();
+                DataSet ds = new DataSet();
+                da.SelectCommand = cmd;
+                conn.Open();
+                da.Fill(ds);
+
+                ddlSelectInvestigator.DataSource = ds.Tables[0];  
+                ddlSelectInvestigator.DataBind();
+            }
+        }
+        /// <summary>
+        /// 調查者選擇課長
+        /// </summary>
+        public void CAPASelectManager()
+        {
+            dbFunction dbFunction = new dbFunction();
+
+            using (SqlConnection conn = dbFunction.sqlHissChiaweiConnection())
+            {
+                SqlCommand cmd = new SqlCommand("spCAPASelectManager", conn);
+
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                SqlDataAdapter da = new SqlDataAdapter();
+                DataSet ds = new DataSet();
+                da.SelectCommand = cmd;
+                conn.Open();
+                da.Fill(ds);
+
+                ddlSelectManager.DataSource = ds.Tables[0];
+                ddlSelectManager.DataBind();
+            }
+        }
+
+        /// <summary>
+        /// wfDynamic寫入調查者跟確認者
+        /// </summary>
+        public void InvestigatorWriteToDynamic(string strProcessID)
+        {           
+            string strInvestigatorEmpID;
+            string strInvestigatorEmpRoleID;
+
+            string[] strInvestigator = ddlSelectInvestigator.SelectedValue.Split('/');
+            strInvestigatorEmpRoleID = strInvestigator[0];
+            strInvestigatorEmpID = strInvestigator[1];
+
+            dbFunction dbFunction = new dbFunction();
+
+            using (SqlConnection conn = dbFunction.sqlHissChiaweiConnection())
+            {
+                SqlCommand cmd = new SqlCommand("spCAPAInvestigatorWriteToDynamic", conn);
+                conn.Open();
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@strProcessID", strProcessID);
+                cmd.Parameters.AddWithValue("@strInvestigatorEmpID", strInvestigatorEmpID);
+                cmd.Parameters.AddWithValue("@strInvestigatorEmpRoleID", strInvestigatorEmpRoleID);
+
+                cmd.ExecuteNonQuery(); // 用於更新資料庫資料             
+            }
+        }
+
+        public void ManagerWriteToDynamic(string strProcessID)
+        {
+            string strManagerEmpID;
+            string strManagerEmpRoleID;
+
+            string[] strManager = ddlSelectManager.SelectedValue.Split('/');
+            strManagerEmpRoleID = strManager[0];
+            strManagerEmpID = strManager[1];
+
+            lblApplyDate.Text = strProcessID;//test
+            dbFunction dbFunction = new dbFunction();
+
+            using (SqlConnection conn = dbFunction.sqlHissChiaweiConnection())
+            {
+                SqlCommand cmd = new SqlCommand("spCAPAManagerWriteToDynamic", conn);
+                conn.Open();
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@strProcessID", strProcessID);
+                cmd.Parameters.AddWithValue("@strManagerEmpID", strManagerEmpID);
+                cmd.Parameters.AddWithValue("@strManagerEmpRoleID", strManagerEmpRoleID);
+
+                cmd.ExecuteNonQuery(); // 用於更新資料庫資料             
+            }
+        }
+
+        /// <summary>
+        /// 取得品保主管的ID
+        /// </summary>
+        public string QAManagerEmpID()
+        {
+            string strQAManagerEmpID;
+
+            dbFunction dbFunction = new dbFunction();
+
+            using (SqlConnection conn = dbFunction.sqlHissChiaweiConnection())
+            {
+                SqlCommand cmd = new SqlCommand("spCAPAGetQAManagerEmpID", conn);
+
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                SqlDataAdapter da = new SqlDataAdapter();
+                DataSet ds = new DataSet();
+                da.SelectCommand = cmd;
+                conn.Open();
+                da.Fill(ds);
+
+                strQAManagerEmpID = ds.Tables[0].Rows[0]["EmployeeID"].ToString();
+
+            }
+            return strQAManagerEmpID;
         }
     }
 }

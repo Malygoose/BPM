@@ -48,6 +48,12 @@ namespace BPMLib
                 SqlConnection sqlCon = new SqlConnection("server=192.168.1.23;database=HISS_Official01;User ID=chiawei;Password=Aa123456;");
                 return sqlCon;
             }
+
+            public SqlConnection sqlHissChiaweiConnection()
+            {
+                SqlConnection sqlCon = new SqlConnection("server=192.168.1.26;database=chiawei;User ID=chiawei;Password=Aa123456;");
+                return sqlCon;
+            }
         }
 
         public class FormInfo
@@ -100,7 +106,7 @@ namespace BPMLib
                 public int intSignerEmployeeDeptLevel;         //流程中下一位簽核人部門Level
                 public string strSignerEmployeeJobID;          //流程中下一位簽核人職位ID
                 public string strSignerEmployeeJobName;        //流程中下一位簽核人職稱
-                public int intSignOfTargetNodeInt;             //流程中下一位簽核人節點ID
+                public string strSignOfTargetNodeID;             //流程中下一位簽核人節點ID
                 public string strSignOfTargetNodeName;         //流程中下一位簽核人節點名稱
 
 
@@ -263,6 +269,8 @@ namespace BPMLib
                         stuFormInfo.dateApplyDate = DateTime.Parse(ds.Tables[0].Rows[0]["ApplyDate"].ToString());
                         stuFormInfo.dateRequireDate = DateTime.Parse(ds.Tables[0].Rows[0]["RequireDate"].ToString());
 
+                        //取得表單現在要簽核的的flowID
+                        stuFormInfo.strSignOfTargetNodeID = ds.Tables[0].Rows[0]["FlowNode_id"].ToString();
 
                         //  將需要用到的發起人、申請人資訊儲存到Struct
                         stuFormInfo.strApplyEmployeeID = ds.Tables[0].Rows[0]["ApplyEmpID"].ToString();
@@ -607,7 +615,7 @@ namespace BPMLib
                 drwfFormAppInfo["sNobr"] = stuFormInfo.strApplyEmployeeID;
                 drwfFormAppInfo["sName"] = stuFormInfo.strApplyEmployeeName;
                 drwfFormAppInfo["sState"] = "1";
-                drwfFormAppInfo["sInfo"] = "(測試)" + stuFormInfo.strApplyEmployeeName; //+ "，需求日期：" + stuFormInfo.strRequireDate;
+                drwfFormAppInfo["sInfo"] = "(測試)" + stuFormInfo.strApplyEmployeeName+"的矯正預防單"; //+ "，需求日期：" + stuFormInfo.strRequireDate;
                 drwfFormAppInfo["sGuid"] = Guid.NewGuid().ToString();
                 drwfFormAppInfo["dKeyDate"] = DateTime.Now.ToString();
                 stuFormInfo.dtwfFormAppInfo.Rows.Add(drwfFormAppInfo);
@@ -630,7 +638,7 @@ namespace BPMLib
                 drwfFormApp["sConditions1"] = "60";
                 drwfFormApp["iCateOrder"] = stuFormInfo.intApplyEmployeeDeptLevel;
                 drwfFormApp["sLevel"] = stuFormInfo.intApplyEmployeeDeptLevel.ToString();
-                drwfFormApp["sInfo"] = "(測試)" + stuFormInfo.strApplyEmployeeName;// + "，需求日期：" + stuFormInfo.strRequireDate;
+                drwfFormApp["sInfo"] = "(測試)" + stuFormInfo.strApplyEmployeeName+"的矯正預防單";// + "，需求日期：" + stuFormInfo.strRequireDate;
                 drwfFormApp["sNote"] = stuFormInfo.strApplyReason;
                 drwfFormApp["sState"] = "1";
                 drwfFormApp["bDelay"] = false;

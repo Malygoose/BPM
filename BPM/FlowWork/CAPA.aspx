@@ -89,7 +89,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>
+                    <td width="50%">
                         <asp:RadioButtonList ID="rbtnlSelectWorking" runat="server" Font-Names="微軟正黑體" RepeatDirection="Horizontal" AutoPostBack="True" OnSelectedIndexChanged="rbtnlSelectWorking_SelectedIndexChanged">
                             <asp:ListItem Value="complain" Text="客訴"></asp:ListItem>
                             <asp:ListItem Value="IQC" Text="進料抽檢"></asp:ListItem>
@@ -97,9 +97,8 @@
                             <asp:ListItem Value="OQC" Text="成品抽檢"></asp:ListItem>
                         </asp:RadioButtonList>
                     </td>
-                </tr>
-                <tr>
-                    <td width="25%">
+
+                    <td>
                         <div style="width: 20px; display: inline-block;"></div>
                         申請日期:
                             <asp:Label ID="lblApplyDate" runat="server"></asp:Label>
@@ -167,52 +166,12 @@
             </table>
         </asp:Panel>
         <asp:Panel ID="pnlApplyDepiction" runat="server">
+            <div class="title-style">
+                ◆ 現況現場現物敘述
+            </div>
             <table width="100%">
                 <tr>
                     <td width="50%">
-                        <div class="title-style">
-                            ◆ 現況現場現物敘述
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <asp:Label ID="lblInputSAPNumber" runat="server" Text="請輸入SAP單號:"></asp:Label>
-                        <asp:TextBox ID="txbInputSAPNumber" runat="server"></asp:TextBox>
-                        <asp:Button ID="btnEnter" runat="server" Text="確定" OnClick="btnEnter_Click"/>
-                        <asp:Button ID="btnClearEnter" runat="server" Text="清空" OnClick="btnClearEnter_Click"/>
-                        <asp:Label ID="lblErrorInputSAPNumber" runat="server" Text="錯誤的sap單號" Visible="false" ForeColor="Red"></asp:Label>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <asp:Label ID="lblEventObject" runat="server" Text="事件對象:"></asp:Label>
-                        <asp:Label ID="lblEventObjectContent" runat="server"></asp:Label>
-                    </td>
-                    <td>
-                        <asp:Label ID="lblProductName" runat="server" Text="品名:"></asp:Label>
-                        <asp:Label ID="lblProductNameContent" runat="server"></asp:Label>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <asp:Label ID="lblShipQty" runat="server" Text="出貨樘數:"></asp:Label>
-                        <asp:Label ID="lblShipQtyContent" runat="server"></asp:Label>
-                    </td>
-                    <td>
-                        <asp:Label ID="lblBadQty" runat="server" Text="不良樘數:"></asp:Label>
-                        <asp:TextBox ID="txbBadQty" runat="server" Width="50px"></asp:TextBox>
-                        <asp:Button ID="btnBadQty" runat="server" Text="計算不良率" OnClick="btnBadQty_Click"/>                       
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <asp:Label ID="lblBadRate" runat="server" Text="不良率:"></asp:Label>
-                        <asp:Label ID="lblBadRateContent" runat="server" ></asp:Label>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
                         <asp:Label ID="lblOccurDate" runat="server" Text="發生日期:"></asp:Label>
                         <asp:TextBox ID="txbOccureDate" runat="server"></asp:TextBox>
                     </td>
@@ -221,30 +180,80 @@
                         <asp:TextBox ID="txbOccurPlace" runat="server"></asp:TextBox>
                     </td>
                 </tr>
+            </table>
+            <table width="100%">
                 <tr>
                     <td>
-                        <asp:Label ID="lblProblemDescription" runat="server" Text="問題描述:"></asp:Label>
-                        <asp:TextBox ID="txbProblemDescription" runat="server" Width="95%" Height="70px" TextMode="MultiLine"></asp:TextBox>
-                    </td>
-                    <td>
-                        <asp:Label ID="lblMeasureDirection" runat="server" Text="已採措施說明:"></asp:Label>
-                        <asp:TextBox ID="txbMeasureDirection" runat="server" Width="95%" Height="70px" TextMode="MultiLine"></asp:TextBox>
+                        <asp:Label ID="lblInputProductCode" runat="server" Text="請輸入成品/進貨料號:"></asp:Label>
+                        <asp:TextBox ID="txbInputProductCode" runat="server" Width="300px"></asp:TextBox>
+                        <asp:Button ID="btnEnter" runat="server" Text="確定" OnClick="btnEnter_Click" />
+                        <asp:Button ID="btnClearEnter" runat="server" Text="清空" OnClick="btnClearEnter_Click" />
+                        <asp:Label ID="lblErrorInputSAPNumber" runat="server" Text="錯誤的料號" Visible="false" ForeColor="Red"></asp:Label>
                     </td>
                 </tr>
-                <asp:Panel ID="pnlComplaint" runat="server">
+            </table>
+            <table width="100%">
+                <tr>
+                    <td width="50%">
+                        <asp:Label ID="lblEventObject" runat="server" Text="事件對象:"></asp:Label>
+                        <asp:Label ID="lblEventObjectContent" runat="server"></asp:Label>
+                    </td>
+                    <td>
+                        <asp:Label ID="lblProductName" runat="server" Text="品名:"></asp:Label>
+                        <asp:Label ID="lblProductNameContent" runat="server"></asp:Label>
+                    </td>
+                </tr>
+            </table>
+            <table width="100%">
+                <tr>
+                    <td width="25%">
+                        <asp:Label ID="lblShipQty" runat="server" Text="工單樘數:"></asp:Label>
+                        <asp:Label ID="lblShipQtyContent" runat="server"></asp:Label>
+                    </td>
+                    <td width="25%">
+                        <asp:Label ID="lblBadQty" runat="server" Text="不良樘數:"></asp:Label>
+                        <asp:TextBox ID="txbBadQty" runat="server" Width="50px"></asp:TextBox>
+                        <asp:Button ID="btnBadQty" runat="server" Text="計算不良率" OnClick="btnBadQty_Click" />
+                    </td>
+                    <td width="50%">
+                        <asp:Label ID="lblBadRate" runat="server" Text="不良率:"></asp:Label>
+                        <asp:Label ID="lblBadRateContent" runat="server"></asp:Label>
+                    </td>
+                </tr>
+            </table>
+            <asp:Panel ID="pnlComplaint" runat="server">
+                <table width="100%">
+                    <tr>
+                        <td width="50%">
+                            <asp:Label ID="lblProblemDescription" runat="server" Text="問題描述:"></asp:Label>
+                            <asp:TextBox ID="txbProblemDescription" runat="server" Width="95%" Height="70px" TextMode="MultiLine"></asp:TextBox>
+                        </td>
+                        <td>
+                            <asp:Label ID="lblMeasureDirection" runat="server" Text="已採措施說明:"></asp:Label>
+                            <asp:TextBox ID="txbMeasureDirection" runat="server" Width="95%" Height="70px" TextMode="MultiLine"></asp:TextBox>
+                        </td>
+                    </tr>
                     <tr>
                         <td>
                             <asp:Label ID="lblComplaint" runat="server" Text="客訴內容是否明確為我司責任"></asp:Label>
-                            <asp:RadioButtonList ID="rbtnComplaint" runat="server" RepeatDirection="Horizontal" AutoPostBack="True">                               
+                            <asp:RadioButtonList ID="rbtnComplaint" runat="server" RepeatDirection="Horizontal" AutoPostBack="True">
                                 <asp:ListItem Value="1" Text="是"></asp:ListItem>
                                 <asp:ListItem Value="0" Text="否"></asp:ListItem>
                             </asp:RadioButtonList>
                         </td>
                     </tr>
-                </asp:Panel>
-            </table>
+                </table>
+            </asp:Panel>
+            <asp:Panel ID="pnlIQC" runat="server">
+
+            </asp:Panel>
+            <asp:Panel ID="pnlIPQC" runat="server">
+
+            </asp:Panel>
+            <asp:Panel ID="pnlOQC" runat="server">
+
+            </asp:Panel>
         </asp:Panel>
-        
 
         <asp:Panel ID="pnlFileUpload" runat="server">
             <table>
@@ -299,6 +308,16 @@
         <br />
         <asp:Panel ID="pnlSend" runat="server">
             <asp:Button ID="btnSend" runat="server" Text="送出" CssClass="title-style" OnClientClick="return confirm('確定要送出申請嗎？');" Visible="true" OnClick="btnSend_Click" />
+        </asp:Panel>
+
+        <asp:Panel ID="pnlSelectInvestigator" runat="server">
+            <asp:Label ID="lblSelectInvestigator" runat="server" Text="選擇調查者"></asp:Label>
+            <asp:DropDownList ID="ddlSelectInvestigator" runat="server" DataTextField="DeptNameEmpName" DataValueField="RoleIDEmpID"></asp:DropDownList>
+        </asp:Panel>
+
+        <asp:Panel ID="pnlSelectManager" runat="server">
+            <asp:Label ID="lblSelectManager" runat="server" Text="選擇課長"></asp:Label>
+            <asp:DropDownList ID="ddlSelectManager" runat="server" DataTextField="DeptNameEmpName" DataValueField="RoleIDEmpID"></asp:DropDownList>
         </asp:Panel>
 
         <asp:Panel ID="pnlCheck" runat="server">
