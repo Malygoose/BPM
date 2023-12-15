@@ -302,6 +302,7 @@
     <Content Include="FlowWork\CAPA.aspx" />
     <Content Include="FlowWork\Home.aspx" />
     <Content Include="FlowWork\IT01.aspx" />
+    <Content Include="FlowWork\QA01.aspx" />
     <Content Include="FlowWork\Template.aspx" />
     <Content Include="Global.asax" />
     <Content Include="IT01RequestEnd.asmx" />
@@ -431,6 +432,13 @@
     </Compile>
     <Compile Include="FlowWork\IT01.aspx.designer.cs">
       <DependentUpon>IT01.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="FlowWork\QA01.aspx.cs">
+      <DependentUpon>QA01.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FlowWork\QA01.aspx.designer.cs">
+      <DependentUpon>QA01.aspx</DependentUpon>
     </Compile>
     <Compile Include="FlowWork\Template.aspx.cs">
       <DependentUpon>Template.aspx</DependentUpon>

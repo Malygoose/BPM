@@ -93,23 +93,6 @@
         <asp:Panel ID="pnlDate" runat="server">
             <table width="100%">
                 <tr>
-                    <td>
-                        <div class="title-style">
-                            ◆ 申請類型
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        <asp:RadioButtonList ID="rbtnlSelectWorking" runat="server" Font-Names="微軟正黑體" OnSelectedIndexChanged="rbtnlSelectWorking_SelectedIndexChanged" RepeatDirection="Horizontal" AutoPostBack="True" Font-Size="20px">
-                            <asp:ListItem Value="AtWork">申請在職變更(新增軟硬體/變更權限)</asp:ListItem>
-                            <asp:ListItem Value="Quit">申請離職(繳回全部設備)</asp:ListItem>
-                            <asp:ListItem Value="Transfer">申請調職(繳回全部設備)</asp:ListItem>
-                        </asp:RadioButtonList>
-                    </td>
-                </tr>
-
-                <tr>
                     <td width="25%">
                         <%--<div style="width: 20px; display: inline-block;"></div>--%>
                         <div class="font-size">
@@ -171,7 +154,7 @@
                                                 <asp:Label ID="lblSelectUser" runat="server"></asp:Label>
                                             </td>
                                         </tr>
-                                     </asp:Panel>
+                                    </asp:Panel>
                                     <tr>
                                         <td>
                                             <div class="title-style">
@@ -202,6 +185,28 @@
                                     </tr>
                                 </table>
                             </asp:Panel>
+
+                            <asp:Panel ID="pnlChooseApply" runat="server">
+                                <table width="100%">
+                                    <tr>
+                                        <td>
+                                            <div class="title-style">
+                                                ◆ 申請類型
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <asp:RadioButtonList ID="rbtnlSelectWorking" runat="server" Font-Names="微軟正黑體" OnSelectedIndexChanged="rbtnlSelectWorking_SelectedIndexChanged" RepeatDirection="Horizontal" AutoPostBack="True" Font-Size="20px">
+                                                <asp:ListItem Value="AtWork">申請在職變更(新增軟硬體/變更權限)</asp:ListItem>
+                                                <asp:ListItem Value="Quit">申請離職(繳回全部設備)</asp:ListItem>
+                                                <asp:ListItem Value="Transfer">申請調職(繳回全部設備)</asp:ListItem>
+                                            </asp:RadioButtonList>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </asp:Panel>
+
                             <asp:Panel runat="server" ID="pnlApplyEmpDevice" CssClass="font-size">
                                 <table width="100%">
                                     <tr>
@@ -550,12 +555,12 @@
             <asp:GridView ID="grvFormSignM" runat="server" Width="100%" AutoGenerateColumns="False" BackColor="White" BorderColor="#999999" BorderStyle="Solid" BorderWidth="1px" CellPadding="3" ForeColor="Black" GridLines="Vertical" Font-Size="18px">
                 <AlternatingRowStyle BackColor="#CCCCCC" />
                 <Columns>
-                    <asp:BoundField DataField="工號" HeaderText="工號" HeaderStyle-Width="5%"/>
-                    <asp:BoundField DataField="姓名" HeaderText="姓名" HeaderStyle-Width="6%"/>
-                    <asp:BoundField DataField="部門" HeaderText="部門" HeaderStyle-Width="10%"/>
-                    <asp:BoundField DataField="職稱" HeaderText="職稱" HeaderStyle-Width="8%"/>
-                    <asp:BoundField DataField="意見" HeaderText="意見" HeaderStyle-Width="44%"/>
-                    <asp:BoundField DataField="簽核日期" HeaderText="簽核日期" HeaderStyle-Width="11%"/>
+                    <asp:BoundField DataField="工號" HeaderText="工號" HeaderStyle-Width="5%" />
+                    <asp:BoundField DataField="姓名" HeaderText="姓名" HeaderStyle-Width="6%" />
+                    <asp:BoundField DataField="部門" HeaderText="部門" HeaderStyle-Width="10%" />
+                    <asp:BoundField DataField="職稱" HeaderText="職稱" HeaderStyle-Width="8%" />
+                    <asp:BoundField DataField="意見" HeaderText="意見" HeaderStyle-Width="44%" />
+                    <asp:BoundField DataField="簽核日期" HeaderText="簽核日期" HeaderStyle-Width="11%" />
                 </Columns>
                 <FooterStyle BackColor="#CCCCCC" />
                 <HeaderStyle BackColor="Black" Font-Bold="True" ForeColor="White" />
