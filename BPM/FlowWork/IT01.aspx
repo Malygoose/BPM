@@ -479,7 +479,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <asp:Label ID="lblFileUploadErrMsg" runat="server" ForeColor="Red" Text="檔案大小不可超過20MB"></asp:Label>
+                        <asp:Label ID="lblFileUploadErrMsg" runat="server" ForeColor="Red" Text="檔案大小不可超過5MB"></asp:Label>
                     </td>
                 </tr>
             </table>

@@ -156,6 +156,7 @@ namespace BPM.FlowWork
                             grvFormSignM.DataBind();
 
                             //----------矯正處理單------------
+                            //品保主管節點
                             if (stuFormInfo.strSignOfTargetNodeID == "576")
                             {
                                 ddlSelectInvestigator.Enabled = true;
@@ -165,7 +166,7 @@ namespace BPM.FlowWork
                             {
                                 ddlSelectInvestigator.Enabled = false;
                             }
-
+                            //品保調查者節點
                             if (stuFormInfo.strSignOfTargetNodeID == "581")
                             {
                                 ddlSelectManager.Enabled = true;
@@ -558,7 +559,8 @@ namespace BPM.FlowWork
         /// <param name="e"></param>
         protected void btnEnter_Click(object sender, EventArgs e)
         {
-            string strInputProductCode = txbInputProductCode.Text;
+            string strInputProductCodeAndName = txbInputProductCode.Text;
+            string strInputProductCode= strInputProductCodeAndName.Split(',')[0];   
 
             dbFunction dbFunction = new dbFunction();
 

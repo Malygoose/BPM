@@ -136,6 +136,8 @@ namespace BPMLib
                 public DataTable dtwfFormApp;           //寫入EZFlow wfFormApp
                 public DataTable dtwfFormSignM;         //寫入EZFlow wfFormSignM
 
+                //矯正預防單QA01 dt
+                public DataTable dtFormQA01;            //寫入到chiawei QA01資料表中
                
             }
             /// <summary>
@@ -516,7 +518,33 @@ namespace BPMLib
                 dtwfFormSignM.Columns.Add("dKeyDate");      //建立時間
                 stuFormInfo.dtwfFormSignM = dtwfFormSignM;
 
-                return stuFormInfo;
+                //建立寫入到"Chiawei"資料庫中"QA01"資料表的DataTable
+                DataTable dtFormQA01 = new DataTable();
+                dtFormQA01.Columns.Add("sProcessID");           //表單ID
+                dtFormQA01.Columns.Add("sFormCode");            //表單代碼
+                dtFormQA01.Columns.Add("sFormName");            //表單名稱
+                dtFormQA01.Columns.Add("sApplyEmployeeID");     //申請人ID
+                dtFormQA01.Columns.Add("sApplyEmployeeName");   //申請人姓名
+                dtFormQA01.Columns.Add("sApplyEmployeeJobName");//申請人職稱
+                dtFormQA01.Columns.Add("sApplyEmployeeDeptName");//申請人部門
+                dtFormQA01.Columns.Add("sApplyType");           //申請樣式
+                dtFormQA01.Columns.Add("dApplyDate");           //申請日期
+                dtFormQA01.Columns.Add("sProductCode");         //料號
+                dtFormQA01.Columns.Add("sProductName");         //料名
+                dtFormQA01.Columns.Add("sEventObject");         //事件對象
+                dtFormQA01.Columns.Add("sShipQty");             //工單數量
+                dtFormQA01.Columns.Add("sBadQty");              //不良數量
+                dtFormQA01.Columns.Add("sBadRate");             //不良率
+                dtFormQA01.Columns.Add("dOccureDate");          //發生日期
+                dtFormQA01.Columns.Add("sOccurePlace");         //發生地點
+                dtFormQA01.Columns.Add("sProblemDescription");  //問題描述
+                dtFormQA01.Columns.Add("sMeasureDirection");    //已採措施說明
+                dtFormQA01.Columns.Add("IsComplaint");          //課訴是否為我司責任
+                dtFormQA01.Columns.Add("sSelectInvestigator");  //選擇調查者的姓名
+                dtFormQA01.Columns.Add("sSelectManager");       //選擇課長的姓名
+
+
+                return stuFormInfo;                
             }
 
             //public DataTable makeFormDataTable(string strDataTableName)

@@ -36,6 +36,11 @@ namespace BPM
             return Weight/Math.Pow( Height/100,2);
         }
 
+        /// <summary>
+        /// 管理者介面用工號或姓名或部門，尋找相對的人
+        /// </summary>
+        /// <param name="prefixText"></param>
+        /// <returns></returns>
         [WebMethod]
         public List<string> GetMatchingData(string prefixText)
         {
@@ -58,6 +63,40 @@ namespace BPM
                         while (reader.Read())
                         {
                             matchingData.Add(reader["EmployeeID"].ToString());
+                        }
+                    }
+                }
+            }
+            return matchingData;
+        }
+
+        /// <summary>
+        /// QA01用成品料號或成品料名尋找成品
+        /// </summary>
+        /// <param name="prefixText"></param>
+        /// <returns></returns>
+        [WebMethod]
+        public List<string> QA01GetProductMatchingData(string prefixText)
+        {
+            List<string> matchingData = new List<string>();
+
+            dbFunction dbFunction = new dbFunction();
+            //連線
+            using (SqlConnection conn = dbFunction.sqlHissSAPHISS_Officail01Connection())
+            {
+                conn.Open();
+            
+                string query = "spQA01InputProductCodeOrProductNameToSearch";
+                using (SqlCommand command = new SqlCommand(query, conn))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@prefixText", prefixText + "%");
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            matchingData.Add(reader["Product"].ToString());
                         }
                     }
                 }

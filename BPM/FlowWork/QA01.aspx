@@ -181,7 +181,15 @@
                 <tr>
                     <td>
                         <asp:Label ID="lblInputProductCode" runat="server" Text="請輸入成品料號或成品料名:"></asp:Label>
-                        <asp:TextBox ID="txbInputProductCode" runat="server" Width="300px"></asp:TextBox>
+                        <asp:TextBox ID="txbInputProductCode" runat="server" Width="690px"></asp:TextBox>
+                        <ajaxToolkit:AutoCompleteExtender ID="AutoCompleteExtender1" runat="server"
+                                    TargetControlID="txbInputProductCode"
+                                    ServiceMethod="QA01GetProductMatchingData"
+                                    MinimumPrefixLength="1"
+                                    CompletionInterval="100"
+                                    EnableCaching="false"
+                                    ServicePath="~/WebService1.asmx">
+                                </ajaxToolkit:AutoCompleteExtender>
                         <asp:Button ID="btnEnter" runat="server" Text="確定" OnClick="btnEnter_Click" />
                         <asp:Button ID="btnClearEnter" runat="server" Text="清空" OnClick="btnClearEnter_Click" />
                         <asp:Label ID="lblErrorInputSAPNumber" runat="server" Text="錯誤的料號" Visible="false" ForeColor="Red"></asp:Label>
@@ -279,7 +287,7 @@
                         <asp:Button ID="btnFileUpload" runat="server" Text="上傳" OnClick="btnFileUpload_Click" />
                     </td>
                     <td width="20%">
-                        <asp:Label ID="lblFileUploadErrMsg" runat="server" ForeColor="Red" Text="檔案大小不可超過20MB"></asp:Label>
+                        <asp:Label ID="lblFileUploadErrMsg" runat="server" ForeColor="Red" Text="檔案大小不可超過5MB"></asp:Label>
                     </td>
                 </tr>
             </table>
