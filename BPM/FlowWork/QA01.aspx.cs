@@ -24,6 +24,7 @@ namespace BPM.FlowWork
             {
                 //  設定表單資訊-------------------------------------              
                 lblApplyDate.Text = DateTime.Now.ToString("yyyy/MM/dd");//申請日期
+                strOccureDate = DateTime.Now.ToString("yyyy/MM/dd");//發生日期
 
                 rbtnlSelectWorking.SelectedIndex = 0;
                 rbtnComplaint.SelectedIndex = 0;
@@ -229,6 +230,10 @@ namespace BPM.FlowWork
                     ViewState["stuFormInfo"] = stuFormInfo;
                 }
             }
+            else
+            { 
+                strOccureDate = txbOccureDate.Text; 
+            }
         }
 
         protected void btnHome_Click(object sender, EventArgs e)
@@ -389,6 +394,9 @@ namespace BPM.FlowWork
         // 送出按鈕
         protected void btnSend_Click(object sender, EventArgs e)
         {
+            //QA01表單資料設定
+            FormQA01DataSet();
+
             FormInfo formInfo = new FormInfo();
             stuFormInfo stuFormInfo = (stuFormInfo)ViewState["stuFormInfo"];
 
@@ -408,6 +416,8 @@ namespace BPM.FlowWork
                 //上傳資料到EZFlow
                 formInfo.SqlBulkCopyToFlow(stuFormInfo);
 
+                //上傳資料到QA01
+                formInfo.SqlBulkCopyToFormQA01(stuFormInfo);
 
                 //  判斷發起人與申請人是否相同，不同的話則為代發起
                 if (stuFormInfo.strApplyEmployeeRoleID != stuFormInfo.strStartEmployeeRoleID)
@@ -597,7 +607,8 @@ namespace BPM.FlowWork
             float intBadQty = txbBadQty.Text.ToInteger();
 
             float BadRate = ((intBadQty / intShipQty) * 100);
-            lblBadRateContent.Text = BadRate.ToString() + "%";
+            float RoundedBadRate = (float)Math.Round(BadRate, 2);
+            lblBadRateContent.Text = RoundedBadRate.ToString() + "%";
         }
 
         /// <summary>
@@ -763,6 +774,43 @@ namespace BPM.FlowWork
 
             }
             return strQAManagerEmpID;
+        }
+
+        /// <summary>
+        /// 設定FormQA01資料
+        /// </summary>
+        /// <param name="stuFormInfo"></param>
+        public void FormQA01DataSet()
+        {
+            stuFormInfo stuFormInfo = (stuFormInfo)ViewState["stuFormInfo"];
+
+            stuFormInfo.strApplyType=rbtnlSelectWorking.SelectedItem.Text;
+
+            string strInputProductCodeAndName = txbInputProductCode.Text;
+            stuFormInfo.strProductCode = strInputProductCodeAndName.Split(',')[0];
+            stuFormInfo.strProductName = strInputProductCodeAndName.Split(',')[1];
+            stuFormInfo.strEventObject = lblEventObjectContent.Text;
+            stuFormInfo.strShipQty = lblShipQtyContent.Text;
+            stuFormInfo.strBadQty = txbBadQty.Text;
+            stuFormInfo.strBadRate = lblBadRateContent.Text;
+            stuFormInfo.dateOccureDate= DateTime.Parse(txbOccureDate.Text);
+            stuFormInfo.strOccurePlace = txbOccurPlace.Text;
+
+            bool IsComplaint;
+            if (rbtnlSelectWorking.SelectedValue== "complain" && rbtnComplaint.SelectedValue == "1")
+            {
+                IsComplaint=true;
+            }
+            else
+            {
+                IsComplaint = false;
+            }
+            stuFormInfo.IsComplaint = IsComplaint;
+
+            stuFormInfo.strProblemDescription = txbProblemDescription.Text;
+            stuFormInfo.strMeasureDirection = txbMeasureDirection.Text;
+
+            ViewState["stuFormInfo"] = stuFormInfo;
         }
     }
 }

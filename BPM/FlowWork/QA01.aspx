@@ -325,12 +325,12 @@
             <asp:Button ID="btnSend" runat="server" Text="送出" CssClass="title-style" OnClientClick="return confirm('確定要送出申請嗎？');" Visible="true" OnClick="btnSend_Click" />
         </asp:Panel>
 
-        <asp:Panel ID="pnlSelectInvestigator" runat="server">
+        <asp:Panel ID="pnlSelectInvestigator" runat="server" Visible="false">
             <asp:Label ID="lblSelectInvestigator" runat="server" Text="選擇調查者"></asp:Label>
             <asp:DropDownList ID="ddlSelectInvestigator" runat="server" DataTextField="DeptNameEmpName" DataValueField="RoleIDEmpID"></asp:DropDownList>
         </asp:Panel>
 
-        <asp:Panel ID="pnlSelectManager" runat="server">
+        <asp:Panel ID="pnlSelectManager" runat="server" Visible="false">
             <asp:Label ID="lblSelectManager" runat="server" Text="選擇課長"></asp:Label>
             <asp:DropDownList ID="ddlSelectManager" runat="server" DataTextField="DeptNameEmpName" DataValueField="RoleIDEmpID"></asp:DropDownList>
         </asp:Panel>

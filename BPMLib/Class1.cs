@@ -136,7 +136,23 @@ namespace BPMLib
                 public DataTable dtwfFormApp;           //寫入EZFlow wfFormApp
                 public DataTable dtwfFormSignM;         //寫入EZFlow wfFormSignM
 
-                //矯正預防單QA01 dt
+                //-----矯正預防單QA01 變數值------
+                public string strApplyType;         //申請樣式
+                public string strProductCode;       //料號
+                public string strProductName;       //料名
+                public string strEventObject;       //事件對象
+                public string strShipQty;           //工單數量
+                public string strBadQty;            //不良數量
+                public string strBadRate;           //不良率
+                public string strOccurePlace;       //發生地點
+                public string strProblemDescription;//問題描述
+                public string strMeasureDirection;  //已採措施說明
+                public string strSelectInvestigator;//選擇調查者的姓名
+                public string strSelectManager;     //選擇課長的姓名
+
+                public DateTime dateOccureDate;     //發生日期
+                public bool IsComplaint;            //課訴是否為我司責任
+                //-----矯正預防單QA01 dt------
                 public DataTable dtFormQA01;            //寫入到chiawei QA01資料表中
                
             }
@@ -542,7 +558,7 @@ namespace BPMLib
                 dtFormQA01.Columns.Add("IsComplaint");          //課訴是否為我司責任
                 dtFormQA01.Columns.Add("sSelectInvestigator");  //選擇調查者的姓名
                 dtFormQA01.Columns.Add("sSelectManager");       //選擇課長的姓名
-
+                stuFormInfo.dtFormQA01 = dtFormQA01;
 
                 return stuFormInfo;                
             }
@@ -643,7 +659,7 @@ namespace BPMLib
                 drwfFormAppInfo["sNobr"] = stuFormInfo.strApplyEmployeeID;
                 drwfFormAppInfo["sName"] = stuFormInfo.strApplyEmployeeName;
                 drwfFormAppInfo["sState"] = "1";
-                drwfFormAppInfo["sInfo"] = "(測試)" + stuFormInfo.strApplyEmployeeName+"的矯正預防單"; //+ "，需求日期：" + stuFormInfo.strRequireDate;
+                drwfFormAppInfo["sInfo"] = "(測試)" + stuFormInfo.strApplyEmployeeName+"送出的矯正預防單"; //+ "，需求日期：" + stuFormInfo.strRequireDate;
                 drwfFormAppInfo["sGuid"] = Guid.NewGuid().ToString();
                 drwfFormAppInfo["dKeyDate"] = DateTime.Now.ToString();
                 stuFormInfo.dtwfFormAppInfo.Rows.Add(drwfFormAppInfo);
@@ -666,7 +682,7 @@ namespace BPMLib
                 drwfFormApp["sConditions1"] = "60";
                 drwfFormApp["iCateOrder"] = stuFormInfo.intApplyEmployeeDeptLevel;
                 drwfFormApp["sLevel"] = stuFormInfo.intApplyEmployeeDeptLevel.ToString();
-                drwfFormApp["sInfo"] = "(測試)" + stuFormInfo.strApplyEmployeeName+"的矯正預防單";// + "，需求日期：" + stuFormInfo.strRequireDate;
+                drwfFormApp["sInfo"] = "(測試)" + stuFormInfo.strApplyEmployeeName+"送出的矯正預防單";// + "，需求日期：" + stuFormInfo.strRequireDate;
                 drwfFormApp["sNote"] = stuFormInfo.strApplyReason;
                 drwfFormApp["sState"] = "1";
                 drwfFormApp["bDelay"] = false;
@@ -801,6 +817,76 @@ namespace BPMLib
                     }
                 }
             }
+
+            /// <summary>
+            /// 資料寫入到資料表QA01
+            /// </summary>
+            /// <param name="stuFormInfo"></param>
+            public void SqlBulkCopyToFormQA01(stuFormInfo stuFormInfo)
+            {
+                DataRow drFormQA01 = stuFormInfo.dtFormQA01.NewRow();
+
+                drFormQA01["sProcessID"] =stuFormInfo.intProcessID.ToString();
+                drFormQA01["sFormCode"] = stuFormInfo.strFormCode;
+                drFormQA01["sFormName"] = stuFormInfo.strFormName;
+                drFormQA01["sApplyEmployeeID"] = stuFormInfo.strApplyEmployeeID;
+                drFormQA01["sApplyEmployeeName"] = stuFormInfo.strApplyEmployeeName;
+                drFormQA01["sApplyEmployeeJobName"] = stuFormInfo.strApplyEmployeeJobName;
+                drFormQA01["sApplyEmployeeDeptName"] = stuFormInfo.strApplyEmployeeDeptName;
+                drFormQA01["sApplyType"] = stuFormInfo.strApplyType;
+                drFormQA01["dApplyDate"] = DateTime.Now;
+                drFormQA01["sProductCode"] = stuFormInfo.strProductCode;
+                drFormQA01["sProductName"] = stuFormInfo.strProductName;
+                drFormQA01["sEventObject"] = stuFormInfo.strEventObject;
+                drFormQA01["sShipQty"] = stuFormInfo.strShipQty;
+                drFormQA01["sBadQty"] = stuFormInfo.strBadQty;
+                drFormQA01["sBadRate"] = stuFormInfo.strBadRate;
+                drFormQA01["dOccureDate"] = stuFormInfo.dateOccureDate;
+                drFormQA01["sOccurePlace"] = stuFormInfo.strOccurePlace;
+                drFormQA01["sProblemDescription"] = stuFormInfo.strProblemDescription;
+                drFormQA01["sMeasureDirection"] = stuFormInfo.strMeasureDirection;
+                drFormQA01["IsComplaint"] = stuFormInfo.IsComplaint;
+                //drFormQA01["sSelectInvestigator"] = stuFormInfo.strSelectInvestigator;
+                //drFormQA01["sSelectManager"] = stuFormInfo.strSelectManager;
+
+                stuFormInfo.dtFormQA01.Rows.Add(drFormQA01);
+
+                dbFunction dbFunction = new dbFunction();
+                using (SqlConnection connection = dbFunction.sqlHissChiaweiConnection())
+                {
+                    connection.Open();
+                    using (SqlBulkCopy bulkCopy = new SqlBulkCopy(connection))
+                    {
+                        // 上傳
+                        bulkCopy.DestinationTableName = "FormQA01";
+                        bulkCopy.ColumnMappings.Add("sProcessID", "sProcessID");
+                        bulkCopy.ColumnMappings.Add("sFormCode", "sFormCode");
+                        bulkCopy.ColumnMappings.Add("sFormName", "sFormName");
+                        bulkCopy.ColumnMappings.Add("sApplyEmployeeID", "sApplyEmployeeID");
+                        bulkCopy.ColumnMappings.Add("sApplyEmployeeName", "sApplyEmployeeName");
+                        bulkCopy.ColumnMappings.Add("sApplyEmployeeJobName", "sApplyEmployeeJobName");
+                        bulkCopy.ColumnMappings.Add("sApplyEmployeeDeptName", "sApplyEmployeeDeptName");
+                        bulkCopy.ColumnMappings.Add("sApplyType", "sApplyType");
+                        bulkCopy.ColumnMappings.Add("dApplyDate", "dApplyDate");
+                        bulkCopy.ColumnMappings.Add("sProductCode", "sProductCode");
+                        bulkCopy.ColumnMappings.Add("sProductName", "sProductName");
+                        bulkCopy.ColumnMappings.Add("sEventObject", "sEventObject");
+                        bulkCopy.ColumnMappings.Add("sShipQty", "sShipQty");
+                        bulkCopy.ColumnMappings.Add("sBadQty", "sBadQty");
+                        bulkCopy.ColumnMappings.Add("sBadRate", "sBadRate");
+                        bulkCopy.ColumnMappings.Add("dOccureDate", "dOccureDate");
+                        bulkCopy.ColumnMappings.Add("sOccurePlace", "sOccurePlace");
+                        bulkCopy.ColumnMappings.Add("sProblemDescription", "sProblemDescription");
+                        bulkCopy.ColumnMappings.Add("sMeasureDirection", "sMeasureDirection");
+                        bulkCopy.ColumnMappings.Add("IsComplaint", "IsComplaint");
+                        //bulkCopy.ColumnMappings.Add("sSelectInvestigator", "sSelectInvestigator");
+                        //bulkCopy.ColumnMappings.Add("sSelectManager", "sSelectManager");
+
+                        bulkCopy.WriteToServer(stuFormInfo.dtFormQA01);
+                    }
+                }
+            }
+
         }
     }
 }
