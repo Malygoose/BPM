@@ -47,6 +47,7 @@ namespace BPM.FlowWork
                             stuFormInfo.intApKey = int.Parse(Request[strRequestName]);//apview or apparm後面的數字
                             stuFormInfo.intProcessID = Forminfo.CheckGetProcessID(stuFormInfo.intApKey, strRequestName); //取得ProcessID
                             stuFormInfo = Forminfo.GetFormView(stuFormInfo);//取得表單資訊
+                            stuFormInfo = Forminfo.GetFormQA01View(stuFormInfo);//取得QA01表單資訊
 
                             //檢視畫面顯示設定
                             ddlSelectStartEmpDept.Visible = false;
@@ -99,14 +100,68 @@ namespace BPM.FlowWork
                             grvFormSignM.DataSource = stuFormInfo.dtFormSingMList;
                             grvFormSignM.DataBind();
 
+                            //------矯正處理單檢視資料-------
+                            rbtnlSelectWorking.Enabled = false;
+                            txbInputProductCode.Enabled = false;
+                            btnEnter.Visible = false;
+                            btnClearEnter.Visible = false;
+                            txbBadQty.Enabled = false;
+                            btnBadQty.Visible = false;
+                            txbOccureDate.Enabled = false;
+                            txbOccurPlace.Enabled = false;
+                            txbProblemDescription.Enabled = false;
+                            txbMeasureDirection.Enabled = false;
+                            rbtnComplaint.Enabled = false;
 
+                            //設定申請樣式的選取按鈕AND顯示設定
+                            switch (stuFormInfo.strApplyType) 
+                            {
+                                case "客訴":
+                                    rbtnlSelectWorking.SelectedIndex = 0;
+                                    if (stuFormInfo.IsComplaint)
+                                    {
+                                        rbtnComplaint.SelectedIndex = 0;    
+                                    }
+                                    else
+                                    {
+                                        rbtnComplaint.SelectedIndex = 1;
+                                    }
+                                    break;
+                                case "進料抽檢":
+                                    rbtnlSelectWorking.SelectedIndex = 1;
+                                    lblComplaint.Visible = false;
+                                    rbtnComplaint.Visible = false;
+                                    break;
+                                case "生產製程巡檢":
+                                    rbtnlSelectWorking.SelectedIndex = 2;
+                                    lblComplaint.Visible = false;
+                                    rbtnComplaint.Visible = false;
+                                    break;
+                                case "成品抽檢":
+                                    rbtnlSelectWorking.SelectedIndex = 3;
+                                    lblComplaint.Visible = false;
+                                    rbtnComplaint.Visible = false;
+                                    break;
+                            }
+                            //設定填寫資料
+                            txbInputProductCode.Text = stuFormInfo.strProductCode+","+ stuFormInfo.strProductName;
+                            lblEventObjectContent.Text = stuFormInfo.strEventObject;
+                            lblShipQtyContent.Text = stuFormInfo.strShipQty;
+                            txbBadQty.Text = stuFormInfo.strBadQty;
+                            lblBadRateContent.Text = stuFormInfo.strBadRate;
+                            txbOccureDate.Text = stuFormInfo.dateOccureDate.ToString();
+                            txbOccurPlace.Text = stuFormInfo.strOccurePlace;
+                            txbProblemDescription.Text = stuFormInfo.strProblemDescription;
+                            txbMeasureDirection.Text = stuFormInfo.strMeasureDirection;
+
+                            
 
                             break;
                         case "ApParm":
                             stuFormInfo.intApKey = int.Parse(Request[strRequestName]);//apview or apparm後面的數字
                             stuFormInfo.intProcessID = Forminfo.CheckGetProcessID(stuFormInfo.intApKey, strRequestName); //取得ProcessID
                             stuFormInfo = Forminfo.GetFormView(stuFormInfo);//取得表單資訊
-
+                            stuFormInfo = Forminfo.GetFormQA01View(stuFormInfo);//取得QA01表單資訊
                             //簽核畫面顯示設定
                             ddlSelectStartEmpDept.Visible = false;
                             ddlSelectApplyEmp.Visible = false;
@@ -157,9 +212,65 @@ namespace BPM.FlowWork
                             grvFormSignM.DataBind();
 
                             //----------矯正處理單------------
+                            //------矯正處理單檢視資料-------
+                            rbtnlSelectWorking.Enabled = false;
+                            txbInputProductCode.Enabled = false;
+                            btnEnter.Visible = false;
+                            btnClearEnter.Visible = false;
+                            txbBadQty.Enabled = false;
+                            btnBadQty.Visible = false;
+                            txbOccureDate.Enabled = false;
+                            txbOccurPlace.Enabled = false;
+                            txbProblemDescription.Enabled = false;
+                            txbMeasureDirection.Enabled = false;
+                            rbtnComplaint.Enabled = false;
+
+                            //設定申請樣式的選取按鈕AND顯示設定
+                            switch (stuFormInfo.strApplyType)
+                            {
+                                case "客訴":
+                                    rbtnlSelectWorking.SelectedIndex = 0;
+                                    if (stuFormInfo.IsComplaint)
+                                    {
+                                        rbtnComplaint.SelectedIndex = 0;
+                                    }
+                                    else
+                                    {
+                                        rbtnComplaint.SelectedIndex = 1;
+                                    }
+                                    break;
+                                case "進料抽檢":
+                                    rbtnlSelectWorking.SelectedIndex = 1;
+                                    lblComplaint.Visible = false;
+                                    rbtnComplaint.Visible = false;
+                                    break;
+                                case "生產製程巡檢":
+                                    rbtnlSelectWorking.SelectedIndex = 2;
+                                    lblComplaint.Visible = false;
+                                    rbtnComplaint.Visible = false;
+                                    break;
+                                case "成品抽檢":
+                                    rbtnlSelectWorking.SelectedIndex = 3;
+                                    lblComplaint.Visible = false;
+                                    rbtnComplaint.Visible = false;
+                                    break;
+                            }
+                            //設定填寫資料
+                            txbInputProductCode.Text = stuFormInfo.strProductCode + "," + stuFormInfo.strProductName;
+                            lblEventObjectContent.Text = stuFormInfo.strEventObject;
+                            lblShipQtyContent.Text = stuFormInfo.strShipQty;
+                            txbBadQty.Text = stuFormInfo.strBadQty;
+                            lblBadRateContent.Text = stuFormInfo.strBadRate;
+                            txbOccureDate.Text = stuFormInfo.dateOccureDate.ToString();
+                            txbOccurPlace.Text = stuFormInfo.strOccurePlace;
+                            txbProblemDescription.Text = stuFormInfo.strProblemDescription;
+                            txbMeasureDirection.Text = stuFormInfo.strMeasureDirection;
+
+
                             //品保主管節點
                             if (stuFormInfo.strSignOfTargetNodeID == "576")
                             {
+                                pnlSelectInvestigator.Visible = true;
                                 ddlSelectInvestigator.Enabled = true;
                                 QA01SelectInvestigator();
                             }
@@ -170,6 +281,7 @@ namespace BPM.FlowWork
                             //品保調查者節點
                             if (stuFormInfo.strSignOfTargetNodeID == "581")
                             {
+                                pnlSelectManager.Visible = true;
                                 ddlSelectManager.Enabled = true;
                                 QA01SelectManager();
                             }

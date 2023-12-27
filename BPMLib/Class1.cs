@@ -887,6 +887,51 @@ namespace BPMLib
                 }
             }
 
+            /// <summary>
+            /// 判斷並讀取QA01的簽核或檢視內容的view
+            /// </summary>
+            /// <param name="stuFormInfo">Struct結構</param>
+            /// <returns>Struct結構</returns>
+            public stuFormInfo GetFormQA01View(stuFormInfo stuFormInfo)
+            {
+                dbFunction dbFunction = new dbFunction();
+                using (SqlConnection conn = dbFunction.sqlHissChiaweiConnection())
+                {
+                    conn.Open();
+                    string query = "spQA01GetFormQA01";
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@strProcessID", stuFormInfo.intProcessID);
+
+                        SqlDataAdapter da = new SqlDataAdapter();
+                        DataSet ds = new DataSet();
+                        da.SelectCommand = cmd;
+                        da.Fill(ds);
+
+                        // 取得QA01填單內容
+                        stuFormInfo.strApplyType = ds.Tables[0].Rows[0]["sApplyType"].ToString();
+                        stuFormInfo.strProductCode = ds.Tables[0].Rows[0]["sProductCode"].ToString();
+                        stuFormInfo.strProductName = ds.Tables[0].Rows[0]["sProductName"].ToString();
+                        stuFormInfo.strEventObject = ds.Tables[0].Rows[0]["sEventObject"].ToString();
+                        stuFormInfo.strShipQty = ds.Tables[0].Rows[0]["sShipQty"].ToString();
+                        stuFormInfo.strBadQty = ds.Tables[0].Rows[0]["sBadQty"].ToString();
+                        stuFormInfo.strBadRate = ds.Tables[0].Rows[0]["sBadRate"].ToString();
+                        stuFormInfo.strOccurePlace = ds.Tables[0].Rows[0]["sOccurePlace"].ToString();
+                        stuFormInfo.strProblemDescription = ds.Tables[0].Rows[0]["sProblemDescription"].ToString();
+                        stuFormInfo.strMeasureDirection = ds.Tables[0].Rows[0]["sMeasureDirection"].ToString();
+                        stuFormInfo.IsComplaint = (bool)ds.Tables[0].Rows[0]["IsComplaint"];
+                        stuFormInfo.strSelectInvestigator = ds.Tables[0].Rows[0]["sSelectInvestigator"].ToString(); 
+                        stuFormInfo.strSelectManager = ds.Tables[0].Rows[0]["sSelectManager"].ToString();
+
+                        //取得QA01"發生日期"
+                        stuFormInfo.dateOccureDate = DateTime.Parse(ds.Tables[0].Rows[0]["dOccureDate"].ToString());
+                 
+                    }
+                }
+                return stuFormInfo;
+            }
+
         }
     }
 }
