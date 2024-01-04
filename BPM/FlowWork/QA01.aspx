@@ -13,15 +13,45 @@
         window.addEventListener('DOMContentLoaded', function () {
             // 取得要綁定 Flatpickr 的元素，這裡假設是一個 ASP.NET 的 TextBox 控制項
             var txbOccureDate = document.getElementById('<%= txbOccureDate.ClientID %>');
-
+            var txbImplementDay = document.getElementById('<%= txbImplementDay.ClientID %>');
             // 初始化 Flatpickr
             flatpickr(txbOccureDate, {
                 locale: "zh",
                 // 在此設定 Flatpickr 的選項
                 //minDate: new Date().fp_incr(0),
-                defaultDate: "<%=strOccureDate%>"
+                defaultDate: "<%=strOccureDate%>"               
+            });
+
+            flatpickr(txbImplementDay, {
+                locale: "zh",
+                // 在此設定 Flatpickr 的選項
+                minDate: new Date().fp_incr(30),
+                defaultDate: "<%=strImplementDay%>"
             });
         });
+
+        //計算不良率
+        function AutoBadRate() {
+            var validInput = /^\d*$/.test(document.getElementById('<%= txbBadQty.ClientID %>').value);
+            // 如果輸入不是數字，清除輸入並取消事件的預設行為
+            if (!validInput) {                
+                document.getElementById('<%= txbBadQty.ClientID %>').value = "";
+                preventDefault();
+            }
+
+            //不良樘數不能超過工單樘數
+            var txbBadQtyValue = parseFloat(document.getElementById('<%= txbBadQty.ClientID %>').value);
+            var lblShipQtyValue = parseFloat(document.getElementById('<%= lblShipQtyContent.ClientID %>').innerText);
+            if (txbBadQtyValue > lblShipQtyValue) {
+                document.getElementById('<%= txbBadQty.ClientID %>').value = lblShipQtyValue;
+            }
+
+            //計算
+            var shipQty = parseFloat(document.getElementById('<%= lblShipQtyContent.ClientID %>').innerText);
+            var badQty = parseFloat(document.getElementById('<%= txbBadQty.ClientID %>').value);
+            var BadRate = (badQty / shipQty) * 100;
+            document.getElementById('<%= lblBadRateContent.ClientID %>').innerText = BadRate.toFixed(2)+'%';
+        }
     </script>
     <style type="text/css">
         .center-panel {
@@ -180,8 +210,8 @@
             <table width="100%">
                 <tr>
                     <td>
-                        <asp:Label ID="lblInputProductCode" runat="server" Text="請輸入成品料號或成品料名:"></asp:Label>
-                        <asp:TextBox ID="txbInputProductCode" runat="server" Width="690px"></asp:TextBox>
+                        <asp:Label ID="lblInputProductCode" runat="server" Text="成品料號,成品料名:"></asp:Label>
+                        <asp:TextBox ID="txbInputProductCode" runat="server" Width="750px" placeholder="(請輸入成品料號或成品料名)"></asp:TextBox>
                         <ajaxToolkit:AutoCompleteExtender ID="AutoCompleteExtender1" runat="server"
                                     TargetControlID="txbInputProductCode"
                                     ServiceMethod="QA01GetProductMatchingData"
@@ -216,8 +246,8 @@
                     </td>
                     <td width="25%">
                         <asp:Label ID="lblBadQty" runat="server" Text="不良樘數:"></asp:Label>
-                        <asp:TextBox ID="txbBadQty" runat="server" Width="50px"></asp:TextBox>
-                        <asp:Button ID="btnBadQty" runat="server" Text="計算不良率" OnClick="btnBadQty_Click" />
+                        <asp:TextBox ID="txbBadQty" runat="server" Width="90px" oninput ="AutoBadRate()" placeholder ="(請輸入數字)" TextMode="Number" Enabled="false"></asp:TextBox>
+                        <%--<asp:Button ID="btnBadQty" runat="server" Text="計算不良率" OnClick="btnBadQty_Click" />--%>
                     </td>
                     <td width="50%">
                         <asp:Label ID="lblBadRate" runat="server" Text="不良率:"></asp:Label>
@@ -228,12 +258,12 @@
             <table width="100%">
                 <tr>
                     <td width="50%">
-                        <asp:Label ID="lblOccurDate" runat="server" Text="發生日期:"></asp:Label>
-                        <asp:TextBox ID="txbOccureDate" runat="server"></asp:TextBox>
+                        <asp:Label ID="lblOccurDate" runat="server" Text="發生日期:" ></asp:Label>
+                        <asp:TextBox ID="txbOccureDate" runat="server" Enabled="false"></asp:TextBox>
                     </td>
                     <td>
-                        <asp:Label ID="lblOccurPlace" runat="server" Text="發生地點:"></asp:Label>
-                        <asp:TextBox ID="txbOccurPlace" runat="server"></asp:TextBox>
+                        <asp:Label ID="lblOccurPlace" runat="server" Text="發生地點:" ></asp:Label>
+                        <asp:TextBox ID="txbOccurPlace" runat="server" placeholder="(請輸入發生地點)" Enabled="false"></asp:TextBox>
                     </td>
                 </tr>
             </table>
@@ -242,13 +272,13 @@
                     <tr>
                         <td width="50%">
                             <asp:Label ID="lblProblemDescription" runat="server" Text="問題描述:"></asp:Label>
-                            <asp:TextBox ID="txbProblemDescription" runat="server" Width="95%" Height="70px" TextMode="MultiLine"></asp:TextBox>
+                            <asp:TextBox ID="txbProblemDescription" runat="server" Width="95%" Height="70px" TextMode="MultiLine" placeholder="(請輸入問題描述)" Enabled="false"></asp:TextBox>
                         </td>
                     </tr>
                     <tr>
                         <td>
                             <asp:Label ID="lblMeasureDirection" runat="server" Text="已採措施說明:"></asp:Label>
-                            <asp:TextBox ID="txbMeasureDirection" runat="server" Width="95%" Height="70px" TextMode="MultiLine"></asp:TextBox>
+                            <asp:TextBox ID="txbMeasureDirection" runat="server" Width="95%" Height="70px" TextMode="MultiLine" placeholder="(請輸入已採措施說明)" Enabled="false"></asp:TextBox>
                         </td>
                     </tr>
                     <tr>
@@ -280,14 +310,14 @@
                     </td>
                 </tr>
                 <tr>
-                    <td width="50%">
+                    <td width="40%">
                         <asp:FileUpload ID="FileUpload1" runat="server" />
                     </td>
                     <td width="30%">
                         <asp:Button ID="btnFileUpload" runat="server" Text="上傳" OnClick="btnFileUpload_Click" />
                     </td>
-                    <td width="20%">
-                        <asp:Label ID="lblFileUploadErrMsg" runat="server" ForeColor="Red" Text="檔案大小不可超過5MB"></asp:Label>
+                    <td width="30%">
+                        <asp:Label ID="lblFileUploadErrMsg" runat="server" ForeColor="Red" Text="請上傳PDF檔案且大小不可超過5MB"></asp:Label>
                     </td>
                 </tr>
             </table>
@@ -323,6 +353,52 @@
         <br />
         <asp:Panel ID="pnlSend" runat="server">
             <asp:Button ID="btnSend" runat="server" Text="送出" CssClass="title-style" OnClientClick="return confirm('確定要送出申請嗎？');" Visible="true" OnClick="btnSend_Click" />
+        </asp:Panel>
+
+        <asp:Panel ID="pnlInvestigation" runat="server" Visible="false">
+            <asp:Label ID="lblInvestigation" runat="server" Text="◆原因調查:"></asp:Label>
+            <asp:TextBox ID="txbInvestigation" runat="server" Width="95%" Height="70px" TextMode="MultiLine" placeholder="(限品保調查員、改善對象填入)"></asp:TextBox>
+        </asp:Panel>
+
+        <asp:Panel ID="pnlTarget" runat="server" Visible="false">
+            <asp:Label ID="lblRedStart" runat="server" Text="*" ForeColor="Red"></asp:Label>
+            <asp:Label ID="lblTarget" runat="server" Text="是否為改善對象:"></asp:Label>
+            <asp:CheckBox ID="chbTarget" runat="server" AutoPostBack="true"/>
+        </asp:Panel>
+
+        <asp:Panel ID="pnlAnalyze" runat="server" Visible="false">
+            <asp:Label ID="lblAnalyze" runat="server" Text="◆真因分析:" ></asp:Label>
+            <asp:TextBox ID="txbAnalyze" runat="server" Width="95%" Height="70px" TextMode="MultiLine" placeholder="(限改善對象勾選後填入)"></asp:TextBox>
+        </asp:Panel>
+
+        <asp:Panel ID="pnlCountermeasures" runat="server" Visible="false">
+            <asp:Label ID="lblCountermeasures" runat="server" Text="◆對策擬定:"></asp:Label><br />
+            <asp:Label ID="lblImplementDay" runat="server" Text="選擇實施日:"></asp:Label>          
+            <asp:TextBox ID="txbImplementDay" runat="server"></asp:TextBox>
+            <asp:TextBox ID="txbCountermeasures" runat="server" Width="95%" Height="70px" TextMode="MultiLine" placeholder="(限改善對象勾選後填入)"></asp:TextBox>
+        </asp:Panel>
+
+        <asp:Panel ID="pnlQAConfirm" runat="server" Visible="false">
+            <asp:Label ID="lblQAConfirm" runat="server" Text="◆品保確認:"></asp:Label><br />
+            <asp:Label ID="lblClassification" runat="server" Text="分類:"></asp:Label>
+            <asp:DropDownList ID="ddlLargeClassification" runat="server"></asp:DropDownList>
+            <asp:DropDownList ID="ddlMediumClassification" runat="server"></asp:DropDownList>
+            <asp:DropDownList ID="ddlSmallClassification" runat="server"></asp:DropDownList>
+            <br />
+            <asp:Label ID="lblDirections" runat="server" Text="說明:" ></asp:Label>
+            <asp:TextBox ID="txbDirections" runat="server"></asp:TextBox>
+            <asp:Button ID="btnAdd" runat="server" Text="加入" />
+            <asp:GridView ID="grdQAConfirm" runat="server"></asp:GridView>
+        </asp:Panel>
+
+        <asp:Panel ID="pnlEffectConfirm" runat="server" Visible="false">
+            <asp:Label ID="lblEffectConfirm" runat="server" Text="◆效果確認:"></asp:Label><br />
+            <asp:TextBox ID="txbEffectConfirm" runat="server" Width="95%" Height="70px" TextMode="MultiLine"></asp:TextBox>
+        </asp:Panel>
+
+        <asp:Panel ID="pnlQAManager" runat="server" Visible="false">
+            <asp:Label ID="lblQAManager" runat="server" Text="◆品保主管審核:"></asp:Label><br />
+            <asp:TextBox ID="txbQAManager" runat="server" Width="95%" Height="70px" TextMode="MultiLine"></asp:TextBox>
         </asp:Panel>
 
         <asp:Panel ID="pnlSelectInvestigator" runat="server" Visible="false">

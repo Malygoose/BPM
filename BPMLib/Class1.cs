@@ -136,8 +136,9 @@ namespace BPMLib
                 public DataTable dtwfFormApp;           //寫入EZFlow wfFormApp
                 public DataTable dtwfFormSignM;         //寫入EZFlow wfFormSignM
 
-                //-----矯正預防單QA01 變數值------
+                //-----矯正預防單QA01 變數值------                
                 public string strApplyType;         //申請樣式
+                public string strApplyTypeCode;     //申請樣式代號 complain、IQC 、IPQC、OQC
                 public string strProductCode;       //料號
                 public string strProductName;       //料名
                 public string strEventObject;       //事件對象
@@ -506,6 +507,7 @@ namespace BPMLib
                 dtwfFormApp.Columns.Add("dDateTimeD");      //需求日期
                 dtwfFormApp.Columns.Add("bSign");           //簽核狀態 1簽核 0駁回
                 dtwfFormApp.Columns.Add("sConditions1");    //簽核人部門Level層級 組長50 課長60 部長70 處長80
+                dtwfFormApp.Columns.Add("sConditions2");    //表單的代號 complain、IQC 、IPQC、OQC
                 dtwfFormApp.Columns.Add("iCateOrder");      //申請人部門Level層級 組長50 課長60 部長70 處長80 int
                 dtwfFormApp.Columns.Add("sLevel");          //申請人部門Level層級 組長50 課長60 部長70 處長80 string
                 dtwfFormApp.Columns.Add("sInfo");           //表單資訊
@@ -680,6 +682,7 @@ namespace BPMLib
                 drwfFormApp["dDateTimeD"] = DateTime.Now;//DateTime.Parse(stuFormInfo.strRequireDate);
                 drwfFormApp["bSign"] = true;
                 drwfFormApp["sConditions1"] = "60";
+                drwfFormApp["sConditions2"] = stuFormInfo.strApplyTypeCode;
                 drwfFormApp["iCateOrder"] = stuFormInfo.intApplyEmployeeDeptLevel;
                 drwfFormApp["sLevel"] = stuFormInfo.intApplyEmployeeDeptLevel.ToString();
                 drwfFormApp["sInfo"] = "(測試)" + stuFormInfo.strApplyEmployeeName+"送出的矯正預防單";// + "，需求日期：" + stuFormInfo.strRequireDate;
@@ -726,6 +729,7 @@ namespace BPMLib
                         bulkCopy.ColumnMappings.Add("dDateTimeD", "dDateTimeD");
                         bulkCopy.ColumnMappings.Add("bSign", "bSign");
                         bulkCopy.ColumnMappings.Add("sConditions1", "sConditions1");
+                        bulkCopy.ColumnMappings.Add("sConditions2", "sConditions2");
                         bulkCopy.ColumnMappings.Add("iCateOrder", "iCateOrder");
                         bulkCopy.ColumnMappings.Add("sLevel", "sLevel");
                         bulkCopy.ColumnMappings.Add("sInfo", "sInfo");

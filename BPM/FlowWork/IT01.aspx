@@ -64,7 +64,7 @@
                     <td width="70%">表單序號:<asp:Label ID="lblProcessID" runat="server"></asp:Label>
                     </td>
                     <td>
-                        <asp:Button ID="btnHide" runat="server" Text="隱藏" CssClass="title-style" OnClick="btnHide_Click" />
+                        <asp:Button ID="btnHide" runat="server" Text="隱藏" CssClass="title-style" OnClick="btnHide_Click" Visible="false"/>
                     </td>
                     <td>
                         <asp:Button ID="btnHome" runat="server" Text="首頁" CssClass="title-style" OnClick="btnHome_Click" />
@@ -196,7 +196,7 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td colspan="2">
+                                        <td>
                                             <asp:RadioButtonList ID="rbtnlSelectWorking" runat="server" Font-Names="微軟正黑體" OnSelectedIndexChanged="rbtnlSelectWorking_SelectedIndexChanged" RepeatDirection="Horizontal" AutoPostBack="True" Font-Size="20px">
                                                 <asp:ListItem Value="AtWork">申請在職變更(新增軟硬體/變更權限)</asp:ListItem>
                                                 <asp:ListItem Value="Quit">申請離職(繳回全部設備)</asp:ListItem>
@@ -470,16 +470,16 @@
 
             <table width="100%">
                 <tr>
-                    <td width="25%">
+                    <td width="40%">
                         <asp:FileUpload ID="FileUpload1" runat="server" />
                     </td>
-                    <td width="75%">
+                    <td >
                         <asp:Button ID="btnFileUpload" runat="server" Text="上傳" OnClick="btnFileUpload_Click" />
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <asp:Label ID="lblFileUploadErrMsg" runat="server" ForeColor="Red" Text="檔案大小不可超過5MB"></asp:Label>
+                        <asp:Label ID="lblFileUploadErrMsg" runat="server" ForeColor="Red" Text="檔案必須為PDF且大小不可超過5MB"></asp:Label>
                     </td>
                 </tr>
             </table>

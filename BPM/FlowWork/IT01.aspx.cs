@@ -105,6 +105,8 @@ namespace BPM.FlowWork
 
                 stuFormInfo.strLoginEmpID = User.Identity.Name;
 
+                if (stuFormInfo.strLoginEmpID=="20181104") btnHide.Visible = true;
+
                 ViewState["stuFormInfo"] = stuFormInfo;
 
                 stuDataTableList stuDataTableList = new stuDataTableList();
@@ -627,43 +629,51 @@ namespace BPM.FlowWork
         {
             if (FileUpload1.HasFile)
             {
-                FileInfo uploadFile = new FileInfo(FileUpload1.PostedFile.FileName);
-                int intFileSize = (FileUpload1.PostedFile.ContentLength / 1024);
-                string strFileType = FileUpload1.PostedFile.ContentType.ToString();
-                string strFileName = uploadFile.Name.ToString();
-                string strFileUploadName = Guid.NewGuid().ToString() + uploadFile.Extension;
-
-                // 將檔案上傳到伺服器
-                string strPath = DateTime.Now.ToString("yyyyMM") + "/";
-                string strServerPath = Server.MapPath("~/Upload/" + strPath);
-                string strServerFilePath = Server.MapPath("~/Upload/" + strPath + strFileUploadName);
-
-                if (!Directory.Exists(strServerPath))
+                string fileExtension = System.IO.Path.GetExtension(FileUpload1.FileName);
+                if (fileExtension.ToLower() == ".pdf")
                 {
-                    Directory.CreateDirectory(strServerPath);
-                    FileUpload1.SaveAs(strServerFilePath);
+                    FileInfo uploadFile = new FileInfo(FileUpload1.PostedFile.FileName);
+                    int intFileSize = (FileUpload1.PostedFile.ContentLength / 1024);
+                    string strFileType = FileUpload1.PostedFile.ContentType.ToString();
+                    string strFileName = uploadFile.Name.ToString();
+                    string strFileUploadName = Guid.NewGuid().ToString() + uploadFile.Extension;
+
+                    // 將檔案上傳到伺服器
+                    string strPath = DateTime.Now.ToString("yyyyMM") + "/";
+                    string strServerPath = Server.MapPath("~/Upload/" + strPath);
+                    string strServerFilePath = Server.MapPath("~/Upload/" + strPath + strFileUploadName);
+
+                    if (!Directory.Exists(strServerPath))
+                    {
+                        Directory.CreateDirectory(strServerPath);
+                        FileUpload1.SaveAs(strServerFilePath);
+                    }
+                    else
+                    {
+                        FileUpload1.SaveAs(strServerFilePath);
+                    }
+
+                    stuDataTableList stuDataTableList = (stuDataTableList)ViewState["stuDataTableList"];
+
+                    DataRow drUpload;
+
+                    drUpload = stuDataTableList.dtFileUpload.NewRow();
+                    drUpload["FileName"] = strFileName;
+                    drUpload["FileType"] = strFileType;
+                    drUpload["FileSize"] = intFileSize;
+                    drUpload["FileUploadDate"] = DateTime.Now.ToString("yyyy/MM/dd   hh:mm:ss");
+                    drUpload["ServerName"] = strFileUploadName;
+                    stuDataTableList.dtFileUpload.Rows.Add(drUpload);
+
+                    ViewState["stuDataTableList"] = stuDataTableList;
+
+                    grvFileUpload.DataSource = stuDataTableList.dtFileUpload;
+                    grvFileUpload.DataBind();
                 }
                 else
                 {
-                    FileUpload1.SaveAs(strServerFilePath);
-                }
-
-                stuDataTableList stuDataTableList = (stuDataTableList)ViewState["stuDataTableList"];
-
-                DataRow drUpload;
-
-                drUpload = stuDataTableList.dtFileUpload.NewRow();
-                drUpload["FileName"] = strFileName;
-                drUpload["FileType"] = strFileType;
-                drUpload["FileSize"] = intFileSize;
-                drUpload["FileUploadDate"] = DateTime.Now.ToString("yyyy/MM/dd   hh:mm:ss");
-                drUpload["ServerName"] = strFileUploadName;
-                stuDataTableList.dtFileUpload.Rows.Add(drUpload);
-
-                ViewState["stuDataTableList"] = stuDataTableList;
-
-                grvFileUpload.DataSource = stuDataTableList.dtFileUpload;
-                grvFileUpload.DataBind();
+                    Response.Write("<script>alert('" + "只能上傳PDF檔案! " + "')</script>");
+                }           
             }
         }
 

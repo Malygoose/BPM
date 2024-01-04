@@ -15,7 +15,8 @@ namespace BPM.FlowWork
     public partial class QA01 : System.Web.UI.Page
     {
         public string strOccureDate;//發生日期
-
+        public string strImplementDay;//實施日期
+        public string strBadRate; //不良率
         protected void Page_Load(object sender, EventArgs e)
         {
             FormInfo Forminfo = new FormInfo();
@@ -24,16 +25,12 @@ namespace BPM.FlowWork
             {
                 //  設定表單資訊-------------------------------------              
                 lblApplyDate.Text = DateTime.Now.ToString("yyyy/MM/dd");//申請日期
-                strOccureDate = DateTime.Now.ToString("yyyy/MM/dd");//發生日期
-
-                rbtnlSelectWorking.SelectedIndex = 0;
-                rbtnComplaint.SelectedIndex = 0;
-
+                
                 stuFormInfo stuFormInfo = new stuFormInfo();//結構
                 stuFormInfo = Forminfo.GetFormInfoDataTable(stuFormInfo);
 
-                stuFormInfo.strLoginEmployeeID = User.Identity.Name;
-
+                stuFormInfo.strLoginEmployeeID = User.Identity.Name; //登入者ID
+                stuFormInfo.strApplyTypeCode = rbtnlSelectWorking.SelectedValue;//代碼先設定為complain
 
 
                 if (!string.IsNullOrEmpty(stuFormInfo.strLoginEmployeeID))
@@ -106,7 +103,7 @@ namespace BPM.FlowWork
                             btnEnter.Visible = false;
                             btnClearEnter.Visible = false;
                             txbBadQty.Enabled = false;
-                            btnBadQty.Visible = false;
+                            
                             txbOccureDate.Enabled = false;
                             txbOccurPlace.Enabled = false;
                             txbProblemDescription.Enabled = false;
@@ -218,12 +215,14 @@ namespace BPM.FlowWork
                             btnEnter.Visible = false;
                             btnClearEnter.Visible = false;
                             txbBadQty.Enabled = false;
-                            btnBadQty.Visible = false;
+                            
                             txbOccureDate.Enabled = false;
                             txbOccurPlace.Enabled = false;
                             txbProblemDescription.Enabled = false;
                             txbMeasureDirection.Enabled = false;
                             rbtnComplaint.Enabled = false;
+
+                            strImplementDay = DateTime.Now.AddDays(30).ToString("yyyy/MM/dd");//實施日  
 
                             //設定申請樣式的選取按鈕AND顯示設定
                             switch (stuFormInfo.strApplyType)
@@ -292,6 +291,11 @@ namespace BPM.FlowWork
 
                             break;
                         default:
+                            //填寫表單的預先設定
+                            rbtnlSelectWorking.SelectedIndex = 0;
+                            rbtnComplaint.SelectedIndex = 0;
+                            strOccureDate = DateTime.Now.ToString("yyyy/MM/dd");//發生日期
+                            
                             //根據網址抓FormCode
                             //stuFormInfo.strFormCode = Request.QueryString.AllKeys[0];
                             stuFormInfo.strFormCode = strRequestName;
@@ -344,7 +348,8 @@ namespace BPM.FlowWork
             }
             else
             { 
-                strOccureDate = txbOccureDate.Text; 
+                strOccureDate = txbOccureDate.Text;
+                strImplementDay = txbImplementDay.Text;                   
             }
         }
 
@@ -428,41 +433,49 @@ namespace BPM.FlowWork
         {
             if (FileUpload1.HasFile)
             {
-                FileInfo uploadFile = new FileInfo(FileUpload1.PostedFile.FileName);
-                int intFileSize = (FileUpload1.PostedFile.ContentLength / 1024);
-                string strFileType = FileUpload1.PostedFile.ContentType.ToString();
-                string strFileName = uploadFile.Name.ToString();
-                string strFileUploadName = Guid.NewGuid().ToString() + uploadFile.Extension;
-
-                // 將檔案上傳到伺服器
-                string strPath = DateTime.Now.ToString("yyyyMM") + "/";
-                string strServerPath = Server.MapPath("~/Upload/" + strPath);
-                string strServerFilePath = Server.MapPath("~/Upload/" + strPath + strFileUploadName);
-
-                if (!Directory.Exists(strServerPath))
+                string fileExtension = System.IO.Path.GetExtension(FileUpload1.FileName);
+                if (fileExtension.ToLower() == ".pdf")
                 {
-                    Directory.CreateDirectory(strServerPath);
-                    FileUpload1.SaveAs(strServerFilePath);
+                    FileInfo uploadFile = new FileInfo(FileUpload1.PostedFile.FileName);
+                    int intFileSize = (FileUpload1.PostedFile.ContentLength / 1024);
+                    string strFileType = FileUpload1.PostedFile.ContentType.ToString();
+                    string strFileName = uploadFile.Name.ToString();
+                    string strFileUploadName = Guid.NewGuid().ToString() + uploadFile.Extension;
+
+                    // 將檔案上傳到伺服器
+                    string strPath = DateTime.Now.ToString("yyyyMM") + "/";
+                    string strServerPath = Server.MapPath("~/Upload/" + strPath);
+                    string strServerFilePath = Server.MapPath("~/Upload/" + strPath + strFileUploadName);
+
+                    if (!Directory.Exists(strServerPath))
+                    {
+                        Directory.CreateDirectory(strServerPath);
+                        FileUpload1.SaveAs(strServerFilePath);
+                    }
+                    else
+                    {
+                        FileUpload1.SaveAs(strServerFilePath);
+                    }
+
+                    stuFormInfo stuFormInfo = (stuFormInfo)ViewState["stuFormInfo"];
+
+                    DataRow drUpload = stuFormInfo.dtFileUpload.NewRow();
+                    drUpload["FileName"] = strFileName;
+                    drUpload["FileType"] = strFileType;
+                    drUpload["FileSize"] = intFileSize;
+                    drUpload["FileUploadDate"] = DateTime.Now.ToString("yyyy/MM/dd   hh:mm:ss");
+                    drUpload["ServerName"] = strFileUploadName;
+                    stuFormInfo.dtFileUpload.Rows.Add(drUpload);
+
+                    ViewState["stuFormInfo"] = stuFormInfo;
+
+                    grvFileUpload.DataSource = stuFormInfo.dtFileUpload;
+                    grvFileUpload.DataBind();
                 }
                 else
                 {
-                    FileUpload1.SaveAs(strServerFilePath);
+                    Response.Write("<script>alert('" + "只能上傳PDF檔案! " + "')</script>");
                 }
-
-                stuFormInfo stuFormInfo = (stuFormInfo)ViewState["stuFormInfo"];
-
-                DataRow drUpload = stuFormInfo.dtFileUpload.NewRow();
-                drUpload["FileName"] = strFileName;
-                drUpload["FileType"] = strFileType;
-                drUpload["FileSize"] = intFileSize;
-                drUpload["FileUploadDate"] = DateTime.Now.ToString("yyyy/MM/dd   hh:mm:ss");
-                drUpload["ServerName"] = strFileUploadName;
-                stuFormInfo.dtFileUpload.Rows.Add(drUpload);
-
-                ViewState["stuFormInfo"] = stuFormInfo;
-
-                grvFileUpload.DataSource = stuFormInfo.dtFileUpload;
-                grvFileUpload.DataBind();
             }
         }
 
@@ -506,6 +519,23 @@ namespace BPM.FlowWork
         // 送出按鈕
         protected void btnSend_Click(object sender, EventArgs e)
         {
+            //輸入框防呆
+            string strInputProductCode = txbInputProductCode.Text.Trim();
+            string strOccurPlace = txbOccurPlace.Text.Trim();
+            string strProblemDescription = txbProblemDescription.Text.Trim();   
+            string strMeasureDirection = txbMeasureDirection.Text.Trim();
+            if (string.IsNullOrEmpty(strInputProductCode) || string.IsNullOrEmpty(strOccurPlace) || string.IsNullOrEmpty(strProblemDescription) || string.IsNullOrEmpty(strMeasureDirection))
+            {
+                Response.Write("<script>alert('" + "輸入框不能為空! " + "')</script>");
+                return;
+            }
+
+            //QA01不良率資料設定
+            float intShipQty = lblShipQtyContent.Text.ToInteger();
+            float intBadQty = txbBadQty.Text.ToInteger();
+            float BadRate = ((intBadQty / intShipQty) * 100);
+            float RoundedBadRate = (float)Math.Round(BadRate, 2);
+            strBadRate = RoundedBadRate.ToString() + "%";
             //QA01表單資料設定
             FormQA01DataSet();
 
@@ -681,30 +711,46 @@ namespace BPM.FlowWork
         /// <param name="e"></param>
         protected void btnEnter_Click(object sender, EventArgs e)
         {
-            string strInputProductCodeAndName = txbInputProductCode.Text;
-            string strInputProductCode= strInputProductCodeAndName.Split(',')[0];   
-
-            dbFunction dbFunction = new dbFunction();
-
-            using (SqlConnection conn = dbFunction.sqlHissSAPHISS_Officail01Connection())
+            try 
             {
-                SqlCommand cmd = new SqlCommand("spGetViewSapB1ProductOrderList", conn);
+                lblErrorInputSAPNumber.Visible = false;
+                txbBadQty.Enabled = true;
+                txbOccureDate.Enabled = true;
+                txbOccurPlace.Enabled = true;
+                txbProblemDescription.Enabled = true;
+                txbMeasureDirection.Enabled = true; 
 
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@strInputProductCode", strInputProductCode);
+                string strInputProductCodeAndName = txbInputProductCode.Text;
+                string strInputProductCode = strInputProductCodeAndName.Split(',')[0];
 
-                SqlDataAdapter da = new SqlDataAdapter();
-                DataSet ds = new DataSet();
-                da.SelectCommand = cmd;
-                conn.Open();
-                da.Fill(ds);
+                dbFunction dbFunction = new dbFunction();
 
-                DataRow drSapB1ProductOrderList = ds.Tables[0].Rows[0];
+                using (SqlConnection conn = dbFunction.sqlHissSAPHISS_Officail01Connection())
+                {
+                    SqlCommand cmd = new SqlCommand("spGetViewSapB1ProductOrderList", conn);
 
-                lblEventObjectContent.Text = (string)drSapB1ProductOrderList["CustomerNo"] + " " + (string)drSapB1ProductOrderList["CustomerName"];
-                //lblProductNameContent.Text = (string)drSapB1ProductOrderList["ProductName"];
-                lblShipQtyContent.Text = drSapB1ProductOrderList["Qty"].ToString();
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@strInputProductCode", strInputProductCode);
+
+                    SqlDataAdapter da = new SqlDataAdapter();
+                    DataSet ds = new DataSet();
+                    da.SelectCommand = cmd;
+                    conn.Open();
+                    da.Fill(ds);
+
+                    DataRow drSapB1ProductOrderList = ds.Tables[0].Rows[0];
+
+                    lblEventObjectContent.Text = (string)drSapB1ProductOrderList["CustomerNo"] + " " + (string)drSapB1ProductOrderList["CustomerName"];
+                    //lblProductNameContent.Text = (string)drSapB1ProductOrderList["ProductName"];
+                    lblShipQtyContent.Text = drSapB1ProductOrderList["Qty"].ToString();
+                }
+            } 
+            catch 
+            {
+                lblErrorInputSAPNumber.Visible = true;
+                lblErrorInputSAPNumber.Text = "錯誤的成品料號或成品料名";
             }
+            
         }
 
 
@@ -713,15 +759,15 @@ namespace BPM.FlowWork
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        protected void btnBadQty_Click(object sender, EventArgs e)
-        {
-            float intShipQty = lblShipQtyContent.Text.ToInteger();
-            float intBadQty = txbBadQty.Text.ToInteger();
+        //protected void btnBadQty_Click(object sender, EventArgs e)
+        //{
+        //    float intShipQty = lblShipQtyContent.Text.ToInteger();
+        //    float intBadQty = txbBadQty.Text.ToInteger();
 
-            float BadRate = ((intBadQty / intShipQty) * 100);
-            float RoundedBadRate = (float)Math.Round(BadRate, 2);
-            lblBadRateContent.Text = RoundedBadRate.ToString() + "%";
-        }
+        //    float BadRate = ((intBadQty / intShipQty) * 100);
+        //    float RoundedBadRate = (float)Math.Round(BadRate, 2);
+        //    lblBadRateContent.Text = RoundedBadRate.ToString() + "%";
+        //}
 
         /// <summary>
         /// 清空欄位
@@ -745,7 +791,11 @@ namespace BPM.FlowWork
         /// <param name="e"></param>
         protected void rbtnlSelectWorking_SelectedIndexChanged(object sender, EventArgs e)
         {
-            switch (rbtnlSelectWorking.SelectedValue)
+            stuFormInfo stuFormInfo = (stuFormInfo)ViewState["stuFormInfo"];
+
+            stuFormInfo.strApplyTypeCode = rbtnlSelectWorking.SelectedValue;
+
+            switch (stuFormInfo.strApplyTypeCode)
             {
                 case "complain":
                     pnlComplaint.Visible = true;
@@ -759,8 +809,9 @@ namespace BPM.FlowWork
                 case "OQC":
                     pnlComplaint.Visible = false;
                     break;
-
             }
+
+            ViewState["stuFormInfo"] = stuFormInfo;
         }
         /// <summary>
         /// 選擇調查者
@@ -844,8 +895,7 @@ namespace BPM.FlowWork
             string[] strManager = ddlSelectManager.SelectedValue.Split('/');
             strManagerEmpRoleID = strManager[0];
             strManagerEmpID = strManager[1];
-
-            lblApplyDate.Text = strProcessID;//test
+          
             dbFunction dbFunction = new dbFunction();
 
             using (SqlConnection conn = dbFunction.sqlHissChiaweiConnection())
@@ -896,7 +946,7 @@ namespace BPM.FlowWork
         {
             stuFormInfo stuFormInfo = (stuFormInfo)ViewState["stuFormInfo"];
 
-            stuFormInfo.strApplyType=rbtnlSelectWorking.SelectedItem.Text;
+            stuFormInfo.strApplyType=rbtnlSelectWorking.SelectedItem.Text;           
 
             string strInputProductCodeAndName = txbInputProductCode.Text;
             stuFormInfo.strProductCode = strInputProductCodeAndName.Split(',')[0];
@@ -904,7 +954,7 @@ namespace BPM.FlowWork
             stuFormInfo.strEventObject = lblEventObjectContent.Text;
             stuFormInfo.strShipQty = lblShipQtyContent.Text;
             stuFormInfo.strBadQty = txbBadQty.Text;
-            stuFormInfo.strBadRate = lblBadRateContent.Text;
+            stuFormInfo.strBadRate = strBadRate;
             stuFormInfo.dateOccureDate= DateTime.Parse(txbOccureDate.Text);
             stuFormInfo.strOccurePlace = txbOccurPlace.Text;
 
