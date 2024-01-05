@@ -165,7 +165,7 @@
             <ul>
                 <li><asp:HyperLink ID="HLIT01ApplyForm" runat="server" Font-Size="25px" NavigateUrl="~/FlowWork/IT01?IT01=?" CssClass="no-underline">資訊服務申請單</asp:HyperLink></li>
                 <li><asp:HyperLink ID="HLQA01" runat="server" Font-Size="25px" NavigateUrl="~/FlowWork/QA01?QA01=?" CssClass="no-underline" >矯正預防單</asp:HyperLink></li>
-                <li><asp:HyperLink ID="HLTemplate" runat="server" Font-Size="25px" NavigateUrl="~/FlowWork/Template?Template=?" CssClass="no-underline" >(測試)共通表單</asp:HyperLink></li>
+                <%--<li><asp:HyperLink ID="HLTemplate" runat="server" Font-Size="25px" NavigateUrl="~/FlowWork/Template?Template=?" CssClass="no-underline" >(測試)共通表單</asp:HyperLink></li>--%>
             </ul><br />
             
 

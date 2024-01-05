@@ -30,8 +30,7 @@ namespace BPM.FlowWork
                 stuFormInfo = Forminfo.GetFormInfoDataTable(stuFormInfo);
 
                 stuFormInfo.strLoginEmployeeID = User.Identity.Name; //登入者ID
-                stuFormInfo.strApplyTypeCode = rbtnlSelectWorking.SelectedValue;//代碼先設定為complain
-
+                stuFormInfo.strApplyTypeCode = rbtnlSelectWorking.SelectedValue;//代碼先設定為complain               
 
                 if (!string.IsNullOrEmpty(stuFormInfo.strLoginEmployeeID))
                 {
@@ -340,6 +339,26 @@ namespace BPM.FlowWork
                             // 設定預設值
                             ddlSelectApplyEmp.SelectedValue = stuFormInfo.strLoginEmployeeID;
                             lblLoginEmpID.Text = stuFormInfo.strLoginEmployeeID;
+
+                            //填寫顯示
+                            //設定業務->客訴 品保->進料抽檢、生產製程巡檢、成品抽檢
+                            List<string> SalesDepartments = new List<string> { "南區業務組", "南區業管組", "中北區業管組" };
+                            List<string> QADepartments = new List<string> { "品保課" };
+                            if (SalesDepartments.Contains(stuFormInfo.strApplyEmployeeDeptName))
+                            {
+                                rbtnlSelectWorking.Items.Remove(rbtnlSelectWorking.Items.FindByValue("IQC"));
+                                rbtnlSelectWorking.Items.Remove(rbtnlSelectWorking.Items.FindByValue("IPQC"));
+                                rbtnlSelectWorking.Items.Remove(rbtnlSelectWorking.Items.FindByValue("OQC"));
+                            }
+                            else if (QADepartments.Contains(stuFormInfo.strApplyEmployeeDeptName))
+                            {
+                                rbtnlSelectWorking.Items.Remove(rbtnlSelectWorking.Items.FindByValue("complain"));                               
+                            }
+                            else 
+                            {
+                                txbInputProductCode.Enabled = false;    
+                                rbtnlSelectWorking.Enabled = false;
+                            }
 
                             break;
                     }
@@ -745,9 +764,14 @@ namespace BPM.FlowWork
                     lblShipQtyContent.Text = drSapB1ProductOrderList["Qty"].ToString();
                 }
             } 
-            catch 
+            catch(Exception) 
             {
                 lblErrorInputSAPNumber.Visible = true;
+                txbBadQty.Enabled = false;
+                txbOccureDate.Enabled = false;
+                txbOccurPlace.Enabled = false;
+                txbProblemDescription.Enabled = false;
+                txbMeasureDirection.Enabled = false;
                 lblErrorInputSAPNumber.Text = "錯誤的成品料號或成品料名";
             }
             

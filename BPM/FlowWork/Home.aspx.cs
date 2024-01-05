@@ -25,7 +25,7 @@ namespace BPM.FlowWork
             if (!IsPostBack)
             {
                 string LoginEmpID = User.Identity.Name;
-                strDateBegin = DateTime.Now.AddMonths(-1).ToString("yyyy-MM-dd");
+                strDateBegin = DateTime.Now.AddMonths(-2).ToString("yyyy-MM-dd");
                 strDateEnd = DateTime.Today.AddDays(1).ToString("yyyy-MM-dd");
 
                 pnlApply.Visible = true;
