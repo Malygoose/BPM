@@ -18,7 +18,7 @@
             flatpickr(txbOccureDate, {
                 locale: "zh",
                 // 在此設定 Flatpickr 的選項
-                //minDate: new Date().fp_incr(0),
+                maxDate: new Date().fp_incr(0),
                 defaultDate: "<%=strOccureDate%>"               
             });
 
@@ -429,7 +429,7 @@
                         </div>
                     </td>
                     <td>
-                        <asp:TextBox ID="txbSignOpinion" runat="server" TextMode="MultiLine" Width="830px" Height="50px"></asp:TextBox>
+                        <asp:TextBox ID="txbSignOpinion" runat="server" TextMode="MultiLine" Width="830px" Height="50px" Enabled="false"></asp:TextBox>
                     </td>
                 </tr>
                 <tr>
@@ -466,11 +466,12 @@
                 <SortedDescendingHeaderStyle BackColor="#6F8DAE" />
             </asp:GridView>
         </asp:Panel>
-        <asp:Panel ID="pnlBtn" runat="server">
+        <asp:Panel ID="pnlBtn" runat="server" Visible="false">
             <div style="text-align: center;">
                 <asp:Button ID="btnSubmit" runat="server" Text="簽核" CssClass="title-style" OnClientClick="return confirm('確定簽核？');" OnClick="btnSubmit_Click" />
                 <asp:Button ID="btnReject" runat="server" Text="駁回" CssClass="title-style" OnClientClick="return confirm('確定駁回？');" OnClick="btnReject_Click" />
                 <asp:Button ID="btnTake" runat="server" Text="取消申請" CssClass="title-style" OnClientClick="return confirm('確定取消申請？');" OnClick="btnTake_Click" />
+                <asp:Button ID="btnInvalid" runat="server" Text="客訴不成立" CssClass="title-style" OnClientClick="return confirm('確定不成立？');" OnClick="btnInvalid_Click"/>
             </div>
 
         </asp:Panel>

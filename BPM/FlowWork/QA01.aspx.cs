@@ -29,8 +29,7 @@ namespace BPM.FlowWork
                 stuFormInfo stuFormInfo = new stuFormInfo();//結構
                 stuFormInfo = Forminfo.GetFormInfoDataTable(stuFormInfo);
 
-                stuFormInfo.strLoginEmployeeID = User.Identity.Name; //登入者ID
-                stuFormInfo.strApplyTypeCode = rbtnlSelectWorking.SelectedValue;//代碼先設定為complain               
+                stuFormInfo.strLoginEmployeeID = User.Identity.Name; //登入者ID                        
 
                 if (!string.IsNullOrEmpty(stuFormInfo.strLoginEmployeeID))
                 {
@@ -166,6 +165,7 @@ namespace BPM.FlowWork
                             btnReject.Visible = true;
                             btnTake.Visible = false;
                             btnSend.Visible = false;
+                            btnInvalid.Visible = false;
                             pnlFileUpload.Visible = false;
                             grvFileUpload.Columns[3].Visible = false;
 
@@ -207,6 +207,15 @@ namespace BPM.FlowWork
                             grvFormSignM.DataSource = stuFormInfo.dtFormSingMList;
                             grvFormSignM.DataBind();
 
+                            //簽核後查詢顯示
+                            if (stuFormInfo.dtSingerRoleList.Rows.Count > 0)
+                            {
+                                lblStatus.Text = "等待 " + stuFormInfo.strSignerEmployeeDeptName + stuFormInfo.strSignerEmployeeJobName + stuFormInfo.strSignerEmployeeName + " 簽核中";
+                            }
+                            else
+                            {
+                                lblStatus.Text = "此表單已結束審核";
+                            }
                             //----------矯正處理單------------
                             //------矯正處理單檢視資料-------
                             rbtnlSelectWorking.Enabled = false;
@@ -264,35 +273,36 @@ namespace BPM.FlowWork
                             txbProblemDescription.Text = stuFormInfo.strProblemDescription;
                             txbMeasureDirection.Text = stuFormInfo.strMeasureDirection;
 
-
-                            //品保主管節點
-                            if (stuFormInfo.strSignOfTargetNodeID == "576")
+                            //QA01中登入者為簽核人 
+                            if (stuFormInfo.strSignerEmployeeID == stuFormInfo.strLoginEmployeeID)
                             {
-                                pnlSelectInvestigator.Visible = true;
-                                ddlSelectInvestigator.Enabled = true;
-                                QA01SelectInvestigator();
+                                //簽核按鈕顯示
+                                pnlBtn.Visible = true;
+                                txbSignOpinion.Enabled = true;  
+                                switch (stuFormInfo.strSignOfTargetNodeID)
+                                {
+                                    //品保主管節點 
+                                    case "576":
+                                        pnlSelectInvestigator.Visible = true;
+                                        ddlSelectInvestigator.Enabled = true;
+                                        btnInvalid.Visible = true;
+                                        QA01SelectInvestigator();
+                                        break;
+                                    //品保調查者節點
+                                    case "581":
+                                        pnlSelectManager.Visible = true;
+                                        ddlSelectManager.Enabled = true;
+                                        QA01SelectManager();
+                                        break;
+                                }                              
                             }
-                            else
-                            {
-                                ddlSelectInvestigator.Enabled = false;
-                            }
-                            //品保調查者節點
-                            if (stuFormInfo.strSignOfTargetNodeID == "581")
-                            {
-                                pnlSelectManager.Visible = true;
-                                ddlSelectManager.Enabled = true;
-                                QA01SelectManager();
-                            }
-                            else
-                            {
-                                ddlSelectManager.Enabled = false;
-                            }
-
+                           
                             break;
                         default:
                             //填寫表單的預先設定
                             rbtnlSelectWorking.SelectedIndex = 0;
                             rbtnComplaint.SelectedIndex = 0;
+                            stuFormInfo.strApplyTypeCode = rbtnlSelectWorking.SelectedValue;//代碼先設定為complain
                             strOccureDate = DateTime.Now.ToString("yyyy/MM/dd");//發生日期
                             
                             //根據網址抓FormCode
@@ -315,7 +325,6 @@ namespace BPM.FlowWork
 
                             //登入者看不到審核畫面
                             pnlCheck.Visible = false;
-                            pnlBtn.Visible = false;
 
                             // dtStartEmpRoleList為發起人的部門清單(role清單)
                             ddlSelectStartEmpDept.DataSource = stuFormInfo.dtStartEmployeeRoleList;
@@ -356,8 +365,11 @@ namespace BPM.FlowWork
                             }
                             else 
                             {
-                                txbInputProductCode.Enabled = false;    
                                 rbtnlSelectWorking.Enabled = false;
+                                pnlApplyDepiction.Enabled = false;
+                                FileUpload1.Enabled = false;
+                                pnlFileUpload.Enabled = false;
+                                pnlSend.Enabled = false;
                             }
 
                             break;
@@ -634,13 +646,13 @@ namespace BPM.FlowWork
                 }
 
                 //如果是品保主管簽核且ddlSelectInvestigator為enable=true時寫入調查者、確認者
-                if (ddlSelectInvestigator.Enabled == true && stuFormInfo.strLoginEmployeeID == QAManagerEmpID())
+                if (ddlSelectInvestigator.Visible == true && stuFormInfo.strLoginEmployeeID == QAManagerEmpID())
                 {
                     InvestigatorWriteToDynamic(strProcessID);
                 }
 
                 //如果是調查者且ddlSelectManager為enable=true時寫入課長
-                if (ddlSelectManager.Enabled == true)
+                if (ddlSelectManager.Visible == true)
                 {
                     ManagerWriteToDynamic(strProcessID);
                 }
@@ -720,6 +732,34 @@ namespace BPM.FlowWork
             }
         }
 
+        /// <summary>
+        /// 客訴不成立
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void btnInvalid_Click(object sender, EventArgs e)
+        {
+            FormInfo formInfo = new FormInfo();
+            stuFormInfo stuFormInfo = (stuFormInfo)ViewState["stuFormInfo"];
+
+            //設定FlowApprove資訊
+            stuFormInfo.blnSignState = false;
+            stuFormInfo.intState = 1;
+
+            //設定InsertFormSignM資訊
+            stuFormInfo.strSignMState = "客訴不成立";
+            stuFormInfo.blnSignM = false;
+            stuFormInfo.strSignOpinion = txbSignOpinion.Text;
+
+            if (stuFormInfo.intProcessID != 0)
+            {
+                formInfo.FlowApprove(stuFormInfo);
+
+                formInfo.InsertFormSignM(stuFormInfo);
+
+                Response.Redirect("Home.aspx");
+            }
+        }
         //--------------------矯正處理單區----------------------
 
 
@@ -998,5 +1038,7 @@ namespace BPM.FlowWork
 
             ViewState["stuFormInfo"] = stuFormInfo;
         }
+
+        
     }
 }
