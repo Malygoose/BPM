@@ -9,6 +9,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using static BPMLib.Class1;
 using static BPMLib.Class1.FormInfo;
+using DocumentFormat.OpenXml.Presentation;
 
 namespace BPM.FlowWork
 {
@@ -24,7 +25,7 @@ namespace BPM.FlowWork
             if (!IsPostBack)
             {
                 //  設定表單資訊-------------------------------------              
-                lblApplyDate.Text = DateTime.Now.ToString("yyyy/MM/dd");//申請日期
+                lblApplyDate.Text = DateTime.Now.ToString("yyyy-MM-dd");//申請日期
                 
                 stuFormInfo stuFormInfo = new stuFormInfo();//結構
                 stuFormInfo = Forminfo.GetFormInfoDataTable(stuFormInfo);
@@ -281,28 +282,80 @@ namespace BPM.FlowWork
                                 txbSignOpinion.Enabled = true;  
                                 switch (stuFormInfo.strSignOfTargetNodeID)
                                 {
+                                    //主管審核節點，如果主管審核就是品保主管，需顯示選擇
+                                    case "575":
+                                        if (stuFormInfo.strLoginEmployeeID ==QAManagerEmpID()) 
+                                        {
+                                            pnlSelectInvestigator.Visible = true;
+                                            QA01GetDropdownlistData();
+                                        }
+                                        break;
                                     //品保主管節點 
                                     case "576":
                                         pnlSelectInvestigator.Visible = true;
-                                        ddlSelectInvestigator.Enabled = true;
                                         btnInvalid.Visible = true;
-                                        QA01SelectInvestigator();
+                                        QA01GetDropdownlistData();
                                         break;
                                     //品保調查者節點
                                     case "581":
                                         pnlSelectManager.Visible = true;
-                                        ddlSelectManager.Enabled = true;
-                                        QA01SelectManager();
+                                        QA01GetDropdownlistData();
+                                        pnlInvestigation.Visible = true;
+                                        pnlInvestigation.Enabled = true;
                                         break;
+                                    //改善對象節點
+                                    case "582":
+                                        pnlTarget.Visible = true;
+                                        pnlTarget.Enabled = true;
+                                        pnlInvestigation.Visible = true;
+                                        pnlAnalyze.Visible = true;
+                                        pnlCountermeasures.Visible = true;
+                                        break;
+                                    //品保主管節點
+                                    case "583":
+                                        pnlInvestigation.Visible = true;
+                                        pnlAnalyze.Visible = true;
+                                        pnlCountermeasures.Visible = true;
+                                        break;
+                                    //品保確認節點
+                                    case "584":
+                                        pnlInvestigation.Visible = true;
+                                        pnlAnalyze.Visible = true;
+                                        pnlCountermeasures.Visible = true;
+                                        pnlQAConfirm.Visible = true;
+                                        pnlQAConfirm.Enabled = true;
+                                        break;
+                                    //品保主管節點
+                                    case "585":
+                                        pnlInvestigation.Visible = true;
+                                        pnlAnalyze.Visible = true;
+                                        pnlCountermeasures.Visible = true;
+                                        pnlQAConfirm.Visible = true;
+                                        break;
+                                    //效果確認節點
+                                    case "586":
+                                        pnlInvestigation.Visible = true;
+                                        pnlAnalyze.Visible = true;
+                                        pnlCountermeasures.Visible = true;
+                                        pnlQAConfirm.Visible = true;
+                                        pnlEffectConfirm.Visible = true;
+                                        pnlEffectConfirm.Enabled = true;    
+                                        break;
+                                    //品保主管節點
+                                    case "587":
+                                        pnlInvestigation.Visible = true;
+                                        pnlAnalyze.Visible = true;
+                                        pnlCountermeasures.Visible = true;
+                                        pnlQAConfirm.Visible = true;
+                                        pnlEffectConfirm.Visible = true;
+                                        pnlQAManager.Visible = true;
+                                        pnlQAManager.Enabled = true;    
+                                        break;                                      
                                 }                              
                             }
                            
                             break;
-                        default:
-                            //填寫表單的預先設定
-                            rbtnlSelectWorking.SelectedIndex = 0;
-                            rbtnComplaint.SelectedIndex = 0;
-                            stuFormInfo.strApplyTypeCode = rbtnlSelectWorking.SelectedValue;//代碼先設定為complain
+                        default:                           
                             strOccureDate = DateTime.Now.ToString("yyyy/MM/dd");//發生日期
                             
                             //根據網址抓FormCode
@@ -350,18 +403,35 @@ namespace BPM.FlowWork
                             lblLoginEmpID.Text = stuFormInfo.strLoginEmployeeID;
 
                             //填寫顯示
+                            pnlInvestigation.Visible = false;
+                            pnlTarget.Visible = false;
+                            pnlAnalyze.Visible = false;
+                            pnlCountermeasures.Visible = false;
+                            pnlQAConfirm.Visible = false;
+                            pnlEffectConfirm.Visible = false;
+                            pnlQAManager.Visible = false;
                             //設定業務->客訴 品保->進料抽檢、生產製程巡檢、成品抽檢
                             List<string> SalesDepartments = new List<string> { "南區業務組", "南區業管組", "中北區業管組" };
                             List<string> QADepartments = new List<string> { "品保課" };
                             if (SalesDepartments.Contains(stuFormInfo.strApplyEmployeeDeptName))
                             {
+                                //客訴填寫表單的預先設定
+                                rbtnlSelectWorking.SelectedIndex = 0;
+                                rbtnComplaint.SelectedIndex = 0;
+                                stuFormInfo.strApplyTypeCode = rbtnlSelectWorking.SelectedValue;//代碼先設定為complain
                                 rbtnlSelectWorking.Items.Remove(rbtnlSelectWorking.Items.FindByValue("IQC"));
                                 rbtnlSelectWorking.Items.Remove(rbtnlSelectWorking.Items.FindByValue("IPQC"));
                                 rbtnlSelectWorking.Items.Remove(rbtnlSelectWorking.Items.FindByValue("OQC"));
+ 
                             }
                             else if (QADepartments.Contains(stuFormInfo.strApplyEmployeeDeptName))
                             {
-                                rbtnlSelectWorking.Items.Remove(rbtnlSelectWorking.Items.FindByValue("complain"));                               
+                                //客訴填寫表單的預先設定
+                                rbtnlSelectWorking.SelectedIndex = 1;
+                                rbtnComplaint.SelectedIndex = 1;
+                                stuFormInfo.strApplyTypeCode = rbtnlSelectWorking.SelectedValue;//代碼先設定為IQC
+                                rbtnlSelectWorking.Items.Remove(rbtnlSelectWorking.Items.FindByValue("complain"));
+
                             }
                             else 
                             {
@@ -645,16 +715,32 @@ namespace BPM.FlowWork
                     formInfo.InsertFormSignM(stuFormInfo);
                 }
 
-                //如果是品保主管簽核且ddlSelectInvestigator為enable=true時寫入調查者、確認者
+                //如果是品保主管簽核且ddlSelectInvestigator為Visible=true時寫入調查者、確認者
                 if (ddlSelectInvestigator.Visible == true && stuFormInfo.strLoginEmployeeID == QAManagerEmpID())
                 {
                     InvestigatorWriteToDynamic(strProcessID);
                 }
 
-                //如果是調查者且ddlSelectManager為enable=true時寫入課長
+                //如果是調查者且ddlSelectManager為Visible=true時寫入課長、原因調查
                 if (ddlSelectManager.Visible == true)
                 {
                     ManagerWriteToDynamic(strProcessID);
+                }
+
+                switch (stuFormInfo.strSignOfTargetNodeID)
+                {
+                    //改善對象 寫入真因分析、對策擬定
+                    case "582":
+                        QA01UpdateData(strProcessID, stuFormInfo.strSignOfTargetNodeID);
+                        break;
+                    //品保確認者 寫入效果確認
+                    case "586":
+                        QA01UpdateData(strProcessID, stuFormInfo.strSignOfTargetNodeID);
+                        break;
+                    //品保主管 寫入品保主管審核
+                    case "587":
+                        QA01UpdateData(strProcessID, stuFormInfo.strSignOfTargetNodeID);
+                        break;
                 }
 
                 //  流程推進
@@ -877,16 +963,27 @@ namespace BPM.FlowWork
 
             ViewState["stuFormInfo"] = stuFormInfo;
         }
+
         /// <summary>
-        /// 選擇調查者
+        /// 是否為改善對象checkbox
         /// </summary>
-        public void QA01SelectInvestigator()
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void chbTarget_CheckedChanged(object sender, EventArgs e)
+        {
+            pnlAnalyze.Enabled = chbTarget.Checked;
+            pnlCountermeasures.Enabled = chbTarget.Checked;
+        }
+        /// <summary>
+        /// 選擇調查者、調查者選擇課長資訊
+        /// </summary>
+        public void QA01GetDropdownlistData()
         {
             dbFunction dbFunction = new dbFunction();
 
             using (SqlConnection conn = dbFunction.sqlHissChiaweiConnection())
             {
-                SqlCommand cmd = new SqlCommand("spQA01SelectInvestigator", conn);
+                SqlCommand cmd = new SqlCommand("spQA01GetDropdownlistData", conn);
 
                 cmd.CommandType = CommandType.StoredProcedure;
 
@@ -898,43 +995,24 @@ namespace BPM.FlowWork
 
                 ddlSelectInvestigator.DataSource = ds.Tables[0];
                 ddlSelectInvestigator.DataBind();
-            }
-        }
-        /// <summary>
-        /// 調查者選擇課長
-        /// </summary>
-        public void QA01SelectManager()
-        {
-            dbFunction dbFunction = new dbFunction();
 
-            using (SqlConnection conn = dbFunction.sqlHissChiaweiConnection())
-            {
-                SqlCommand cmd = new SqlCommand("spQA01SelectManager", conn);
-
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                SqlDataAdapter da = new SqlDataAdapter();
-                DataSet ds = new DataSet();
-                da.SelectCommand = cmd;
-                conn.Open();
-                da.Fill(ds);
-
-                ddlSelectManager.DataSource = ds.Tables[0];
+                ddlSelectManager.DataSource = ds.Tables[1];
                 ddlSelectManager.DataBind();
             }
         }
 
-        /// <summary>
-        /// wfDynamic寫入調查者跟確認者
-        /// </summary>
         public void InvestigatorWriteToDynamic(string strProcessID)
         {
             string strInvestigatorEmpID;
             string strInvestigatorEmpRoleID;
+            string strInvestigatorEmpName;
 
-            string[] strInvestigator = ddlSelectInvestigator.SelectedValue.Split('/');
-            strInvestigatorEmpRoleID = strInvestigator[0];
-            strInvestigatorEmpID = strInvestigator[1];
+            string[] strInvestigatorValue = ddlSelectInvestigator.SelectedValue.Split('/');
+            strInvestigatorEmpRoleID = strInvestigatorValue[0];
+            strInvestigatorEmpID = strInvestigatorValue[1];
+
+            string[] strInvestigatorText = ddlSelectInvestigator.SelectedItem.Text.Split('/');
+            strInvestigatorEmpName = strInvestigatorText[1]; 
 
             dbFunction dbFunction = new dbFunction();
 
@@ -946,20 +1024,31 @@ namespace BPM.FlowWork
                 cmd.Parameters.AddWithValue("@strProcessID", strProcessID);
                 cmd.Parameters.AddWithValue("@strInvestigatorEmpID", strInvestigatorEmpID);
                 cmd.Parameters.AddWithValue("@strInvestigatorEmpRoleID", strInvestigatorEmpRoleID);
+                cmd.Parameters.AddWithValue("@strInvestigatorEmpName", strInvestigatorEmpName);
 
                 cmd.ExecuteNonQuery(); // 用於更新資料庫資料             
             }
         }
-
+        /// <summary>
+        /// 寫入改善對象姓名、dynamic
+        /// </summary>
+        /// <param name="strProcessID"></param>
         public void ManagerWriteToDynamic(string strProcessID)
         {
             string strManagerEmpID;
             string strManagerEmpRoleID;
+            string strManagerEmpName;
+            string strInvestigation;
 
-            string[] strManager = ddlSelectManager.SelectedValue.Split('/');
-            strManagerEmpRoleID = strManager[0];
-            strManagerEmpID = strManager[1];
-          
+            string[] strManagerValue = ddlSelectManager.SelectedValue.Split('/');
+            strManagerEmpRoleID = strManagerValue[0];
+            strManagerEmpID = strManagerValue[1];
+
+            string[] strManagerText = ddlSelectManager.SelectedItem.Text.Split('/');
+            strManagerEmpName = strManagerText[1];
+
+            strInvestigation = txbInvestigation.Text;
+
             dbFunction dbFunction = new dbFunction();
 
             using (SqlConnection conn = dbFunction.sqlHissChiaweiConnection())
@@ -970,9 +1059,80 @@ namespace BPM.FlowWork
                 cmd.Parameters.AddWithValue("@strProcessID", strProcessID);
                 cmd.Parameters.AddWithValue("@strManagerEmpID", strManagerEmpID);
                 cmd.Parameters.AddWithValue("@strManagerEmpRoleID", strManagerEmpRoleID);
-
+                cmd.Parameters.AddWithValue("@strManagerEmpName", strManagerEmpName);
+                cmd.Parameters.AddWithValue("@strInvestigation", strInvestigation);
                 cmd.ExecuteNonQuery(); // 用於更新資料庫資料             
             }
+        }
+        /// <summary>
+        /// 寫入真因分析、對策擬定、對策日、效果確認、主管審核
+        /// </summary>
+        /// <param name="strProcessID"></param>
+        public void QA01UpdateData(string strProcessID,string strSignOfTargetNodeID)
+        {
+            string strAnalyze;
+            string strCountermeasures;
+            DateTime dateImplementDay;
+
+            string strEffectConfirm;
+            string strQAManagerCheck;
+
+            dbFunction dbFunction = new dbFunction();
+
+            using (SqlConnection conn = dbFunction.sqlHissChiaweiConnection())
+            {
+                SqlCommand cmd = new SqlCommand("spQA01UpdateData", conn);
+                switch (strSignOfTargetNodeID)
+                {
+                    case "582":
+                        if (chbTarget.Checked)
+                        {
+                            strAnalyze = txbAnalyze.Text;
+                            strCountermeasures = txbCountermeasures.Text;
+                            dateImplementDay = DateTime.Parse(strImplementDay);
+
+                            conn.Open();
+                            cmd.CommandType = CommandType.StoredProcedure;
+                            cmd.Parameters.AddWithValue("@strProcessID", strProcessID);
+                            cmd.Parameters.AddWithValue("@strSignOfTargetNodeID", strSignOfTargetNodeID);
+                            cmd.Parameters.AddWithValue("@strAnalyze", strAnalyze);
+                            cmd.Parameters.AddWithValue("@strCountermeasures", strCountermeasures);
+                            cmd.Parameters.AddWithValue("@dateImplementDay", dateImplementDay);
+                            cmd.Parameters.AddWithValue("@strEffectConfirm", "");
+                            cmd.Parameters.AddWithValue("@strQAManagerCheck", "");
+                            cmd.ExecuteNonQuery(); // 用於更新資料庫資料
+                        }
+                        break;
+                    case "586":
+                        strEffectConfirm = txbEffectConfirm.Text;
+
+                        conn.Open();
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@strProcessID", strProcessID);
+                        cmd.Parameters.AddWithValue("@strSignOfTargetNodeID", strSignOfTargetNodeID);
+                        cmd.Parameters.AddWithValue("@strAnalyze", "");
+                        cmd.Parameters.AddWithValue("@strCountermeasures", "");
+                        cmd.Parameters.AddWithValue("@dateImplementDay", "");
+                        cmd.Parameters.AddWithValue("@strEffectConfirm", strEffectConfirm);
+                        cmd.Parameters.AddWithValue("@strQAManagerCheck", "");
+                        cmd.ExecuteNonQuery(); // 用於更新資料庫資料
+                        break;
+                    case "587":
+                        strQAManagerCheck = txbQAManager.Text;
+
+                        conn.Open();
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@strProcessID", strProcessID);
+                        cmd.Parameters.AddWithValue("@strSignOfTargetNodeID", strSignOfTargetNodeID);
+                        cmd.Parameters.AddWithValue("@strAnalyze", "");
+                        cmd.Parameters.AddWithValue("@strCountermeasures", "");
+                        cmd.Parameters.AddWithValue("@dateImplementDay", "");
+                        cmd.Parameters.AddWithValue("@strEffectConfirm", "");
+                        cmd.Parameters.AddWithValue("@strQAManagerCheck", strQAManagerCheck);
+                        cmd.ExecuteNonQuery(); // 用於更新資料庫資料
+                        break;
+                }                           
+            }               
         }
 
         /// <summary>

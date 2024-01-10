@@ -19,7 +19,7 @@
                 locale: "zh",
                 // 在此設定 Flatpickr 的選項
                 maxDate: new Date().fp_incr(0),
-                defaultDate: "<%=strOccureDate%>"               
+                defaultDate: "<%=strOccureDate%>"
             });
 
             flatpickr(txbImplementDay, {
@@ -34,7 +34,7 @@
         function AutoBadRate() {
             var validInput = /^\d*$/.test(document.getElementById('<%= txbBadQty.ClientID %>').value);
             // 如果輸入不是數字，清除輸入並取消事件的預設行為
-            if (!validInput) {                
+            if (!validInput) {
                 document.getElementById('<%= txbBadQty.ClientID %>').value = "";
                 preventDefault();
             }
@@ -50,7 +50,7 @@
             var shipQty = parseFloat(document.getElementById('<%= lblShipQtyContent.ClientID %>').innerText);
             var badQty = parseFloat(document.getElementById('<%= txbBadQty.ClientID %>').value);
             var BadRate = (badQty / shipQty) * 100;
-            document.getElementById('<%= lblBadRateContent.ClientID %>').innerText = BadRate.toFixed(2)+'%';
+            document.getElementById('<%= lblBadRateContent.ClientID %>').innerText = BadRate.toFixed(2) + '%';
         }
     </script>
     <style type="text/css">
@@ -109,7 +109,7 @@
                 </tr>
             </table>
         </asp:Panel>
-        
+
         <asp:Panel ID="pnlPersonInformation" runat="server">
             <asp:Panel ID="pnlstartInfo" runat="server" Visible="false">
                 <table width="100%">
@@ -158,7 +158,7 @@
                     <td>姓名</td>
                     <td>職稱</td>
                     <td>部門</td>
-                    
+
                 </tr>
                 <tr style="text-align: center">
                     <td>
@@ -213,13 +213,13 @@
                         <asp:Label ID="lblInputProductCode" runat="server" Text="成品料號,成品料名:"></asp:Label>
                         <asp:TextBox ID="txbInputProductCode" runat="server" Width="750px" placeholder="(請輸入成品料號或成品料名)"></asp:TextBox>
                         <ajaxToolkit:AutoCompleteExtender ID="AutoCompleteExtender1" runat="server"
-                                    TargetControlID="txbInputProductCode"
-                                    ServiceMethod="QA01GetProductMatchingData"
-                                    MinimumPrefixLength="1"
-                                    CompletionInterval="100"
-                                    EnableCaching="false"
-                                    ServicePath="~/WebService1.asmx">
-                                </ajaxToolkit:AutoCompleteExtender>
+                            TargetControlID="txbInputProductCode"
+                            ServiceMethod="QA01GetProductMatchingData"
+                            MinimumPrefixLength="1"
+                            CompletionInterval="100"
+                            EnableCaching="false"
+                            ServicePath="~/WebService1.asmx">
+                        </ajaxToolkit:AutoCompleteExtender>
                         <asp:Button ID="btnEnter" runat="server" Text="確定" OnClick="btnEnter_Click" />
                         <asp:Button ID="btnClearEnter" runat="server" Text="清空" OnClick="btnClearEnter_Click" />
                         <asp:Label ID="lblErrorInputSAPNumber" runat="server" Text="錯誤的料號" Visible="false" ForeColor="Red"></asp:Label>
@@ -246,7 +246,7 @@
                     </td>
                     <td width="25%">
                         <asp:Label ID="lblBadQty" runat="server" Text="不良樘數:"></asp:Label>
-                        <asp:TextBox ID="txbBadQty" runat="server" Width="90px" oninput ="AutoBadRate()" placeholder ="(請輸入數字)" TextMode="Number" Enabled="false"></asp:TextBox>
+                        <asp:TextBox ID="txbBadQty" runat="server" Width="90px" oninput="AutoBadRate()" placeholder="(請輸入數字)" TextMode="Number" Enabled="false"></asp:TextBox>
                         <%--<asp:Button ID="btnBadQty" runat="server" Text="計算不良率" OnClick="btnBadQty_Click" />--%>
                     </td>
                     <td width="50%">
@@ -258,11 +258,11 @@
             <table width="100%">
                 <tr>
                     <td width="50%">
-                        <asp:Label ID="lblOccurDate" runat="server" Text="發生日期:" ></asp:Label>
+                        <asp:Label ID="lblOccurDate" runat="server" Text="發生日期:"></asp:Label>
                         <asp:TextBox ID="txbOccureDate" runat="server" Enabled="false"></asp:TextBox>
                     </td>
                     <td>
-                        <asp:Label ID="lblOccurPlace" runat="server" Text="發生地點:" ></asp:Label>
+                        <asp:Label ID="lblOccurPlace" runat="server" Text="發生地點:"></asp:Label>
                         <asp:TextBox ID="txbOccurPlace" runat="server" placeholder="(請輸入發生地點)" Enabled="false"></asp:TextBox>
                     </td>
                 </tr>
@@ -350,55 +350,59 @@
             <SortedDescendingHeaderStyle BackColor="#6F8DAE" />
         </asp:GridView>
 
-        <br />
         <asp:Panel ID="pnlSend" runat="server">
             <asp:Button ID="btnSend" runat="server" Text="送出" CssClass="title-style" OnClientClick="return confirm('確定要送出申請嗎？');" Visible="true" OnClick="btnSend_Click" />
         </asp:Panel>
 
-        <asp:Panel ID="pnlInvestigation" runat="server" Visible="false">
-            <asp:Label ID="lblInvestigation" runat="server" Text="◆原因調查:"></asp:Label>
-            <asp:TextBox ID="txbInvestigation" runat="server" Width="95%" Height="70px" TextMode="MultiLine" placeholder="(限品保調查員、改善對象填入)"></asp:TextBox>
+        <asp:Panel ID="pnlInvestigation" runat="server" Visible="false" Enabled="false">
+            <asp:Label ID="lblInvestigation" runat="server" Text="◆原因調查:" CssClass="title-style"></asp:Label>
+            <asp:TextBox ID="txbInvestigation" runat="server" Width="95%" Height="70px" TextMode="MultiLine" placeholder="(限品保調查員填入)"></asp:TextBox>
         </asp:Panel>
 
-        <asp:Panel ID="pnlTarget" runat="server" Visible="false">
+        <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+            <ContentTemplate>
+            </ContentTemplate>
+        </asp:UpdatePanel>
+
+        <asp:Panel ID="pnlTarget" runat="server" Visible="false" Enabled="false">
             <asp:Label ID="lblRedStart" runat="server" Text="*" ForeColor="Red"></asp:Label>
-            <asp:Label ID="lblTarget" runat="server" Text="是否為改善對象:"></asp:Label>
-            <asp:CheckBox ID="chbTarget" runat="server" AutoPostBack="true"/>
+            <asp:Label ID="lblTarget" runat="server" Text="是否為改善對象(非改善對象請填簽核意見後駁回):" ></asp:Label>
+            <asp:CheckBox ID="chbTarget" runat="server" AutoPostBack="true" OnCheckedChanged="chbTarget_CheckedChanged" />
         </asp:Panel>
 
-        <asp:Panel ID="pnlAnalyze" runat="server" Visible="false">
-            <asp:Label ID="lblAnalyze" runat="server" Text="◆真因分析:" ></asp:Label>
+        <asp:Panel ID="pnlAnalyze" runat="server" Visible="false" Enabled="false">
+            <asp:Label ID="lblAnalyze" runat="server" Text="◆真因分析:" CssClass="title-style"></asp:Label>
             <asp:TextBox ID="txbAnalyze" runat="server" Width="95%" Height="70px" TextMode="MultiLine" placeholder="(限改善對象勾選後填入)"></asp:TextBox>
         </asp:Panel>
 
-        <asp:Panel ID="pnlCountermeasures" runat="server" Visible="false">
-            <asp:Label ID="lblCountermeasures" runat="server" Text="◆對策擬定:"></asp:Label><br />
-            <asp:Label ID="lblImplementDay" runat="server" Text="選擇實施日:"></asp:Label>          
+        <asp:Panel ID="pnlCountermeasures" runat="server" Visible="false" Enabled="false">
+            <asp:Label ID="lblCountermeasures" runat="server" Text="◆對策擬定:" CssClass="title-style"></asp:Label><br />
+            <asp:Label ID="lblImplementDay" runat="server" Text="選擇實施日:"></asp:Label>
             <asp:TextBox ID="txbImplementDay" runat="server"></asp:TextBox>
             <asp:TextBox ID="txbCountermeasures" runat="server" Width="95%" Height="70px" TextMode="MultiLine" placeholder="(限改善對象勾選後填入)"></asp:TextBox>
         </asp:Panel>
 
-        <asp:Panel ID="pnlQAConfirm" runat="server" Visible="false">
-            <asp:Label ID="lblQAConfirm" runat="server" Text="◆品保確認:"></asp:Label><br />
+        <asp:Panel ID="pnlQAConfirm" runat="server" Visible="false" Enabled="false">
+            <asp:Label ID="lblQAConfirm" runat="server" Text="◆品保確認:" CssClass="title-style"></asp:Label><br />
             <asp:Label ID="lblClassification" runat="server" Text="分類:"></asp:Label>
             <asp:DropDownList ID="ddlLargeClassification" runat="server"></asp:DropDownList>
             <asp:DropDownList ID="ddlMediumClassification" runat="server"></asp:DropDownList>
             <asp:DropDownList ID="ddlSmallClassification" runat="server"></asp:DropDownList>
             <br />
-            <asp:Label ID="lblDirections" runat="server" Text="說明:" ></asp:Label>
+            <asp:Label ID="lblDirections" runat="server" Text="說明:"></asp:Label>
             <asp:TextBox ID="txbDirections" runat="server"></asp:TextBox>
             <asp:Button ID="btnAdd" runat="server" Text="加入" />
             <asp:GridView ID="grdQAConfirm" runat="server"></asp:GridView>
         </asp:Panel>
 
-        <asp:Panel ID="pnlEffectConfirm" runat="server" Visible="false">
-            <asp:Label ID="lblEffectConfirm" runat="server" Text="◆效果確認:"></asp:Label><br />
-            <asp:TextBox ID="txbEffectConfirm" runat="server" Width="95%" Height="70px" TextMode="MultiLine"></asp:TextBox>
+        <asp:Panel ID="pnlEffectConfirm" runat="server" Visible="false" Enabled="false">
+            <asp:Label ID="lblEffectConfirm" runat="server" Text="◆效果確認:" CssClass="title-style"></asp:Label><br />
+            <asp:TextBox ID="txbEffectConfirm" runat="server" Width="95%" Height="70px" TextMode="MultiLine" placeholder="(限品保調查者填入)"></asp:TextBox>
         </asp:Panel>
 
-        <asp:Panel ID="pnlQAManager" runat="server" Visible="false">
-            <asp:Label ID="lblQAManager" runat="server" Text="◆品保主管審核:"></asp:Label><br />
-            <asp:TextBox ID="txbQAManager" runat="server" Width="95%" Height="70px" TextMode="MultiLine"></asp:TextBox>
+        <asp:Panel ID="pnlQAManager" runat="server" Visible="false" Enabled="false">
+            <asp:Label ID="lblQAManager" runat="server" Text="◆品保主管審核:" CssClass="title-style"></asp:Label><br />
+            <asp:TextBox ID="txbQAManager" runat="server" Width="95%" Height="70px" TextMode="MultiLine" placeholder="(限品保課長填入)"></asp:TextBox>
         </asp:Panel>
 
         <asp:Panel ID="pnlSelectInvestigator" runat="server" Visible="false">
@@ -407,7 +411,7 @@
         </asp:Panel>
 
         <asp:Panel ID="pnlSelectManager" runat="server" Visible="false">
-            <asp:Label ID="lblSelectManager" runat="server" Text="選擇課長:"></asp:Label>
+            <asp:Label ID="lblSelectManager" runat="server" Text="選擇改善對象:"></asp:Label>
             <asp:DropDownList ID="ddlSelectManager" runat="server" DataTextField="DeptNameEmpName" DataValueField="RoleIDEmpID"></asp:DropDownList>
         </asp:Panel>
 
@@ -471,7 +475,7 @@
                 <asp:Button ID="btnSubmit" runat="server" Text="簽核" CssClass="title-style" OnClientClick="return confirm('確定簽核？');" OnClick="btnSubmit_Click" />
                 <asp:Button ID="btnReject" runat="server" Text="駁回" CssClass="title-style" OnClientClick="return confirm('確定駁回？');" OnClick="btnReject_Click" />
                 <asp:Button ID="btnTake" runat="server" Text="取消申請" CssClass="title-style" OnClientClick="return confirm('確定取消申請？');" OnClick="btnTake_Click" />
-                <asp:Button ID="btnInvalid" runat="server" Text="客訴不成立" CssClass="title-style" OnClientClick="return confirm('確定不成立？');" OnClick="btnInvalid_Click"/>
+                <asp:Button ID="btnInvalid" runat="server" Text="客訴不成立" CssClass="title-style" OnClientClick="return confirm('確定不成立？');" OnClick="btnInvalid_Click" />
             </div>
 
         </asp:Panel>
