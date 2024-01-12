@@ -10,6 +10,7 @@ using System.Web.UI.WebControls;
 using static BPMLib.Class1;
 using static BPMLib.Class1.FormInfo;
 using DocumentFormat.OpenXml.Presentation;
+using Bll.Sal.Vdb;
 
 namespace BPM.FlowWork
 {
@@ -96,24 +97,33 @@ namespace BPM.FlowWork
                             grvFormSignM.DataSource = stuFormInfo.dtFormSingMList;
                             grvFormSignM.DataBind();
 
-                            //------矯正處理單檢視資料-------
-                            rbtnlSelectWorking.Enabled = false;
-                            txbInputProductCode.Enabled = false;
-                            btnEnter.Visible = false;
-                            btnClearEnter.Visible = false;
-                            txbBadQty.Enabled = false;
-                            
-                            txbOccureDate.Enabled = false;
-                            txbOccurPlace.Enabled = false;
-                            txbProblemDescription.Enabled = false;
-                            txbMeasureDirection.Enabled = false;
-                            rbtnComplaint.Enabled = false;
-
+                            //------矯正處理單檢視資料-------                           
                             //設定申請樣式的選取按鈕AND顯示設定
                             switch (stuFormInfo.strApplyType) 
                             {
                                 case "客訴":
                                     rbtnlSelectWorking.SelectedIndex = 0;
+
+                                    rbtnlSelectWorking.Enabled = false;
+                                    txbInputProductCode.Enabled = false;
+                                    btnEnter.Visible = false;
+                                    btnClearEnter.Visible = false;
+                                    txbBadQty.Enabled = false;
+
+                                    txbOccureDate.Enabled = false;
+                                    txbOccurPlace.Enabled = false;
+                                    txbProblemDescription.Enabled = false;
+                                    txbMeasureDirection.Enabled = false;
+                                    rbtnComplaint.Enabled = false;
+
+                                    pnlInvestigation.Visible = true;
+                                    pnlAnalyze.Visible = true;
+                                    pnlCountermeasures.Visible = true;
+                                    pnlQAConfirm.Visible = true;
+                                    pnlEffectConfirm.Visible = true;
+                                    pnlQAManager.Visible = true;
+                                    pnlAppoint.Visible = true;
+
                                     if (stuFormInfo.IsComplaint)
                                     {
                                         rbtnComplaint.SelectedIndex = 0;    
@@ -150,7 +160,15 @@ namespace BPM.FlowWork
                             txbProblemDescription.Text = stuFormInfo.strProblemDescription;
                             txbMeasureDirection.Text = stuFormInfo.strMeasureDirection;
 
-                            
+                            //設定簽核資料
+                            txbInvestigation.Text = stuFormInfo.strInvestigation;
+                            txbAnalyze.Text = stuFormInfo.strAnalyze;
+                            txbCountermeasures.Text = stuFormInfo.strCountermeasures;
+                            txbEffectConfirm.Text = stuFormInfo.strEffectConfirm;
+                            txbQAManager.Text = stuFormInfo.QAManagerCheck;
+                            txbImplementDay.Text = (stuFormInfo.dateImplementDay == DateTime.MinValue ? "" : stuFormInfo.dateImplementDay.ToString("yyyy-MM-dd"));               
+                            lblAppointInvestigatorName.Text = stuFormInfo.strSelectInvestigator;
+                            lblAppointTargetName.Text = stuFormInfo.strSelectManager;
 
                             break;
                         case "ApParm":
@@ -168,7 +186,7 @@ namespace BPM.FlowWork
                             btnSend.Visible = false;
                             btnInvalid.Visible = false;
                             pnlFileUpload.Visible = false;
-                            grvFileUpload.Columns[3].Visible = false;
+                            grvFileUpload.Columns[3].Visible = false;                           
 
                             //申請日期、需求日期顯示設定
                             lblApplyDate.Text = stuFormInfo.dateApplyDate.ToString("yyyy-MM-dd");
@@ -230,14 +248,23 @@ namespace BPM.FlowWork
                             txbProblemDescription.Enabled = false;
                             txbMeasureDirection.Enabled = false;
                             rbtnComplaint.Enabled = false;
-
-                            strImplementDay = DateTime.Now.AddDays(30).ToString("yyyy/MM/dd");//實施日  
-
+                             
                             //設定申請樣式的選取按鈕AND顯示設定
                             switch (stuFormInfo.strApplyType)
                             {
                                 case "客訴":
                                     rbtnlSelectWorking.SelectedIndex = 0;
+                                    //設定填寫資料
+                                    txbInputProductCode.Text = stuFormInfo.strProductCode + "," + stuFormInfo.strProductName;
+                                    lblEventObjectContent.Text = stuFormInfo.strEventObject;
+                                    lblShipQtyContent.Text = stuFormInfo.strShipQty;
+                                    txbBadQty.Text = stuFormInfo.strBadQty;
+                                    lblBadRateContent.Text = stuFormInfo.strBadRate;
+                                    txbOccureDate.Text = stuFormInfo.dateOccureDate.ToString();
+                                    txbOccurPlace.Text = stuFormInfo.strOccurePlace;
+                                    txbProblemDescription.Text = stuFormInfo.strProblemDescription;
+                                    txbMeasureDirection.Text = stuFormInfo.strMeasureDirection;
+
                                     if (stuFormInfo.IsComplaint)
                                     {
                                         rbtnComplaint.SelectedIndex = 0;
@@ -262,29 +289,29 @@ namespace BPM.FlowWork
                                     lblComplaint.Visible = false;
                                     rbtnComplaint.Visible = false;
                                     break;
-                            }
-                            //設定填寫資料
-                            txbInputProductCode.Text = stuFormInfo.strProductCode + "," + stuFormInfo.strProductName;
-                            lblEventObjectContent.Text = stuFormInfo.strEventObject;
-                            lblShipQtyContent.Text = stuFormInfo.strShipQty;
-                            txbBadQty.Text = stuFormInfo.strBadQty;
-                            lblBadRateContent.Text = stuFormInfo.strBadRate;
-                            txbOccureDate.Text = stuFormInfo.dateOccureDate.ToString();
-                            txbOccurPlace.Text = stuFormInfo.strOccurePlace;
-                            txbProblemDescription.Text = stuFormInfo.strProblemDescription;
-                            txbMeasureDirection.Text = stuFormInfo.strMeasureDirection;
+                            }                           
+                            //設定簽核資料
+                            txbInvestigation.Text = stuFormInfo.strInvestigation;
+                            txbAnalyze.Text = stuFormInfo.strAnalyze;
+                            txbCountermeasures.Text = stuFormInfo.strCountermeasures;
+                            txbEffectConfirm.Text = stuFormInfo.strEffectConfirm;
+                            txbQAManager.Text = stuFormInfo.QAManagerCheck;
+                            txbImplementDay.Text = (stuFormInfo.dateImplementDay == DateTime.MinValue ? "" : stuFormInfo.dateImplementDay.ToString("yyyy-MM-dd"));
+                            lblAppointInvestigatorName.Text = stuFormInfo.strSelectInvestigator;
+                            lblAppointTargetName.Text = stuFormInfo.strSelectManager;
 
                             //QA01中登入者為簽核人 
                             if (stuFormInfo.strSignerEmployeeID == stuFormInfo.strLoginEmployeeID)
                             {
                                 //簽核按鈕顯示
                                 pnlBtn.Visible = true;
-                                txbSignOpinion.Enabled = true;  
+                                txbSignOpinion.Enabled = true;
+                                pnlAppoint.Visible = true;
                                 switch (stuFormInfo.strSignOfTargetNodeID)
                                 {
                                     //主管審核節點，如果主管審核就是品保主管，需顯示選擇
                                     case "575":
-                                        if (stuFormInfo.strLoginEmployeeID ==QAManagerEmpID()) 
+                                        if (stuFormInfo.strLoginEmployeeID == QAManagerEmpID())
                                         {
                                             pnlSelectInvestigator.Visible = true;
                                             QA01GetDropdownlistData();
@@ -339,7 +366,7 @@ namespace BPM.FlowWork
                                         pnlCountermeasures.Visible = true;
                                         pnlQAConfirm.Visible = true;
                                         pnlEffectConfirm.Visible = true;
-                                        pnlEffectConfirm.Enabled = true;    
+                                        pnlEffectConfirm.Enabled = true;
                                         break;
                                     //品保主管節點
                                     case "587":
@@ -349,14 +376,24 @@ namespace BPM.FlowWork
                                         pnlQAConfirm.Visible = true;
                                         pnlEffectConfirm.Visible = true;
                                         pnlQAManager.Visible = true;
-                                        pnlQAManager.Enabled = true;    
-                                        break;                                      
-                                }                              
+                                        pnlQAManager.Enabled = true;
+                                        break;
+                                }
+                            }
+                            else 
+                            {
+                                pnlInvestigation.Visible = true;
+                                pnlAnalyze.Visible = true;
+                                pnlCountermeasures.Visible = true;
+                                pnlQAConfirm.Visible = true;
+                                pnlEffectConfirm.Visible = true;
+                                pnlQAManager.Visible = true;
+                                pnlAppoint.Visible = true;
                             }
                            
                             break;
                         default:                           
-                            strOccureDate = DateTime.Now.ToString("yyyy/MM/dd");//發生日期
+                            //strOccureDate = DateTime.Now.ToString("yyyy/MM/dd");//發生日期
                             
                             //根據網址抓FormCode
                             //stuFormInfo.strFormCode = Request.QueryString.AllKeys[0];
@@ -621,12 +658,13 @@ namespace BPM.FlowWork
         protected void btnSend_Click(object sender, EventArgs e)
         {
             //輸入框防呆
-            string strInputProductCode = txbInputProductCode.Text.Trim();
-            string strOccurPlace = txbOccurPlace.Text.Trim();
-            string strProblemDescription = txbProblemDescription.Text.Trim();   
-            string strMeasureDirection = txbMeasureDirection.Text.Trim();
+            string strInputProductCode = txbInputProductCode.Text;
+            string strOccurPlace = txbOccurPlace.Text;
+            string strProblemDescription = txbProblemDescription.Text;   
+            string strMeasureDirection = txbMeasureDirection.Text;
             if (string.IsNullOrEmpty(strInputProductCode) || string.IsNullOrEmpty(strOccurPlace) || string.IsNullOrEmpty(strProblemDescription) || string.IsNullOrEmpty(strMeasureDirection))
             {
+                
                 Response.Write("<script>alert('" + "輸入框不能為空! " + "')</script>");
                 return;
             }
@@ -973,6 +1011,8 @@ namespace BPM.FlowWork
         {
             pnlAnalyze.Enabled = chbTarget.Checked;
             pnlCountermeasures.Enabled = chbTarget.Checked;
+
+            strImplementDay = DateTime.Now.AddDays(30).ToString("yyyy/MM/dd");//實施日
         }
         /// <summary>
         /// 選擇調查者、調查者選擇課長資訊

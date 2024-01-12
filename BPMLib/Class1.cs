@@ -150,8 +150,14 @@ namespace BPMLib
                 public string strMeasureDirection;  //已採措施說明
                 public string strSelectInvestigator;//選擇調查者的姓名
                 public string strSelectManager;     //選擇課長的姓名
+                public string strInvestigation;     //原因調查
+                public string strAnalyze;           //真因分析
+                public string strCountermeasures;   //對策擬定
+                public string strEffectConfirm;     //效果確認
+                public string QAManagerCheck;       //品保課長審核
 
                 public DateTime dateOccureDate;     //發生日期
+                public DateTime dateImplementDay;   //實施日期
                 public bool IsComplaint;            //課訴是否為我司責任
                 //-----矯正預防單QA01 dt------
                 public DataTable dtFormQA01;            //寫入到chiawei QA01資料表中
@@ -928,9 +934,24 @@ namespace BPMLib
                         stuFormInfo.strSelectInvestigator = ds.Tables[0].Rows[0]["sSelectInvestigator"].ToString(); 
                         stuFormInfo.strSelectManager = ds.Tables[0].Rows[0]["sSelectManager"].ToString();
 
-                        //取得QA01"發生日期"
+                        //取得QA01簽核內容
+                        stuFormInfo.strInvestigation = ds.Tables[0].Rows[0]["sInvestigation"].ToString();
+                        stuFormInfo.strAnalyze = ds.Tables[0].Rows[0]["sAnalyze"].ToString();
+                        stuFormInfo.strCountermeasures = ds.Tables[0].Rows[0]["sCountermeasures"].ToString();
+                        stuFormInfo.strEffectConfirm = ds.Tables[0].Rows[0]["sEffectConfirm"].ToString();
+                        stuFormInfo.QAManagerCheck = ds.Tables[0].Rows[0]["sQAManagerCheck"].ToString();
+
+                        //取得QA01"日期"
                         stuFormInfo.dateOccureDate = DateTime.Parse(ds.Tables[0].Rows[0]["dOccureDate"].ToString());
-                 
+                        if (string.IsNullOrEmpty(ds.Tables[0].Rows[0]["dImplementDay"].ToString()))
+                        {
+                            stuFormInfo.dateImplementDay = DateTime.MinValue;
+                        }
+                        else 
+                        {
+                            stuFormInfo.dateImplementDay = DateTime.Parse(ds.Tables[0].Rows[0]["dImplementDay"].ToString());
+                        }
+                        
                     }
                 }
                 return stuFormInfo;

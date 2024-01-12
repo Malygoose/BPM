@@ -915,6 +915,60 @@ namespace BPM.FlowWork
         protected global::System.Web.UI.WebControls.DropDownList ddlSelectManager;
 
         /// <summary>
+        /// pnlAppoint 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlAppoint;
+
+        /// <summary>
+        /// lblAppoint 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblAppoint;
+
+        /// <summary>
+        /// lblAppointInvestigator 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblAppointInvestigator;
+
+        /// <summary>
+        /// lblAppointTarget 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblAppointTarget;
+
+        /// <summary>
+        /// lblAppointInvestigatorName 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblAppointInvestigatorName;
+
+        /// <summary>
+        /// lblAppointTargetName 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblAppointTargetName;
+
+        /// <summary>
         /// pnlCheck 控制項。
         /// </summary>
         /// <remarks>

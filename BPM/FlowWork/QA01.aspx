@@ -415,6 +415,28 @@
             <asp:DropDownList ID="ddlSelectManager" runat="server" DataTextField="DeptNameEmpName" DataValueField="RoleIDEmpID"></asp:DropDownList>
         </asp:Panel>
 
+        <asp:Panel ID="pnlAppoint" runat="server" Visible="false">
+            <asp:Label ID="lblAppoint" runat="server" Text="◆負責人:" CssClass="title-style"></asp:Label><br />
+            <table width="100%">
+                <tr class="gray-row">
+                    <td>
+                        <asp:Label ID="lblAppointInvestigator" runat="server" Text="調查者"></asp:Label>                        
+                    </td>
+                    <td>
+                        <asp:Label ID="lblAppointTarget" runat="server" Text="改善對象"></asp:Label>                       
+                    </td>
+                </tr>
+                <tr style="text-align: center">
+                    <td>
+                        <asp:Label ID="lblAppointInvestigatorName" runat="server"></asp:Label>
+                    </td>
+                    <td>
+                        <asp:Label ID="lblAppointTargetName" runat="server"></asp:Label>
+                    </td>
+                </tr>
+            </table>                    
+        </asp:Panel>
+
         <asp:Panel ID="pnlCheck" runat="server">
             <table width="100%">
                 <tr>
