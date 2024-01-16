@@ -156,12 +156,14 @@ namespace BPMLib
                 public string strEffectConfirm;     //效果確認
                 public string QAManagerCheck;       //品保課長審核
 
+
                 public DateTime dateOccureDate;     //發生日期
                 public DateTime dateImplementDay;   //實施日期
                 public bool IsComplaint;            //課訴是否為我司責任
                 //-----矯正預防單QA01 dt------
                 public DataTable dtFormQA01;            //寫入到chiawei QA01資料表中
-               
+                public DataTable dtQAConfirm;           //寫入到chiawei QAConfirm資料表中
+
             }
             /// <summary>
             /// 設定發起人的資訊
@@ -568,6 +570,14 @@ namespace BPMLib
                 dtFormQA01.Columns.Add("sSelectManager");       //選擇課長的姓名
                 stuFormInfo.dtFormQA01 = dtFormQA01;
 
+                //建立寫入到"Chiawei"資料庫中"QAFonfirm"資料表的DataTable
+                DataTable dtQAFonfirm = new DataTable();
+                dtQAFonfirm.Columns.Add("sProcessID");          //表單代號
+                dtQAFonfirm.Columns.Add("sReason");             //原因層別
+                dtQAFonfirm.Columns.Add("sDirections");         //說明
+                stuFormInfo.dtQAConfirm = dtQAFonfirm;  
+
+
                 return stuFormInfo;                
             }
 
@@ -897,6 +907,31 @@ namespace BPMLib
                 }
             }
 
+            public void SqlBulkCopyToQAConfirm(stuFormInfo stuFormInfo)
+            {
+                dbFunction dbFunction = new dbFunction();
+                using (SqlConnection connection = dbFunction.sqlHissChiaweiConnection())
+                {
+                    connection.Open();
+
+                    SqlCommand cmd = new SqlCommand("spQA01DeleteQAConfirmData", connection);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@strProcessID", stuFormInfo.intProcessID.ToString());
+                    cmd.ExecuteNonQuery(); // 用於更新資料庫資料
+
+                    using (SqlBulkCopy bulkCopy = new SqlBulkCopy(connection))
+                    {
+                        // 上傳
+                        bulkCopy.DestinationTableName = "QAConfirm";
+                        bulkCopy.ColumnMappings.Add("sProcessID", "sProcessID");
+                        bulkCopy.ColumnMappings.Add("sReason", "sReason");
+                        bulkCopy.ColumnMappings.Add("sDirections", "sDirections");
+
+                        bulkCopy.WriteToServer(stuFormInfo.dtQAConfirm);
+                    }
+                }
+            }
+
             /// <summary>
             /// 判斷並讀取QA01的簽核或檢視內容的view
             /// </summary>
@@ -951,7 +986,9 @@ namespace BPMLib
                         {
                             stuFormInfo.dateImplementDay = DateTime.Parse(ds.Tables[0].Rows[0]["dImplementDay"].ToString());
                         }
-                        
+
+                        //品保確認
+                        stuFormInfo.dtQAConfirm = ds.Tables[1];
                     }
                 }
                 return stuFormInfo;

@@ -30,17 +30,17 @@ namespace BPM.FlowWork
 
                 pnlApply.Visible = true;
 
-                GetGrvFormList(LoginEmpID);
-
                 ddlStateType.SelectedItem.Value = "1";
 
+                GetGrvFormList(LoginEmpID);
+                
                 string strEmployeeName = (string)Session["EmployeeName"];
                 lblLoginName.Text = strEmployeeName;
 
                 //HttpCookie cookie = Request.Cookies["EmployeeName"];
                 //lblLoginName.Text = cookie.Value;
 
-                if (LoginEmpID == "20181104" || LoginEmpID=="20210305")
+                if (LoginEmpID == "20181104" || LoginEmpID=="20210305" || LoginEmpID == "20230305")
                 {                 
                     HLAdminterface.Visible = true;
                 }

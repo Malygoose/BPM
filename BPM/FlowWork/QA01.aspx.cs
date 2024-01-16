@@ -102,9 +102,10 @@ namespace BPM.FlowWork
                             switch (stuFormInfo.strApplyType) 
                             {
                                 case "客訴":
+                                    lblSelectWorking.Visible = true;
                                     rbtnlSelectWorking.SelectedIndex = 0;
 
-                                    rbtnlSelectWorking.Enabled = false;
+                                    rbtnlSelectWorking.Visible = false;
                                     txbInputProductCode.Enabled = false;
                                     btnEnter.Visible = false;
                                     btnClearEnter.Visible = false;
@@ -116,6 +117,7 @@ namespace BPM.FlowWork
                                     txbMeasureDirection.Enabled = false;
                                     rbtnComplaint.Enabled = false;
 
+                                    pnlWrite.Visible = true;
                                     pnlInvestigation.Visible = true;
                                     pnlAnalyze.Visible = true;
                                     pnlCountermeasures.Visible = true;
@@ -123,6 +125,10 @@ namespace BPM.FlowWork
                                     pnlEffectConfirm.Visible = true;
                                     pnlQAManager.Visible = true;
                                     pnlAppoint.Visible = true;
+
+                                    grvQAConfirm.Columns[2].Visible = false;
+                                    grvQAConfirm.DataSource = stuFormInfo.dtQAConfirm;
+                                    grvQAConfirm.DataBind();
 
                                     if (stuFormInfo.IsComplaint)
                                     {
@@ -150,7 +156,8 @@ namespace BPM.FlowWork
                                     break;
                             }
                             //設定填寫資料
-                            txbInputProductCode.Text = stuFormInfo.strProductCode+","+ stuFormInfo.strProductName;
+                            txbInputProductCode.Text = stuFormInfo.strProductCode;
+                            lblProductNameContent.Text = stuFormInfo.strProductName;
                             lblEventObjectContent.Text = stuFormInfo.strEventObject;
                             lblShipQtyContent.Text = stuFormInfo.strShipQty;
                             txbBadQty.Text = stuFormInfo.strBadQty;
@@ -247,15 +254,20 @@ namespace BPM.FlowWork
                             txbOccurPlace.Enabled = false;
                             txbProblemDescription.Enabled = false;
                             txbMeasureDirection.Enabled = false;
+                            lblQAConfirm.Visible = false;
+                            grvQAConfirm.Columns[2].Visible = false;
                             rbtnComplaint.Enabled = false;
-                             
                             //設定申請樣式的選取按鈕AND顯示設定
                             switch (stuFormInfo.strApplyType)
                             {
                                 case "客訴":
-                                    rbtnlSelectWorking.SelectedIndex = 0;
+                                    lblSelectWorking.Visible = true;
+                                    rbtnlSelectWorking.Visible = false;
+                                    pnlWrite.Visible = true;
+                                    
                                     //設定填寫資料
-                                    txbInputProductCode.Text = stuFormInfo.strProductCode + "," + stuFormInfo.strProductName;
+                                    txbInputProductCode.Text = stuFormInfo.strProductCode;
+                                    lblProductNameContent.Text = stuFormInfo.strProductName;
                                     lblEventObjectContent.Text = stuFormInfo.strEventObject;
                                     lblShipQtyContent.Text = stuFormInfo.strShipQty;
                                     txbBadQty.Text = stuFormInfo.strBadQty;
@@ -273,6 +285,10 @@ namespace BPM.FlowWork
                                     {
                                         rbtnComplaint.SelectedIndex = 1;
                                     }
+
+                                    grvQAConfirm.DataSource=stuFormInfo.dtQAConfirm;
+                                    grvQAConfirm.DataBind();
+
                                     break;
                                 case "進料抽檢":
                                     rbtnlSelectWorking.SelectedIndex = 1;
@@ -306,7 +322,6 @@ namespace BPM.FlowWork
                                 //簽核按鈕顯示
                                 pnlBtn.Visible = true;
                                 txbSignOpinion.Enabled = true;
-                                pnlAppoint.Visible = true;
                                 switch (stuFormInfo.strSignOfTargetNodeID)
                                 {
                                     //主管審核節點，如果主管審核就是品保主管，需顯示選擇
@@ -329,6 +344,7 @@ namespace BPM.FlowWork
                                         QA01GetDropdownlistData();
                                         pnlInvestigation.Visible = true;
                                         pnlInvestigation.Enabled = true;
+                                        pnlAppoint.Visible = true;
                                         break;
                                     //改善對象節點
                                     case "582":
@@ -337,36 +353,43 @@ namespace BPM.FlowWork
                                         pnlInvestigation.Visible = true;
                                         pnlAnalyze.Visible = true;
                                         pnlCountermeasures.Visible = true;
+                                        pnlAppoint.Visible = true;
                                         break;
                                     //品保主管節點
                                     case "583":
                                         pnlInvestigation.Visible = true;
                                         pnlAnalyze.Visible = true;
                                         pnlCountermeasures.Visible = true;
+                                        pnlAppoint.Visible = true;
                                         break;
                                     //品保確認節點
                                     case "584":
                                         pnlInvestigation.Visible = true;
                                         pnlAnalyze.Visible = true;
                                         pnlCountermeasures.Visible = true;
-                                        pnlQAConfirm.Visible = true;
                                         pnlQAConfirm.Enabled = true;
+                                        pnlQAConfirmWrite.Visible = true;
+                                        grvQAConfirm.Columns[2].Visible= true;
+                                        pnlAppoint.Visible = true;
+                                        lblQAConfirm.Visible = true;
                                         break;
                                     //品保主管節點
                                     case "585":
                                         pnlInvestigation.Visible = true;
                                         pnlAnalyze.Visible = true;
                                         pnlCountermeasures.Visible = true;
-                                        pnlQAConfirm.Visible = true;
+                                        pnlAppoint.Visible = true;
+                                        lblQAConfirm.Visible = true;
                                         break;
                                     //效果確認節點
                                     case "586":
                                         pnlInvestigation.Visible = true;
                                         pnlAnalyze.Visible = true;
                                         pnlCountermeasures.Visible = true;
-                                        pnlQAConfirm.Visible = true;
                                         pnlEffectConfirm.Visible = true;
                                         pnlEffectConfirm.Enabled = true;
+                                        pnlAppoint.Visible = true;
+                                        lblQAConfirm.Visible = true;
                                         break;
                                     //品保主管節點
                                     case "587":
@@ -377,6 +400,8 @@ namespace BPM.FlowWork
                                         pnlEffectConfirm.Visible = true;
                                         pnlQAManager.Visible = true;
                                         pnlQAManager.Enabled = true;
+                                        pnlAppoint.Visible = true;
+                                        lblQAConfirm.Visible = true;
                                         break;
                                 }
                             }
@@ -454,7 +479,7 @@ namespace BPM.FlowWork
                             {
                                 //客訴填寫表單的預先設定
                                 rbtnlSelectWorking.SelectedIndex = 0;
-                                rbtnComplaint.SelectedIndex = 0;
+                                //rbtnComplaint.SelectedIndex = 0;
                                 stuFormInfo.strApplyTypeCode = rbtnlSelectWorking.SelectedValue;//代碼先設定為complain
                                 rbtnlSelectWorking.Items.Remove(rbtnlSelectWorking.Items.FindByValue("IQC"));
                                 rbtnlSelectWorking.Items.Remove(rbtnlSelectWorking.Items.FindByValue("IPQC"));
@@ -659,13 +684,52 @@ namespace BPM.FlowWork
         {
             //輸入框防呆
             string strInputProductCode = txbInputProductCode.Text;
+            string strBadQty = txbBadQty.Text;  
+            string strOccureDate = txbOccureDate.Text;
             string strOccurPlace = txbOccurPlace.Text;
             string strProblemDescription = txbProblemDescription.Text;   
             string strMeasureDirection = txbMeasureDirection.Text;
-            if (string.IsNullOrEmpty(strInputProductCode) || string.IsNullOrEmpty(strOccurPlace) || string.IsNullOrEmpty(strProblemDescription) || string.IsNullOrEmpty(strMeasureDirection))
+
+            if (string.IsNullOrEmpty(strInputProductCode))
             {
-                
-                Response.Write("<script>alert('" + "輸入框不能為空! " + "')</script>");
+                txbInputProductCode.Focus();    
+                Response.Write("<script>alert('" + "成品料號不能為空! " + "')</script>");
+                return;
+            }
+            if (string.IsNullOrEmpty(strBadQty))
+            {
+                txbBadQty.Focus();
+                Response.Write("<script>alert('" + "不良樘數不能為空! " + "')</script>");
+                return;
+            }
+            if (string.IsNullOrEmpty(strOccureDate))
+            {
+                txbOccureDate.Focus();
+                Response.Write("<script>alert('" + "發生日期不能為空! " + "')</script>");
+                return;
+            }
+            if (string.IsNullOrEmpty(strOccurPlace))
+            {
+                txbOccurPlace.Focus();
+                Response.Write("<script>alert('" + "發生地點不能為空! " + "')</script>");
+                return;
+            }
+            if (string.IsNullOrEmpty(strProblemDescription))
+            {
+                txbProblemDescription.Focus();
+                Response.Write("<script>alert('" + "問題描述不能為空! " + "')</script>");
+                return;
+            }
+            if (string.IsNullOrEmpty(strMeasureDirection))
+            {
+                txbMeasureDirection.Focus();
+                Response.Write("<script>alert('" + "已採措施說明不能為空! " + "')</script>");
+                return;
+            }
+            if (!rbtnComplaint.Items.Cast<ListItem>().Any(item => item.Selected))
+            { 
+                rbtnComplaint.Focus();
+                Response.Write("<script>alert('" + "客訴內容是否明確為我司責任沒有選取! " + "')</script>");
                 return;
             }
 
@@ -771,6 +835,10 @@ namespace BPM.FlowWork
                     case "582":
                         QA01UpdateData(strProcessID, stuFormInfo.strSignOfTargetNodeID);
                         break;
+                    //品保確認者 寫入品保確認
+                    case "584":
+                        formInfo.SqlBulkCopyToQAConfirm(stuFormInfo);
+                        break;
                     //品保確認者 寫入效果確認
                     case "586":
                         QA01UpdateData(strProcessID, stuFormInfo.strSignOfTargetNodeID);
@@ -779,6 +847,7 @@ namespace BPM.FlowWork
                     case "587":
                         QA01UpdateData(strProcessID, stuFormInfo.strSignOfTargetNodeID);
                         break;
+                    
                 }
 
                 //  流程推進
@@ -897,14 +966,12 @@ namespace BPM.FlowWork
             try 
             {
                 lblErrorInputSAPNumber.Visible = false;
-                txbBadQty.Enabled = true;
-                txbOccureDate.Enabled = true;
-                txbOccurPlace.Enabled = true;
-                txbProblemDescription.Enabled = true;
-                txbMeasureDirection.Enabled = true; 
+                pnlWrite.Visible = true;
+                pnlFileUpload.Visible = true;   
+                pnlSend.Visible = true; 
 
-                string strInputProductCodeAndName = txbInputProductCode.Text;
-                string strInputProductCode = strInputProductCodeAndName.Split(',')[0];
+                string strInputProductCode = txbInputProductCode.Text;
+                //string strInputProductCode = strInputProductCodeAndName.Split(',')[0];
 
                 dbFunction dbFunction = new dbFunction();
 
@@ -924,19 +991,17 @@ namespace BPM.FlowWork
                     DataRow drSapB1ProductOrderList = ds.Tables[0].Rows[0];
 
                     lblEventObjectContent.Text = (string)drSapB1ProductOrderList["CustomerNo"] + " " + (string)drSapB1ProductOrderList["CustomerName"];
-                    //lblProductNameContent.Text = (string)drSapB1ProductOrderList["ProductName"];
+                    lblProductNameContent.Text = (string)drSapB1ProductOrderList["ProductName"];
                     lblShipQtyContent.Text = drSapB1ProductOrderList["Qty"].ToString();
                 }
             } 
             catch(Exception) 
             {
                 lblErrorInputSAPNumber.Visible = true;
-                txbBadQty.Enabled = false;
-                txbOccureDate.Enabled = false;
-                txbOccurPlace.Enabled = false;
-                txbProblemDescription.Enabled = false;
-                txbMeasureDirection.Enabled = false;
-                lblErrorInputSAPNumber.Text = "錯誤的成品料號或成品料名";
+                pnlWrite.Visible = false;
+                pnlFileUpload.Visible = false;
+                pnlSend.Visible = false;
+                lblErrorInputSAPNumber.Text = "錯誤的成品料號";
             }
             
         }
@@ -1212,9 +1277,8 @@ namespace BPM.FlowWork
 
             stuFormInfo.strApplyType=rbtnlSelectWorking.SelectedItem.Text;           
 
-            string strInputProductCodeAndName = txbInputProductCode.Text;
-            stuFormInfo.strProductCode = strInputProductCodeAndName.Split(',')[0];
-            stuFormInfo.strProductName = strInputProductCodeAndName.Split(',')[1];
+            stuFormInfo.strProductCode = txbInputProductCode.Text; ;
+            stuFormInfo.strProductName = lblProductNameContent.Text;    
             stuFormInfo.strEventObject = lblEventObjectContent.Text;
             stuFormInfo.strShipQty = lblShipQtyContent.Text;
             stuFormInfo.strBadQty = txbBadQty.Text;
@@ -1239,6 +1303,30 @@ namespace BPM.FlowWork
             ViewState["stuFormInfo"] = stuFormInfo;
         }
 
-        
+        protected void btnAdd_Click(object sender, EventArgs e)
+        {
+            stuFormInfo stuFormInfo = (stuFormInfo)ViewState["stuFormInfo"];
+
+            DataRow drQAConfirm = stuFormInfo.dtQAConfirm.NewRow();
+
+            drQAConfirm["sProcessID"] = stuFormInfo.intProcessID.ToString();
+            drQAConfirm["sReason"] = ddlClassification.SelectedItem.Text;
+            drQAConfirm["sDirections"] =txbDirections.Text;
+
+            stuFormInfo.dtQAConfirm.Rows.Add(drQAConfirm);
+
+            grvQAConfirm.DataSource = stuFormInfo.dtQAConfirm;
+            grvQAConfirm.DataBind();
+
+        }
+
+        protected void lbtnDelete_Command(object sender, CommandEventArgs e)
+        {
+            stuFormInfo stuFormInfo = (stuFormInfo)ViewState["stuFormInfo"];
+            int rowIndex = Convert.ToInt32(e.CommandArgument);
+            stuFormInfo.dtQAConfirm.Rows.RemoveAt(rowIndex);
+            grvQAConfirm.DataSource = stuFormInfo.dtQAConfirm;
+            grvQAConfirm.DataBind();
+        }
     }
 }

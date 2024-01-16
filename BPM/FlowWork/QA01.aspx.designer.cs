@@ -213,6 +213,15 @@ namespace BPM.FlowWork
         protected global::System.Web.UI.WebControls.Panel pnlDate;
 
         /// <summary>
+        /// lblSelectWorking 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblSelectWorking;
+
+        /// <summary>
         /// rbtnlSelectWorking 控制項。
         /// </summary>
         /// <remarks>
@@ -292,6 +301,15 @@ namespace BPM.FlowWork
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblErrorInputSAPNumber;
+
+        /// <summary>
+        /// pnlWrite 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlWrite;
 
         /// <summary>
         /// lblEventObject 控制項。
@@ -600,15 +618,6 @@ namespace BPM.FlowWork
         protected global::System.Web.UI.WebControls.TextBox txbInvestigation;
 
         /// <summary>
-        /// UpdatePanel1 控制項。
-        /// </summary>
-        /// <remarks>
-        /// 自動產生的欄位。
-        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
-        /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdatePanel1;
-
-        /// <summary>
         /// pnlTarget 控制項。
         /// </summary>
         /// <remarks>
@@ -735,6 +744,24 @@ namespace BPM.FlowWork
         protected global::System.Web.UI.WebControls.Label lblQAConfirm;
 
         /// <summary>
+        /// UpdatePanel1 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel UpdatePanel1;
+
+        /// <summary>
+        /// pnlQAConfirmWrite 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlQAConfirmWrite;
+
+        /// <summary>
         /// lblClassification 控制項。
         /// </summary>
         /// <remarks>
@@ -744,31 +771,13 @@ namespace BPM.FlowWork
         protected global::System.Web.UI.WebControls.Label lblClassification;
 
         /// <summary>
-        /// ddlLargeClassification 控制項。
+        /// ddlClassification 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlLargeClassification;
-
-        /// <summary>
-        /// ddlMediumClassification 控制項。
-        /// </summary>
-        /// <remarks>
-        /// 自動產生的欄位。
-        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlMediumClassification;
-
-        /// <summary>
-        /// ddlSmallClassification 控制項。
-        /// </summary>
-        /// <remarks>
-        /// 自動產生的欄位。
-        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlSmallClassification;
+        protected global::System.Web.UI.WebControls.DropDownList ddlClassification;
 
         /// <summary>
         /// lblDirections 控制項。
@@ -798,13 +807,13 @@ namespace BPM.FlowWork
         protected global::System.Web.UI.WebControls.Button btnAdd;
 
         /// <summary>
-        /// grdQAConfirm 控制項。
+        /// grvQAConfirm 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView grdQAConfirm;
+        protected global::System.Web.UI.WebControls.GridView grvQAConfirm;
 
         /// <summary>
         /// pnlEffectConfirm 控制項。
