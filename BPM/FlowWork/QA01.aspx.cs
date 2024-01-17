@@ -637,7 +637,7 @@ namespace BPM.FlowWork
                 }
                 else
                 {
-                    Response.Write("<script>alert('" + "只能上傳PDF檔案! " + "')</script>");
+                    HttpContext.Current.Response.Write("<script>alert('只能上傳PDF檔案!')</script>");
                 }
             }
         }
@@ -690,46 +690,40 @@ namespace BPM.FlowWork
             string strProblemDescription = txbProblemDescription.Text;   
             string strMeasureDirection = txbMeasureDirection.Text;
 
-            if (string.IsNullOrEmpty(strInputProductCode))
-            {
-                txbInputProductCode.Focus();    
-                Response.Write("<script>alert('" + "成品料號不能為空! " + "')</script>");
-                return;
-            }
             if (string.IsNullOrEmpty(strBadQty))
             {
                 txbBadQty.Focus();
-                Response.Write("<script>alert('" + "不良樘數不能為空! " + "')</script>");
+                HttpContext.Current.Response.Write("<script>alert('不良樘數不能為空!')</script>");
                 return;
             }
             if (string.IsNullOrEmpty(strOccureDate))
             {
                 txbOccureDate.Focus();
-                Response.Write("<script>alert('" + "發生日期不能為空! " + "')</script>");
+                HttpContext.Current.Response.Write("<script>alert('發生日期不能為空!')</script>");
                 return;
             }
             if (string.IsNullOrEmpty(strOccurPlace))
             {
                 txbOccurPlace.Focus();
-                Response.Write("<script>alert('" + "發生地點不能為空! " + "')</script>");
+                HttpContext.Current.Response.Write("<script>alert('發生地點不能為空!')</script>");
                 return;
             }
             if (string.IsNullOrEmpty(strProblemDescription))
             {
                 txbProblemDescription.Focus();
-                Response.Write("<script>alert('" + "問題描述不能為空! " + "')</script>");
+                HttpContext.Current.Response.Write("<script>alert('問題描述不能為空!')</script>");
                 return;
             }
             if (string.IsNullOrEmpty(strMeasureDirection))
             {
                 txbMeasureDirection.Focus();
-                Response.Write("<script>alert('" + "已採措施說明不能為空! " + "')</script>");
+                HttpContext.Current.Response.Write("<script>alert('已採措施說明不能為空!')</script>");
                 return;
             }
             if (!rbtnComplaint.Items.Cast<ListItem>().Any(item => item.Selected))
             { 
                 rbtnComplaint.Focus();
-                Response.Write("<script>alert('" + "客訴內容是否明確為我司責任沒有選取! " + "')</script>");
+                HttpContext.Current.Response.Write("<script>alert('客訴內容是否明確為我司責任沒有選取!')</script>");
                 return;
             }
 
@@ -780,7 +774,7 @@ namespace BPM.FlowWork
             }
             catch (Exception)
             {
-                Response.Write("<script>alert('" + "傳送失敗! " + "')</script>");
+                HttpContext.Current.Response.Write("<script>alert('傳送失敗!')</script>");
             }
 
         }
@@ -865,7 +859,8 @@ namespace BPM.FlowWork
                 }
                 else
                 {
-                    Response.Write("<script>alert('" + "簽核失敗!" + "')</script>");
+                    HttpContext.Current.Response.Write("<script>alert('簽核失敗!')</script>");
+
                 }
 
             }
@@ -919,7 +914,7 @@ namespace BPM.FlowWork
                     formInfo.FlowApprove(stuFormInfo);
                     formInfo.InsertFormSignM(stuFormInfo);
 
-                    Response.Write("<script>alert('" + "申請已取消! " + "')</script>");
+                    HttpContext.Current.Response.Write("<script>alert('申請已取消!')</script>");
                     Response.Redirect("Home.aspx");
                 }
             }
@@ -1277,7 +1272,7 @@ namespace BPM.FlowWork
 
             stuFormInfo.strApplyType=rbtnlSelectWorking.SelectedItem.Text;           
 
-            stuFormInfo.strProductCode = txbInputProductCode.Text; ;
+            stuFormInfo.strProductCode = txbInputProductCode.Text; 
             stuFormInfo.strProductName = lblProductNameContent.Text;    
             stuFormInfo.strEventObject = lblEventObjectContent.Text;
             stuFormInfo.strShipQty = lblShipQtyContent.Text;

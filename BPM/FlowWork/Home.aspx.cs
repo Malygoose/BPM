@@ -211,10 +211,13 @@ namespace BPM.FlowWork
 
                     oService.FlowStateSet(list, FlowState.Take, User.Identity.Name);
 
-                    Response.Write("<script>alert('" + "撤回成功" + "')</script>");  //刪除失敗 警告訊息
+                    HttpContext.Current.Response.Write("<script>alert('撤回成功')</script>");//刪除失敗 警告訊息
                 }
                 else
-                    Response.Write("<script>alert('" + "撤回失敗，主管已簽核" + "')</script>");  //刪除失敗 警告訊息
+                {
+                    HttpContext.Current.Response.Write("<script>alert('撤回失敗，主管已簽核')</script>");//刪除失敗 警告訊息
+                } 
+
 
                 grvFormList.DataSource = FormList;
                 grvFormList.DataBind();

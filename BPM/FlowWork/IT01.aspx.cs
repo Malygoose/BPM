@@ -672,7 +672,7 @@ namespace BPM.FlowWork
                 }
                 else
                 {
-                    Response.Write("<script>alert('" + "只能上傳PDF檔案! " + "')</script>");
+                    HttpContext.Current.Response.Write("<script>alert('只能上傳PDF檔案!')</script>");
                 }           
             }
         }
@@ -724,14 +724,14 @@ namespace BPM.FlowWork
             //  檢查有無輸入日期
             if (string.IsNullOrEmpty(txbRequireDate.Text))
             {
-                Response.Write("<script>alert('" + "請選擇需求日期!" + "')</script>");
+                HttpContext.Current.Response.Write("<script>alert('請選擇需求日期!')</script>");
                 return;
             }
 
             //  檢查有無申請內容
             if (grvApplyContent.Rows.Count<1)
             {
-                Response.Write("<script>alert('" + "申請內容不能為空!" + "')</script>");
+                HttpContext.Current.Response.Write("<script>alert('申請內容不能為空!')</script>");
                 return;
             }
 
@@ -807,7 +807,7 @@ namespace BPM.FlowWork
             }
             catch (Exception )
             {
-                Response.Write("<script>alert('" + "傳送失敗! " + "')</script>");
+                HttpContext.Current.Response.Write("<script>alert('傳送失敗!')</script>");
             }
 
         }
@@ -885,13 +885,13 @@ namespace BPM.FlowWork
             if (ddlSelectExecuteEmp.Enabled == true && ddlSelectExecuteEmp.SelectedValue == "請選擇負責人")
             {
                 lblError.Text = "簽核失敗，未指定負責人！";
-                Response.Write("<script>alert('" + "簽核失敗，未指定負責人！" + "')</script>");
+                HttpContext.Current.Response.Write("<script>alert('簽核失敗，未指定負責人！')</script>");
 
                 return;
             }
             else if (txbTotalCost.Enabled == true && string.IsNullOrEmpty(txbTotalCost.Text))
             {
-                Response.Write("<script>alert('" + "簽核失敗，未填寫預估費用！" + "')</script>");
+                HttpContext.Current.Response.Write("<script>alert('簽核失敗，未填寫預估費用！')</script>");
 
                 lblError.Text = "簽核失敗，未填寫預估費用！";
                 return;
@@ -971,9 +971,9 @@ namespace BPM.FlowWork
                         Response.Redirect("Home.aspx");
                     }
                     else
-                        Response.Write("<script>alert('" + "簽核失敗!" + "')</script>");
-
-
+                    {
+                        HttpContext.Current.Response.Write("<script>alert('簽核失敗!')</script>");
+                    }
                 }
             }
 
@@ -1131,7 +1131,7 @@ namespace BPM.FlowWork
                     FlowApprove(false, 7);
                     InsertFormSignM("取消申請", true);
 
-                    Response.Write("<script>alert('" + "申請已取消! " + "')</script>");
+                    HttpContext.Current.Response.Write("<script>alert('申請已取消!')</script>");
                     Response.Redirect("Home.aspx");
                 }
             }
@@ -2494,7 +2494,7 @@ namespace BPM.FlowWork
             }
             catch (Exception ex)
             {
-                Response.Write("<script>alert('" + ex.Message + "')</script>");
+                HttpContext.Current.Response.Write("<script>alert('" + ex.Message + "')</script>");
             }
         }
 
