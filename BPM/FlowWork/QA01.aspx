@@ -369,8 +369,8 @@
 
         <asp:Panel ID="pnlTarget" runat="server" Visible="false" Enabled="false">
             <asp:Label ID="lblRedStart" runat="server" Text="*" ForeColor="Red"></asp:Label>
-            <asp:Label ID="lblTarget" runat="server" Text="是否為改善對象(非改善對象請填簽核意見後駁回):"></asp:Label>
             <asp:CheckBox ID="chbTarget" runat="server" AutoPostBack="true" OnCheckedChanged="chbTarget_CheckedChanged" />
+            <asp:Label ID="lblTarget" runat="server" Text="是否為改善對象(非改善對象請填簽核意見後駁回)"></asp:Label>          
         </asp:Panel>
 
         <asp:Panel ID="pnlAnalyze" runat="server" Visible="false" Enabled="false">

@@ -354,6 +354,7 @@ namespace BPM.FlowWork
                                         pnlAnalyze.Visible = true;
                                         pnlCountermeasures.Visible = true;
                                         pnlAppoint.Visible = true;
+                                        btnSubmit.Visible = false;
                                         break;
                                     //品保主管節點
                                     case "583":
@@ -794,6 +795,89 @@ namespace BPM.FlowWork
 
             if (strProcessID.Trim().Length > 0 && stuFormInfo.intApKey != 0)
             {
+                
+
+                //如果是品保主管簽核且ddlSelectInvestigator為Visible=true時寫入調查者、確認者
+                if (ddlSelectInvestigator.Visible == true && stuFormInfo.strLoginEmployeeID == QAManagerEmpID())
+                {
+                    InvestigatorWriteToDynamic(strProcessID);
+                }
+
+                //如果是調查者且ddlSelectManager為Visible=true時寫入課長、原因調查
+                if (ddlSelectManager.Visible == true)
+                {
+
+                    if (string.IsNullOrEmpty(txbInvestigation.Text))
+                    {
+                        txbBadQty.Focus();
+                        HttpContext.Current.Response.Write("<script>alert('原因調查不能為空!')</script>");
+                        return;
+                    }
+                    else 
+                    {
+                        ManagerWriteToDynamic(strProcessID);
+                    }                   
+                }
+
+                switch (stuFormInfo.strSignOfTargetNodeID)
+                {
+                    //改善對象 寫入真因分析、對策擬定
+                    case "582":
+                        
+                        if (string.IsNullOrEmpty(txbCountermeasures.Text) && string.IsNullOrEmpty(txbAnalyze.Text))
+                        {
+                            txbAnalyze.Focus();
+                            txbCountermeasures.Focus();
+                            HttpContext.Current.Response.Write("<script>alert('真因分析或對策擬定不能為空!')</script>");
+                            return;
+                        }
+                        else
+                        {
+                            QA01UpdateData(strProcessID, stuFormInfo.strSignOfTargetNodeID);
+                        }
+                        
+                        break;
+                    //品保確認者 寫入品保確認
+                    case "584":
+                        if (grvQAConfirm.Rows.Count < 1)
+                        {
+                            HttpContext.Current.Response.Write("<script>alert('品保確認不能為空!')</script>");
+                            return;
+                        }
+                        else 
+                        {
+                            formInfo.SqlBulkCopyToQAConfirm(stuFormInfo);
+                        }                      
+                        break;
+                    //品保確認者 寫入效果確認
+                    case "586":
+                        if (string.IsNullOrEmpty(txbEffectConfirm.Text))
+                        {
+                            txbEffectConfirm.Focus();
+                            HttpContext.Current.Response.Write("<script>alert('效果確認不能為空!')</script>");
+                            return;
+                        }
+                        else 
+                        {
+                            QA01UpdateData(strProcessID, stuFormInfo.strSignOfTargetNodeID);
+                        }                            
+                        break;
+                    //品保主管 寫入品保主管審核
+                    case "587":
+                        if (string.IsNullOrEmpty(txbQAManager.Text))
+                        {
+                            txbQAManager.Focus();   
+                            HttpContext.Current.Response.Write("<script>alert('品保主管審核不能為空!')</script>");
+                            return;
+                        }
+                        else
+                        {
+                            QA01UpdateData(strProcessID, stuFormInfo.strSignOfTargetNodeID);
+                        }                      
+                        break;
+                    
+                }
+
                 if (stuFormInfo.blnSignState == false && stuFormInfo.strStartEmployeeID == stuFormInfo.strLoginEmployeeID && btnTake.Visible == true)
                 {
                     //設定InsertFormSignM資訊
@@ -809,39 +893,6 @@ namespace BPM.FlowWork
                     stuFormInfo.blnSignM = true;
                     stuFormInfo.strSignOpinion = txbSignOpinion.Text;
                     formInfo.InsertFormSignM(stuFormInfo);
-                }
-
-                //如果是品保主管簽核且ddlSelectInvestigator為Visible=true時寫入調查者、確認者
-                if (ddlSelectInvestigator.Visible == true && stuFormInfo.strLoginEmployeeID == QAManagerEmpID())
-                {
-                    InvestigatorWriteToDynamic(strProcessID);
-                }
-
-                //如果是調查者且ddlSelectManager為Visible=true時寫入課長、原因調查
-                if (ddlSelectManager.Visible == true)
-                {
-                    ManagerWriteToDynamic(strProcessID);
-                }
-
-                switch (stuFormInfo.strSignOfTargetNodeID)
-                {
-                    //改善對象 寫入真因分析、對策擬定
-                    case "582":
-                        QA01UpdateData(strProcessID, stuFormInfo.strSignOfTargetNodeID);
-                        break;
-                    //品保確認者 寫入品保確認
-                    case "584":
-                        formInfo.SqlBulkCopyToQAConfirm(stuFormInfo);
-                        break;
-                    //品保確認者 寫入效果確認
-                    case "586":
-                        QA01UpdateData(strProcessID, stuFormInfo.strSignOfTargetNodeID);
-                        break;
-                    //品保主管 寫入品保主管審核
-                    case "587":
-                        QA01UpdateData(strProcessID, stuFormInfo.strSignOfTargetNodeID);
-                        break;
-                    
                 }
 
                 //  流程推進
@@ -1071,7 +1122,8 @@ namespace BPM.FlowWork
         {
             pnlAnalyze.Enabled = chbTarget.Checked;
             pnlCountermeasures.Enabled = chbTarget.Checked;
-
+            btnReject.Visible = !chbTarget.Checked;
+            btnSubmit.Visible = chbTarget.Checked; 
             strImplementDay = DateTime.Now.AddDays(30).ToString("yyyy/MM/dd");//實施日
         }
         /// <summary>
@@ -1111,8 +1163,10 @@ namespace BPM.FlowWork
             strInvestigatorEmpRoleID = strInvestigatorValue[0];
             strInvestigatorEmpID = strInvestigatorValue[1];
 
-            string[] strInvestigatorText = ddlSelectInvestigator.SelectedItem.Text.Split('/');
-            strInvestigatorEmpName = strInvestigatorText[1]; 
+            strInvestigatorEmpName = ddlSelectInvestigator.SelectedItem.Text;
+
+            //string[] strInvestigatorText = ddlSelectInvestigator.SelectedItem.Text.Split('/');
+            //strInvestigatorEmpName = strInvestigatorText[1]; 
 
             dbFunction dbFunction = new dbFunction();
 
@@ -1144,8 +1198,10 @@ namespace BPM.FlowWork
             strManagerEmpRoleID = strManagerValue[0];
             strManagerEmpID = strManagerValue[1];
 
-            string[] strManagerText = ddlSelectManager.SelectedItem.Text.Split('/');
-            strManagerEmpName = strManagerText[1];
+            strManagerEmpName = ddlSelectManager.SelectedItem.Text;
+
+            //string[] strManagerText = ddlSelectManager.SelectedItem.Text.Split('/');
+            //strManagerEmpName = strManagerText[1];
 
             strInvestigation = txbInvestigation.Text;
 
