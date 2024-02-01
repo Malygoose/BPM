@@ -11,6 +11,7 @@ using static BPMLib.Class1;
 using static BPMLib.Class1.FormInfo;
 using DocumentFormat.OpenXml.Presentation;
 using Bll.Sal.Vdb;
+using System.Configuration;
 
 namespace BPM.FlowWork
 {
@@ -345,6 +346,8 @@ namespace BPM.FlowWork
                                         pnlInvestigation.Visible = true;
                                         pnlInvestigation.Enabled = true;
                                         pnlAppoint.Visible = true;
+                                        pnlFileUpload.Visible = true;
+                                        grvFileUpload.Columns[3].Visible = true;
                                         break;
                                     //改善對象節點
                                     case "582":
@@ -355,6 +358,8 @@ namespace BPM.FlowWork
                                         pnlCountermeasures.Visible = true;
                                         pnlAppoint.Visible = true;
                                         btnSubmit.Visible = false;
+                                        pnlFileUpload.Visible = true;
+                                        grvFileUpload.Columns[3].Visible = true;
                                         break;
                                     //品保主管節點
                                     case "583":
@@ -680,6 +685,30 @@ namespace BPM.FlowWork
             grvFileUpload.DataBind();
         }
 
+        //更改檔案狀態
+        public void updateFileUploadState()
+        {
+            stuFormInfo stuFormInfo = (stuFormInfo)ViewState["stuFormInfo"];
+
+            string connectionString = ConfigurationManager.ConnectionStrings["ming"].ConnectionString;
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+
+                string query = "UPDATE FileUpload SET [DeleteMark] = @DeleteMark WHERE ProcessID = @ProcessID";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.Clear(); // 清除之前的參數
+
+                    cmd.Parameters.AddWithValue("@DeleteMark", 1);
+                    cmd.Parameters.AddWithValue("@ProcessID", stuFormInfo.intProcessID);
+
+                    cmd.ExecuteNonQuery(); // 更新資料庫資料
+                }
+            }
+        }
+
         // 送出按鈕
         protected void btnSend_Click(object sender, EventArgs e)
         {
@@ -815,6 +844,10 @@ namespace BPM.FlowWork
                     }
                     else 
                     {
+                        //上傳資料到FileUpload
+                        updateFileUploadState();
+                        formInfo.SqlbulkCopyFileUpload(stuFormInfo);
+
                         ManagerWriteToDynamic(strProcessID);
                     }                   
                 }
@@ -833,6 +866,10 @@ namespace BPM.FlowWork
                         }
                         else
                         {
+                            //上傳資料到FileUpload
+                            updateFileUploadState();
+                            formInfo.SqlbulkCopyFileUpload(stuFormInfo);
+
                             QA01UpdateData(strProcessID, stuFormInfo.strSignOfTargetNodeID);
                         }
                         
@@ -895,6 +932,8 @@ namespace BPM.FlowWork
                     formInfo.InsertFormSignM(stuFormInfo);
                 }
 
+
+
                 //  流程推進
                 formInfo.FlowApprove(stuFormInfo);
 
@@ -931,6 +970,20 @@ namespace BPM.FlowWork
             stuFormInfo.strSignMState = "駁回";
             stuFormInfo.blnSignM = false;
             stuFormInfo.strSignOpinion = txbSignOpinion.Text;
+
+            if (chbTarget.Checked == false)
+            {
+                if (string.IsNullOrEmpty(txbSignOpinion.Text))
+                {
+                    txbSignOpinion.Focus();
+                    HttpContext.Current.Response.Write("<script>alert('請說明駁回原因!')</script>");
+                    return;
+                }
+
+                //上傳資料到FileUpload
+                updateFileUploadState();
+                formInfo.SqlbulkCopyFileUpload(stuFormInfo);
+            }
 
             if (stuFormInfo.intProcessID != 0)
             {
@@ -1124,7 +1177,7 @@ namespace BPM.FlowWork
             pnlCountermeasures.Enabled = chbTarget.Checked;
             btnReject.Visible = !chbTarget.Checked;
             btnSubmit.Visible = chbTarget.Checked; 
-            strImplementDay = DateTime.Now.AddDays(30).ToString("yyyy/MM/dd");//實施日
+            strImplementDay = DateTime.Now.AddDays(0).ToString("yyyy/MM/dd");//實施日
         }
         /// <summary>
         /// 選擇調查者、調查者選擇課長資訊

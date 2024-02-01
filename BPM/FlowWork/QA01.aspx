@@ -25,7 +25,7 @@
             flatpickr(txbImplementDay, {
                 locale: "zh",
                 // 在此設定 Flatpickr 的選項
-                minDate: new Date().fp_incr(30),
+                minDate: new Date().fp_incr(0),
                 defaultDate: "<%=strImplementDay%>"
             });
         });
