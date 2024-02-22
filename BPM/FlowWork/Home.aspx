@@ -141,8 +141,8 @@
                         <asp:Button ID="btnApplyForm" runat="server" Text="資訊服務申請單" CssClass="btnQty" OnClick="btnApplyForm_Click" Visible="false"/>
                         <asp:Button ID="btnTemplate" runat="server" Text="OO申請單" CssClass="btnQty" OnClick="btnTemplate_Click" Visible="false"/>
                         
-                        <asp:TextBox ID="txbTestDelete" runat="server" Visible="True"></asp:TextBox>
-                        <asp:Button ID="btnTestDelete" runat="server" OnClick="btnTestDelete_Click" Text="刪除" Visible="True" />
+                        <asp:TextBox ID="txbTestDelete" runat="server" Visible="false"></asp:TextBox>
+                        <asp:Button ID="btnTestDelete" runat="server" OnClick="btnTestDelete_Click" Text="刪除" Visible="false" />
                     </td>
                     <td style="text-align: right">
                         <asp:LoginName ID="LoginID" runat="server" Font-Size="Large" />

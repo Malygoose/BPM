@@ -32,10 +32,10 @@ namespace BPM
             string connectionString = ConfigurationManager.ConnectionStrings["Flow"].ConnectionString;
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
-                string query = "SELECT COUNT(*) FROM Emp WHERE id = @Username ";//AND pw = @pw";
+                string query = "SELECT COUNT(*) FROM Emp WHERE id = @Username AND pw = @pw";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@Username", username);
-                //cmd.Parameters.AddWithValue("@pw", password);
+                cmd.Parameters.AddWithValue("@pw", password);
                 //cmd.Parameters.AddWithValue("@Password", password);
                 conn.Open();
                 int result = (int)cmd.ExecuteScalar();

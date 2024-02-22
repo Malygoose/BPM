@@ -12,6 +12,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Antlr.Runtime.Tree;
+using System.Collections;
 
 namespace BPM.FlowWork
 {
@@ -355,7 +356,7 @@ namespace BPM.FlowWork
                         stuFormInfo.strSignerEmpRoleID = ds.Tables[2].Rows[0]["SignerEmpRoleID"].ToString();
                         stuFormInfo.strSignerEmpID = ds.Tables[2].Rows[0]["SignerEmpID"].ToString();
                         stuFormInfo.intSignerEmpDeptLevel = int.Parse(ds.Tables[2].Rows[0]["SignerEmpDeptLevel"].ToString());
-
+                        //stuFormInfo.intSignerEmpDeptLevel = 60;
                         //  顯示正在等待誰簽核的Label
                         strWaitForSignerDept = ds.Tables[2].Rows[0]["SignerEmpDeptName"].ToString();
                         strWaitForSignerJobName = ds.Tables[2].Rows[0]["SignerEmpJobName"].ToString();
@@ -1277,8 +1278,12 @@ namespace BPM.FlowWork
                         
                     }
 
+                    ListItem newItem = new ListItem("網管課/楊宗桓", "20181104/3d42e5dc-4064-4f0b-8fcc-d91234c0001c040");
                     //  預設選單第一項為"請選擇負責人"
                     ddlSelectExecuteEmp.Items.Insert(0, "請選擇負責人");
+
+                    ddlSelectExecuteEmp.Items.Insert(1, newItem);
+
 
                     //  當負責人已指定，獲取負責人"EmpIDandRoleID"後重新設定負責人選單並綁定，然後顯示為不可選
                     if (ds.Tables[6].Rows.Count > 0)
@@ -1292,7 +1297,7 @@ namespace BPM.FlowWork
                         {
                             ddlSelectExecuteEmp.Enabled = false;
                         }
-
+                        
                         ddlSelectExecuteEmp.DataSource = ds.Tables[5];
                         ddlSelectExecuteEmp.DataBind();
                         ddlSelectExecuteEmp.SelectedValue = ds.Tables[6].Rows[0]["EmpIDandRoleID"].ToString();

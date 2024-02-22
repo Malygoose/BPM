@@ -182,7 +182,8 @@ namespace BPM.FlowWork
             txbEmpNumName.Text = selectedRow[0]["Nobr"].ToString() + "," + selectedRow[0]["UserName"].ToString() + "," + selectedRow[0]["DeptName"].ToString();
             txbEditAssetsName.Text = selectedRow[0]["AssetsName"].ToString();
             txbEditAssetsCode.Text = selectedRow[0]["AssetsCode"].ToString();
-           
+            txbEditAssetsValue.Text = selectedRow[0]["AssetsValue"].ToString();
+
             if (ddlItemType.SelectedItem.Text == "信箱")
             {
                 txbEditAssetsName.Text = selectedRow[0]["AssetsName"].ToString().Split('@')[0];
@@ -249,7 +250,8 @@ namespace BPM.FlowWork
             string strItemType = ddlItemType.SelectedItem.Text;
             string strItemName = ddlItemList.SelectedItem.Text; 
             string strAssetsCode = txbEditAssetsCode.Text.ToLower();
-            string strAssetsName = txbEditAssetsName.Text.ToLower();          
+            string strAssetsName = txbEditAssetsName.Text.ToLower();    
+            string strAssetsValue = txbEditAssetsValue.Text;  
             string strGuidKey = lblGuidKey.Text;
 
             string strItemTypeID = ddlItemType.SelectedItem.Value;
@@ -315,6 +317,7 @@ namespace BPM.FlowWork
                 selectedRow[0]["ItemType"] = strItemType;
                 selectedRow[0]["AssetsCode"] = strAssetsCode;
                 selectedRow[0]["AssetsName"] = strAssetsName;
+                selectedRow[0]["AssetsValue"] = strAssetsValue;
                 selectedRow[0]["ItemName"] = strItemName;
                 selectedRow[0]["GuidKey"] = strGuidKey;
 
@@ -350,6 +353,7 @@ namespace BPM.FlowWork
                         cmd.Parameters.AddWithValue("@ItemType", strItemType);
                         cmd.Parameters.AddWithValue("@AssetsCode", strAssetsCode);
                         cmd.Parameters.AddWithValue("@AssetsName", strAssetsName);
+                        cmd.Parameters.AddWithValue("@AssetsValue", strAssetsValue);
                         cmd.Parameters.AddWithValue("@ItemName", strItemName);
                         cmd.Parameters.AddWithValue("@GuidKey", strGuidKey);
 
@@ -476,6 +480,7 @@ namespace BPM.FlowWork
 
             string strAddAssetsCode = txbEditAssetsCode.Text.ToLower();
             string strAddAssetsName = txbEditAssetsName.Text.ToLower();
+            string strAddAssetsValue = txbEditAssetsValue.Text;   
           
             string strInputEmail = txbEditAssetsName.Text.ToLower().Trim()+lblEmailFormate.Text;
             string strInputAssetsCode = txbEditAssetsCode.Text.Trim();  
@@ -535,6 +540,7 @@ namespace BPM.FlowWork
                 dtAddIT01EmployeeItems.Columns.Add("ItemName");
                 dtAddIT01EmployeeItems.Columns.Add("ItemTypeID");
                 dtAddIT01EmployeeItems.Columns.Add("ItemCode");
+                dtAddIT01EmployeeItems.Columns.Add("AssetsValue");
                 //設定欄位相對資料
                 DataRow drAddIT01EmployeeItems = dtAddIT01EmployeeItems.NewRow();
                 drAddIT01EmployeeItems["Nobr"] = strAddNobr;
@@ -546,6 +552,7 @@ namespace BPM.FlowWork
                 drAddIT01EmployeeItems["ItemName"] = strAddItemName;
                 drAddIT01EmployeeItems["ItemTypeID"] = strAddItemTypeID;
                 drAddIT01EmployeeItems["ItemCode"] = strAddItemCode;
+                drAddIT01EmployeeItems["AssetsValue"] = strAddAssetsValue;
                 dtAddIT01EmployeeItems.Rows.Add(drAddIT01EmployeeItems);
 
                 dbFunction dbFunction = new dbFunction();
@@ -566,6 +573,7 @@ namespace BPM.FlowWork
                         bulkCopy.ColumnMappings.Add("ItemName", "ItemName");
                         bulkCopy.ColumnMappings.Add("ItemTypeID", "ItemTypeID");
                         bulkCopy.ColumnMappings.Add("ItemCode", "ItemCode");
+                        bulkCopy.ColumnMappings.Add("AssetsValue", "AssetsValue");
                         bulkCopy.WriteToServer(dtAddIT01EmployeeItems);
                     }
                 }
@@ -590,6 +598,7 @@ namespace BPM.FlowWork
             txbEmpNumName.Text = "";
             txbEditAssetsCode.Text = "";
             txbEditAssetsName.Text = "";
+            txbEditAssetsValue.Text = "";
             lblMessage.Text = "";
             grvAdminterface.SelectedIndex = -1;
             btnEdit.Visible = false;

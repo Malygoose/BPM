@@ -90,7 +90,7 @@
                             <td width="15%">
                                 <asp:Label ID="lblAssetsCode" runat="server" Text="資產編號:" Visible="false"></asp:Label>
                                 <asp:TextBox ID="txbEditAssetsCode" runat="server" Width="80px" Visible="false"></asp:TextBox>
-                            </td>
+                            </td>                         
                             <td width="10%">
                                 <asp:Label ID="lblMessage" runat="server" Visible="false" ForeColor="Red"></asp:Label>
                             </td>
@@ -99,6 +99,12 @@
                                 <asp:Button ID="btnEdit" runat="server" Text="更改" OnClick="btnEdit_Click" OnClientClick="return confirm('確定要更改嗎？');" Visible="false" />
                                 <asp:Button ID="btnDelete" runat="server" Text="刪除" OnClick="btnDelete_Click" Visible="false" OnClientClick="return confirm('確定要刪除嗎？');" />
                                 <asp:Button ID="btnClear" runat="server" Text="清空" OnClick="btnClear_Click" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td >
+                                <asp:Label ID="lblAssetsValue" runat="server" Text="資產價值:" ></asp:Label>
+                                <asp:TextBox ID="txbEditAssetsValue" runat="server" Width="30px" ></asp:TextBox>
                             </td>
                         </tr>
                     </table>
@@ -121,7 +127,7 @@
                             <asp:BoundField DataField="ItemName" HeaderText="項目" />
                             <asp:BoundField DataField="AssetsName" HeaderText="資產名稱" />
                             <asp:BoundField DataField="AssetsCode" HeaderText="資產編號" />
-
+                            <asp:BoundField DataField="AssetsValue" HeaderText="資產價值" />
 
 
                             <asp:CommandField ShowSelectButton="true"></asp:CommandField>

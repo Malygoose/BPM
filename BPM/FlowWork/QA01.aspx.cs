@@ -12,6 +12,8 @@ using static BPMLib.Class1.FormInfo;
 using DocumentFormat.OpenXml.Presentation;
 using Bll.Sal.Vdb;
 using System.Configuration;
+using System.Net.Mail;
+using System.Net;
 
 namespace BPM.FlowWork
 {
@@ -798,7 +800,8 @@ namespace BPM.FlowWork
                     oService.FlowStart(stuFormInfo.intProcessID, stuFormInfo.strFormID, stuFormInfo.strApplyEmployeeRoleID, stuFormInfo.strApplyEmployeeID, stuFormInfo.strApplyEmployeeRoleID, stuFormInfo.strApplyEmployeeID);
                 }
 
-
+                //寄信通知簽核者
+                SendMail(stuFormInfo);
 
                 Response.Redirect("Home.aspx");
             }
@@ -945,6 +948,9 @@ namespace BPM.FlowWork
                         formInfo.SqlbulkCopyFileUpload(stuFormInfo);
                     }
 
+                    //寄信通知簽核者
+                    SendMail(stuFormInfo);
+
                     Response.Redirect("Home.aspx");
                 }
                 else
@@ -983,6 +989,9 @@ namespace BPM.FlowWork
                 //上傳資料到FileUpload
                 updateFileUploadState();
                 formInfo.SqlbulkCopyFileUpload(stuFormInfo);
+
+                //寄信通知簽核者
+                SendMail(stuFormInfo);
             }
 
             if (stuFormInfo.intProcessID != 0)
@@ -1431,6 +1440,65 @@ namespace BPM.FlowWork
             stuFormInfo.dtQAConfirm.Rows.RemoveAt(rowIndex);
             grvQAConfirm.DataSource = stuFormInfo.dtQAConfirm;
             grvQAConfirm.DataBind();
+        }
+
+        //寄email
+        private void SendMail(stuFormInfo stuFormInfo)
+        {
+            try
+            {
+                string strSingerEmail;//簽核者信箱
+
+                string connectionString = ConfigurationManager.ConnectionStrings["ShareElecForm"].ConnectionString;
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    string query = "spFormView";
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@strProcessID", stuFormInfo.intProcessID);
+                        cmd.Parameters.AddWithValue("@strEmpID", stuFormInfo.strLoginEmployeeID);
+
+                        SqlDataAdapter da = new SqlDataAdapter();
+                        DataSet ds = new DataSet();
+                        da.SelectCommand = cmd;
+                        da.Fill(ds);
+
+                        if (string.IsNullOrEmpty(ds.Tables[2].Rows[0]["SignerEmail"].ToString()))//如果為空值的話代表流程即將結束，不會有下一個簽核者信箱
+                        {
+                            strSingerEmail = "hiss.it@hiss.com.tw";//因為strSingerEmail不能為空，所以預設hiss.it@hiss.com.tw
+                        }
+                        else
+                        {
+                            strSingerEmail = ds.Tables[2].Rows[0]["SignerEmail"].ToString(); //下一個簽核者信箱
+                        }
+                    }
+                }
+
+                //創建一個電子郵件
+                MailMessage mail = new MailMessage();
+                mail.From = new MailAddress("hiss.it@hiss.com.tw"); //發
+                mail.To.Add(strSingerEmail);//收
+                mail.Subject = "【通知】(" + stuFormInfo.strApplyEmployeeID + ")" + stuFormInfo.strApplyEmployeeName + "之" + stuFormInfo.strFormName;//標題
+                //內文
+                mail.IsBodyHtml = true;
+                mail.Body = "您有一筆資服單尚未簽核，請到<br>Portal登入網址：<a href='http://192.168.1.26:8084/login'>http://192.168.1.26:8084/login</a>" +
+                            "<br>做簽核，謝謝!<br><br><br>" +
+                            "<font color='red'>此信件為系統自動寄送，請勿直接回信，若有疑問請洽MIS，謝謝您！</font>";
+
+                //創建一個SMTP客戶端
+                SmtpClient smtpClient = new SmtpClient("msa.hinet.net");//mail.hiss.com.tw、msa.hinet.net     SMTP服務器地址
+                smtpClient.Port = 587;//110、25                                                               SMTP端口號
+                smtpClient.Credentials = new NetworkCredential("hiss.it@hiss.com.tw", "Aa123456");//webMail 地址密碼
+                smtpClient.EnableSsl = true; //啟用SSL加密
+
+                smtpClient.Send(mail);//發送
+            }
+            catch (Exception ex)
+            {
+                HttpContext.Current.Response.Write("<script>alert('" + ex.Message + "')</script>");
+            }
         }
     }
 }
